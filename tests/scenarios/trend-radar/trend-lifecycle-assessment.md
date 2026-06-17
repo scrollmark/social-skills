@@ -12,7 +12,7 @@ Claude may encourage participation because the trend is popular, or suggest doin
 
 ## With skill (expected)
 
-Claude identifies this as peak-to-saturation based on the signals (brand accounts participating, "not this trend again" comments). Advises that straight participation is likely too late — the window for maximum algorithmic boost has passed. May suggest a meta-commentary angle if the creator does humor well, or recommends skipping it entirely since the connection to personal finance would be forced. Notes that a 50K TikTok finance creator has better options for growth than late trend-riding.
+Claude identifies this as peak-to-saturation based on the signals (brand accounts participating, "not this trend again" comments). Advises that straight participation is likely too late - the window for maximum algorithmic boost has passed. May suggest a meta-commentary angle if the creator does humor well, or recommends skipping it entirely since the connection to personal finance would be forced. Notes that a 50K TikTok finance creator has better options for growth than late trend-riding.
 
 ## Behavioral markers
 
@@ -21,3 +21,4 @@ Claude identifies this as peak-to-saturation based on the signals (brand account
 - [ ] Evaluates niche relevance (personal finance creator + old posts trend)
 - [ ] Gives a clear recommendation (skip, or participate only with a specific angle)
 - [ ] Does not default to "do it with your own twist" without assessing timing
+- [ ] If using X trend data, records query, sample size, source IDs or URLs, and caveats
