@@ -26,18 +26,29 @@ Also covered: **X**, **LinkedIn**
 
 ## Install
 
+Via the [skills.sh](https://skills.sh) CLI (no clone needed):
+
+```bash
+npx skills add scrollmark/social-skills                  # all seven
+npx skills add scrollmark/social-skills -s hook-anatomy  # just one
+```
+
+Or from a clone:
+
 ```bash
 git clone https://github.com/scrollmark/social-skills.git
 cd social-skills
-./install.sh
+./install.sh                            # all seven
+./install.sh hook-anatomy trend-radar   # just the ones you name
 ```
 
-Skills are symlinked into `~/.claude/skills/` and will be available in your next Claude Code session.
+Cloned skills are symlinked into `~/.claude/skills/` and will be available in your next Claude Code session. `./install.sh --help` lists the available skill names.
 
 ## Uninstall
 
 ```bash
-./uninstall.sh
+./uninstall.sh                # remove all
+./uninstall.sh hook-anatomy   # remove one
 ```
 
 ## Contributing
