@@ -44,6 +44,10 @@ they describe is executed by the video-studio engine.
 |-------|----------|-------------|
 | `video-formats` | Planning, structuring, or critiquing a short-form video — choosing a format, laying out its scenes, or defining a new format. Covers ten scene grammars from talking-head to hand-drawn motion graphics. | Mostly — 8 of the 10 formats are pure structure. **Boil** and **PointerPopups** are not (see below). |
 | `brand-kit` | A user wants their videos to stay visually consistent — saving caption styling, card colours and geometry, title treatment, logos, fonts, voice and CTA copy once instead of redeciding them per video. | Deciding and recording a brand, yes. Applying it automatically at render time needs the engine. |
+| `media-acquisition` | Deciding where a shot's footage or stills should come from — public-domain archive, free stock, a paid generator, or a URL the user supplied — and when checking that what came back is actually usable before anything is built on it. | **No.** It is a selection rule wrapped around ten sourcing scripts; without them nothing searches, generates, or checks what arrived. |
+| `audio-acquisition` | A video needs narration, a music bed or sound effects — choosing a voice, deciding which music source is safe to publish with, timing a cut to a track, or fixing a render that came out quiet. | Partly. The rights tiering and mixing discipline read as a briefing; synthesis, measurement and licence filtering are the engine. |
+| `subject-compositing` | A filmed person has to appear somewhere they never were — dropping a subject over replacement footage, putting a drawn prop in front of them, driving the pair across frame, or pinning popup images to where they point on camera. | **No.** The segmentation, occlusion seam, arm punch-through and gesture timing are all engine scripts. What survives is knowing what footage to shoot. |
+| `edit-handoff` | A finished cut has to leave the pipeline and continue in a human editor — exporting a timeline to Premiere Pro, DaVinci Resolve, Final Cut Pro or CapCut, or answering what survives the trip and what an editor has to rebuild. | **No.** The exporters read the engine's timeline document; there is no degraded mode that still writes a file. The format judgement generalises. |
 
 ### Working method and toolchain
 
@@ -82,6 +86,25 @@ If you do not have access to video-studio, here is exactly what that costs you:
 - `brand-kit` lets you agree a brand with a user and hand-write the files. The preset
   mechanism — `--list`, `--show`, `--apply`, `--save` — is `styles.py`, and nothing expands
   a preset into a storyboard without it, so applying a brand becomes manual editing.
+- **`media-acquisition` does not work standalone.** The provider ladder, the shot-type
+  corollary and the landmine file are readable and will tell a human which library to
+  open — but the searching, generating, licence filtering and the five-way check on what
+  came back are all `source_clips.py`, the `stock_*` scripts, the `gen_*` scripts and
+  `verify_clips.py`. Without them it is a briefing document, not a workflow.
+- `audio-acquisition` keeps the part that matters commercially — which music source is
+  safe to publish with, and why the free one is not — plus the measure-don't-trust
+  discipline. Synthesis, loudness measurement and the per-sound licence filter are
+  `tts_kokoro.py`, `tts_eleven.py`, `gen_music.py`, `stock_freesound.py`, `measure.py`
+  and `normalize_audio.py`.
+- **`subject-compositing` is entirely engine-side.** `composite_subject.py` does the
+  segmentation, the feathered occlusion seam and the arm punch-through;
+  `track_pointing.py` does the gesture timing. Without them there is no shot. The one
+  part that survives is the footage brief — what a selfie segmenter needs from a take —
+  and it is worth having before anyone films.
+- **`edit-handoff` cannot produce a file without the engine.** `export_edit.py`,
+  `export_fcpxml.py` and `export_capcut.py` all read video-studio's per-project timeline
+  document. What generalises is the judgement: which format each application actually
+  imports, and that no interchange format carries effects.
 - `studio-setup` keeps its tooling inventory, but the single status report, the install
   plan and the auto/system/manual classification all come from `doctor.py` and `setup.py`.
   You can still check binaries by hand.
