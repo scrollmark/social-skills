@@ -33,7 +33,7 @@ Three questions:
 
 ## Platform Differences
 
-Hooks work differently by platform. Read the `.root` file in this skill's directory for the repo path, then load the relevant `{repo}/references/platforms/{platform}.md`.
+Hooks work differently by platform. Load the relevant `references/platforms/{platform}.md` from this skill's own directory.
 
 Key distinction: TikTok hooks are visual + text overlay (the first frame and on-screen text do the work). Instagram Reels hooks are often spoken — the first words matter most. YouTube hooks happen *before* the video — the thumbnail and title ARE the hook. First 30 seconds then justify the click.
 

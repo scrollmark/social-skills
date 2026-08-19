@@ -30,7 +30,7 @@ Platforms differ on three axes. Knowing where a platform sits on each one shapes
 
 ## When to Load References
 
-If the conversation involves a specific platform, read the `.root` file in this skill's directory for the repo path, then load `{repo}/references/platforms/{platform}.md`. If comparing platforms or adapting content across them, load both.
+If the conversation involves a specific platform, load `references/platforms/{platform}.md` from this skill's own directory. If comparing platforms or adapting content across them, load both.
 
 ## Native vs. Cross-Posted
 

@@ -24,9 +24,46 @@ The body should teach patterns, not specific trends. Keep it under 500 words. Wr
 
 If your skill references platform-specific knowledge, tell Claude to load the relevant reference file on demand rather than embedding the knowledge in the skill itself.
 
+## The Self-Containment Invariant
+
+**Every skill folder must be self-contained. A `SKILL.md` must never reference anything above its own directory.**
+
+Skills are installed two ways, and both must work:
+
+```bash
+npx skills add scrollmark/social-skills   # users — COPIES each skills/<name>/ folder
+./install.sh                              # development — symlinks each folder
+```
+
+The `npx` route copies the skill folder and nothing else. Anything your `SKILL.md` points
+at outside that folder simply will not be there, and the skill degrades silently — no
+error, just worse answers. That is the bug this invariant exists to prevent.
+
+So:
+
+- Put the reference files your skill needs in `skills/<your-skill>/references/`.
+- Load them by a path relative to the skill: `` `references/platforms/tiktok.md` ``.
+- Never use `../`, an absolute path, a `{repo}` placeholder, or a `.root` file.
+- Only ship files the skill actually loads.
+
+The repo-root `references/` is the canonical source for shared files. Copy the ones your
+skill uses into the skill folder — duplication is the correct tradeoff for portability.
+When you change a shared reference, update the root copy and every skill copy of it.
+
+Before opening a PR:
+
+```bash
+./scripts/verify-skills.sh
+```
+
+It fails if a `SKILL.md` reaches outside its folder, if any `.root` file exists, or if a
+skill names a reference file it does not contain.
+
 ## Adding a Platform Reference
 
-Create a file at `references/platforms/{platform-name}.md` with this structure:
+Create the canonical file at `references/platforms/{platform-name}.md` (repo root), then
+copy it into `skills/<name>/references/platforms/` for every skill that loads platform
+references. Use this structure:
 
 ```yaml
 ---
@@ -46,7 +83,9 @@ Required sections:
 
 ## Updating slang-and-signals.md
 
-Add entries to the appropriate category. Each entry needs:
+Edit `references/slang-and-signals.md` at the repo root, then copy it into every skill that
+loads it (currently `skills/read-the-room/references/`). Add entries to the appropriate
+category. Each entry needs:
 
 - **Pattern/term** — what it is
 - **Signal** — what it actually means

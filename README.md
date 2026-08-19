@@ -26,19 +26,51 @@ Also covered: **X**, **LinkedIn**
 
 ## Install
 
+### For users (recommended)
+
+```bash
+npx skills add scrollmark/social-skills
+```
+
+This copies each skill folder into your Claude Code skills directory. Every skill is
+self-contained — it ships the reference files it needs — so a copied install has the
+exact same behaviour as a cloned one.
+
+### For development
+
 ```bash
 git clone https://github.com/scrollmark/social-skills.git
 cd social-skills
 ./install.sh
 ```
 
-Skills are symlinked into `~/.claude/skills/` and will be available in your next Claude Code session.
+`install.sh` symlinks each `skills/<name>/` into `~/.claude/skills/social-skills--<name>`,
+so edits in your clone take effect immediately. It is idempotent — re-run it any time,
+including after pulling new skills — and it prunes links whose skill no longer exists.
+Set `CLAUDE_SKILLS_DIR` to install somewhere other than `~/.claude/skills`.
+
+Either way, skills become available in your next Claude Code session.
 
 ## Uninstall
 
 ```bash
 ./uninstall.sh
 ```
+
+Removes every `social-skills--*` entry from your skills directory (symlinks and copies
+alike) and deletes any stale `.root` files left behind by older versions of `install.sh`.
+
+## Self-contained skills
+
+Every skill folder stands on its own. `skills/<name>/` contains its `SKILL.md` plus its
+own `references/`, and a `SKILL.md` never points at anything above its own directory.
+
+That is what makes the two install routes equivalent. Earlier versions resolved reference
+paths through a `.root` file that only `install.sh` wrote, so `npx skills add` installs
+silently ran without their references. The shared reference files under the repo-root
+`references/` remain the canonical source and are copied into each skill that uses them.
+
+Run `./scripts/verify-skills.sh` to check the invariant.
 
 ## Contributing
 
