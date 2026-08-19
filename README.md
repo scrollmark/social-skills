@@ -48,6 +48,7 @@ they describe is executed by the video-studio engine.
 | `audio-acquisition` | A video needs narration, a music bed or sound effects — choosing a voice, deciding which music source is safe to publish with, timing a cut to a track, or fixing a render that came out quiet. | Partly. The rights tiering and mixing discipline read as a briefing; synthesis, measurement and licence filtering are the engine. |
 | `subject-compositing` | A filmed person has to appear somewhere they never were — dropping a subject over replacement footage, putting a drawn prop in front of them, driving the pair across frame, or pinning popup images to where they point on camera. | **No.** The segmentation, occlusion seam, arm punch-through and gesture timing are all engine scripts. What survives is knowing what footage to shoot. |
 | `edit-handoff` | A finished cut has to leave the pipeline and continue in a human editor — exporting a timeline to Premiere Pro, DaVinci Resolve, Final Cut Pro or CapCut, or answering what survives the trip and what an editor has to rebuild. | **No.** The exporters read the engine's timeline document; there is no degraded mode that still writes a file. The format judgement generalises. |
+| `video-production` | Actually producing a short-form video end to end — running the interview, storyboarding, sourcing, previewing, rendering and quality-checking in order — or when a run has stalled and you need to know which step comes next and who owns it. | **No.** It drives the whole engine: without the private repo there is no props document, no preview, no renderer and no preflight. The step order and the hard rules still read as a production discipline. |
 
 ### Working method and toolchain
 
@@ -105,6 +106,11 @@ If you do not have access to video-studio, here is exactly what that costs you:
   `export_fcpxml.py` and `export_capcut.py` all read video-studio's per-project timeline
   document. What generalises is the judgement: which format each application actually
   imports, and that no interchange format carries effects.
+- **`video-production` is the one skill that is purely the engine's driver.** It sequences
+  `setup.py`, `build_props.py`, `studio.py`, `preflight.py`, the Remotion renderer,
+  `normalize_audio.py` and `poster.py`; with none of those present there is nothing to sequence.
+  What survives is the shape of a production run — which decision must precede which, where money
+  enters, and the `references/hard-rules.md` list of things that already went wrong once.
 - `studio-setup` keeps its tooling inventory, but the single status report, the install
   plan and the auto/system/manual classification all come from `doctor.py` and `setup.py`.
   You can still check binaries by hand.
