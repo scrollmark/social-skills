@@ -124,13 +124,25 @@ so edits in your clone take effect immediately. It is idempotent — re-run it a
 including after pulling new skills — and it prunes links whose skill no longer exists.
 Set `CLAUDE_SKILLS_DIR` to install somewhere other than `~/.claude/skills`.
 
+Install a subset by naming the skills, which is worth doing if you only want the
+social-media half or only the video half:
+
+```bash
+./install.sh trend-radar hook-anatomy    # just these two
+./install.sh --list                      # what is available
+```
+
+An unknown name is an error rather than a silent no-op, and a partial install never
+prunes skills it was not asked about.
+
 Either way, skills become available in your next Claude Code session. Neither route
 installs, downloads, or requires video-studio.
 
 ## Uninstall
 
 ```bash
-./uninstall.sh
+./uninstall.sh              # everything
+./uninstall.sh trend-radar  # just one
 ```
 
 Removes every `social-skills--*` entry from your skills directory (symlinks and copies
