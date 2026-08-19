@@ -9,9 +9,9 @@ preferences. Every one of them describes something that already went wrong.
 it.** Unresolved sources become solid coloured boxes, and a placeholdered build
 is not a *failed* build to the naked eye — it is a finished-looking video of
 coloured rectangles. Check `readyToRender` in the `build_props` summary and run
-`preflight.py` before every render.
+`video-studio preflight` before every render.
 
-A nonzero `preflight.py` means **do not render** — fix and rebuild. It exits
+A nonzero `video-studio preflight` means **do not render** — fix and rebuild. It exits
 nonzero if any layer would render as a placeholder, if props reference a file
 missing from `public/`, or if a narration track is silent.
 
@@ -28,7 +28,7 @@ first.
 - **Scene duration = MEASURED narration WAV duration.** The plan's estimate is a
   hint, never the clock. Using planned durations desyncs audio, video and
   captions cumulatively: 20–30 findings per video before the fix, 0–6 after.
-- Empty narration → `tts_kokoro.py --silence <seconds>`; never synthesize `""`.
+- Empty narration → `video-studio tts_kokoro --silence <seconds>`; never synthesize `""`.
   `--silence` is for beats that are **meant** to be quiet. Never use it to paper
   over a voice backend that failed: the silent WAV becomes the scene clock and
   the render ships with no narration and no captions while every log line still
@@ -58,7 +58,7 @@ first.
 ## The clips path
 
 `url:` / `find:` / `prompt:` sources resolve from exactly one location:
-`project/clips/<sceneId>-<layerId>.<ext>`. Use `source_clips.py` or the `gen_*`
+`project/clips/<sceneId>-<layerId>.<ext>`. Use `video-studio source_clips` or the `gen_*`
 scripts to put them there — `build_props` copies them into `composer/public/`
 itself. Hand-placing files into `composer/public/clips/` does **not** work;
 `build_props` never looks there and will placeholder or error.
@@ -103,4 +103,4 @@ dollar-prefixed digit tokens get clobbered by argument substitution.
 | Placeholder previews | free |
 
 Quote the total **before the first paid call and again after the last**, and only
-after `doctor.py` has said which providers are actually reachable.
+after `scripts/doctor.py` has said which providers are actually reachable.

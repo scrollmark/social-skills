@@ -98,11 +98,36 @@ for skill_dir in "$SKILLS_ROOT"/*/; do
     fi
   done < <(grep -oE '(\./)?references/[A-Za-z0-9_{}./-]+\.md' "$skill_md" | sort -u)
 
+  # 3b. Every bundled executable a SKILL.md names must exist inside this skill.
+  #     Same guarantee as the references check above, for the other thing a skill
+  #     can ship. A `## Requires` block that says "ships with this skill" and
+  #     names scripts/foo.py is a promise; this is what keeps it true after a
+  #     rename, and it is the check that would catch a script left behind when a
+  #     skill folder is copied by `npx skills add`.
+  while IFS= read -r bundled; do
+    bundled="${bundled#./}"
+    if [ ! -f "$skill_dir/$bundled" ]; then
+      err "$name/SKILL.md names bundled script '$bundled' but $name/$bundled does not exist"
+    elif [ ! -x "$skill_dir/$bundled" ]; then
+      warn "$name/$bundled is not executable (chmod +x)"
+    fi
+  done < <(grep -oE '(\./)?scripts/[A-Za-z0-9_./-]+\.(py|sh|mjs|js)' "$skill_md" | sort -u)
+
   # 4. Anything shipped under the skill's references/ should be reachable.
   if [ -d "$skill_dir/references" ]; then
     if ! grep -q 'references/' "$skill_md"; then
       err "$name ships references/ but SKILL.md never loads anything from it"
     fi
+  fi
+
+  # 4b. Same rule for scripts/: a bundled executable nobody invokes is dead
+  #     weight that still gets copied into every install.
+  if [ -d "$skill_dir/scripts" ]; then
+    while IFS= read -r shipped; do
+      rel="scripts/$(basename "$shipped")"
+      grep -q "$rel" "$skill_md" || err "$name ships $rel but SKILL.md never invokes it"
+    done < <(find "$skill_dir/scripts" -maxdepth 1 -type f \
+               \( -name '*.py' -o -name '*.sh' -o -name '*.mjs' -o -name '*.js' \) 2>/dev/null)
   fi
 done
 
@@ -123,6 +148,26 @@ if [ -d "$REPO_DIR/references" ]; then
     fi
   done < <(find "$SKILLS_ROOT" -path '*/references/*' -type f -name '*.md' 2>/dev/null)
 fi
+
+# 6. A bundled script shipped by more than one skill must be byte-identical in
+#    every copy. Same reasoning as rule 5: two skills genuinely need their own
+#    copy (a skill may never reach outside its folder, so there is nowhere
+#    shared to put it), but a fix applied to one copy and not the other ships
+#    two different programs under one name. There is no root-level canonical
+#    copy for scripts — the copies ARE the source, so they are compared to
+#    each other.
+while IFS= read -r base; do
+  first=""
+  while IFS= read -r copy; do
+    if [ -z "$first" ]; then
+      first="$copy"
+    elif ! cmp -s "$copy" "$first"; then
+      err "${copy#$REPO_DIR/} has drifted from ${first#$REPO_DIR/} (same script, two skills — edit both, in the same commit)"
+    fi
+  done < <(find "$SKILLS_ROOT" -path '*/scripts/*' -type f -name "$base" 2>/dev/null | sort)
+done < <(find "$SKILLS_ROOT" -path '*/scripts/*' -type f \
+           \( -name '*.py' -o -name '*.sh' -o -name '*.mjs' -o -name '*.js' \) 2>/dev/null \
+         | xargs -n1 basename 2>/dev/null | sort | uniq -d)
 
 if [ "$skill_count" -eq 0 ]; then
   echo "FAIL: no skills with a SKILL.md found under skills/" >&2

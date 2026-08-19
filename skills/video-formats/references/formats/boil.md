@@ -16,7 +16,7 @@ type, and captions would double it.
 Round 1 — header "Subject": What is it, and what are the three things worth
 saying about it?
 Round 2 — header "Marks": For each beat, what object stands for it? Keep it
-iconic — a hand, a spark, a bridge, a lock. First run `gen_boil.py --list`.
+iconic — a hand, a spark, a bridge, a lock. First run `video-studio gen_boil --list`.
 If the vocabulary is too rigid, create `boil_shapes.py` in the project and
 pass it with `--shape-file`; do not squeeze the idea into an unrelated built-in
 mark.
@@ -39,7 +39,7 @@ Freeform: exact wording for the end card.
 - One shape per scene. Two marks on screen reads as a diagram, not a beat.
 
 ## Render notes
-- Generate art with `scripts/gen_boil.py`, one clip per scene. Match
+- Generate art with `video-studio gen_boil`, one clip per scene. Match
   `--seconds` to `plannedSeconds` EXACTLY: a short clip either loops
   (visible seam) or freezes.
 - Custom marks live beside the storyboard, usually `project/boil_shapes.py`.

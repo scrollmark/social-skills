@@ -12,23 +12,25 @@ does not move, because being vague there costs an editor an afternoon.
 
 ## Requires
 
-`scripts/export_edit.py`, `scripts/export_fcpxml.py` and `scripts/export_capcut.py`
-from **scrollmark/video-studio** (private). They read that repo's per-project
-timeline document, so there is no degraded mode that still produces a file: no
-engine, no export. What survives without it is the judgement below — which
-format an editor should be asked for, and what to warn them about — which
-applies to any OTIO or FCPXML handoff, whoever writes it.
+`pip install video-studio-engine` for `export_fcpxml` and `export_capcut`;
+`pip install 'video-studio-engine[export]'` for `export_edit`, which needs
+OpenTimelineIO. Run them as `video-studio export_fcpxml …`. None of the three is
+bundled here — each reads the engine's per-project timeline document and composer
+directory, so none is a lone file a skill folder can hold. Without that install
+there is no degraded mode that still writes a file: no engine, no export. What
+survives is the judgement below — which format an editor should be asked for, and
+what to warn them about — which applies to any OTIO or FCPXML handoff.
 
 ## Which Export, Which Application
 
 | Target | Script | Route |
 |---|---|---|
-| Premiere Pro, DaVinci Resolve | `export_edit.py` | `.otio`, imported natively — no plugin |
-| Final Cut Pro | `export_fcpxml.py` | `.fcpxml` 1.9, opens as a real project |
-| CapCut | `export_capcut.py --install` | overwrites `draft_info.json` in an existing project |
+| Premiere Pro, DaVinci Resolve | `video-studio export_edit` | `.otio`, imported natively — no plugin |
+| Final Cut Pro | `video-studio export_fcpxml` | `.fcpxml` 1.9, opens as a real project |
+| CapCut | `video-studio export_capcut --install` | overwrites `draft_info.json` in an existing project |
 | Any of them, another machine | add `--bundle` | copies the media in beside the timeline |
 
-    uv run scripts/export_edit.py --project <dir>
+    video-studio export_edit --project <dir>
 
 **Always pass `--project`.** It rebuilds that project's timeline first. The
 composer's props document is global, so exporting unbuilt silently emits
@@ -54,7 +56,7 @@ their text** at the frame where each appeared, and camera moves are marked the
 same way. The editor does not get the title; they get a labelled spot saying
 what belonged there.
 
-**Final Cut is the exception worth naming.** `export_fcpxml.py` writes cards as
+**Final Cut is the exception worth naming.** `export_fcpxml` writes cards as
 real `<title>` elements on Final Cut's Basic Title generator and camera moves as
 keyframed `<adjust-transform>`, both editable in the inspector. Measured on a
 real project, the generic OTIO→FCPX adapter emitted zero of each. If the cards

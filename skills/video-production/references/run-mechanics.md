@@ -6,7 +6,7 @@ before the step starts, and what the step leaves behind for the next one.
 
 ## 0 — Can this machine do the job?
 
-`setup.py` reports only; it changes nothing without `--yes`. Everything present:
+`video-studio setup` reports only; it changes nothing without `--yes`. Everything present:
 say nothing and go to step 1 — narrating a clean bill of health is noise.
 Something missing: name it in the user's terms ("the renderer isn't installed"),
 say whether you can fix it, and **ask before running anything, every time, even
@@ -34,7 +34,7 @@ else?" option.
 
 ## 3 — Sourcing, one round, both halves
 
-Run `doctor.py` **first** and only offer sources that are actually available.
+Run `scripts/doctor.py` **first** and only offer sources that are actually available.
 Footage and audio are elicited in the **same round**, and the offer is phrased as
 a choice question.
 
@@ -58,8 +58,8 @@ live-typography `card` instead of a source.
 
 ## 5 — Placeholder preview
 
-    build_props.py --placeholders     # every unresolved source becomes a labelled coloured shape
-    studio.py --project <dir>         # NEVER launch the editor directly
+    video-studio build_props --placeholders   # every unresolved source becomes a labelled coloured shape
+    video-studio studio --project <dir>       # NEVER launch the editor directly
 
 The editor hot-reloads `props.json`, so the user can adjust rects, timing and
 tweens visually at zero cost. **Re-read `props.json` when they finish — their
@@ -72,17 +72,17 @@ TTS first (narration timing drives everything), then footage per the sourcing
 choices. Everything lands at `project/clips/<sceneId>-<layerId>.<ext>`. Never
 regenerate an existing clip; never pass `--force` to "make sure it's fresh".
 Narration caches itself and reports `"cached": true`, so on a revision just re-run
-every scene and let the unchanged ones skip. Then `verify_clips.py --project
+every scene and let the unchanged ones skip. Then `video-studio verify_clips --project
 <dir>` — **nonzero means do not build.**
 
 Quote the running total cost before the first paid call and again after the last.
 
 ## 7 — Final props, gate, render, normalise
 
-    build_props.py            # no --placeholders; measured narration becomes the clock
-    preflight.py              # nonzero = do not render
+    video-studio build_props   # no --placeholders; measured narration becomes the clock
+    video-studio preflight     # nonzero = do not render
     npx remotion render       # in the composer directory
-    normalize_audio.py --in <mp4>
+    python3 scripts/normalize_audio.py --in <mp4>
 
 Rebuild props immediately before **each** render. See `hard-rules.md` for why.
 
@@ -96,7 +96,7 @@ duration and loudness. Offer one fix-and-rerender loop before declaring done.
 
 ## 9 — Poster frame
 
-`poster.py --in <mp4>` writes a ranked shortlist and a labelled candidate sheet.
+`scripts/poster.py --in <mp4>` writes a ranked shortlist and a labelled candidate sheet.
 **Open the sheet.** The score measures colour and contrast, so it knows nothing
 about subject matter — on its first real run it ranked an underwater reef above a
 marigold market for a Mexico spot. Pass `--at <seconds>` once you have looked. A
@@ -112,7 +112,7 @@ media, separate document, separate composition. Render and preflight both take
 the project name.
 
 Still shared: the composer's `node_modules` (read-only in practice) and **the
-port**. Always open the editor with `studio.py --project <dir>`, which picks a
+port**. Always open the editor with `video-studio studio --project <dir>`, which picks a
 free port and claims the shared props file. The default port is shared, so a
 second agent launching directly *attaches* to the first agent's editor and both
 then see one project.

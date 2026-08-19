@@ -19,8 +19,8 @@ render as real typography, so give them to me exactly as they should appear.
 Round A — header "Audio": Score (supply a file / generate / none)?
 Voice (built-in / supplied recording / none)? If generating the score, say
 which backend and its rights terms before they choose, not after.
-Round L — header "Look": Which caption/card preset — `styles.py --list`?
-Any look they describe should be saved with `styles.py --save`.
+Round L — header "Look": Which caption/card preset — `video-studio styles --list`?
+Any look they describe should be saved with `video-studio styles --save`.
 Freeform: brand colours, tone, anything to avoid.
 
 ## Slots

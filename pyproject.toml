@@ -1,0 +1,88 @@
+# The engine behind the video-production skills.
+#
+# The skills in skills/ are prose and install with `npx skills add`, which only
+# ever copies skills/<name>/ folders — it never looks at src/. Installing this
+# package is therefore a separate, optional step, and nothing about the skills
+# install story depends on it.
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "video-studio-engine"
+version = "0.1.0"
+description = "The programs behind the social-skills video skills: sourcing, voice, generation, measurement and editor handoff for short-form video."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Scrollmark" }]
+keywords = ["video", "short-form", "social", "ffmpeg", "stock-footage", "tts"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Multimedia :: Video",
+]
+
+# The base install is deliberately thin. httpx is the one dependency shared by
+# enough modules (every stock source, every hosted generator) that installing
+# without it leaves the package barely able to do anything.
+dependencies = [
+  "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+# Downloading footage from a URL.
+sourcing = ["yt-dlp>=2024.1.0"]
+
+# Local speech synthesis. kokoro has no wheels for 3.13+ at time of writing, so
+# the marker keeps `pip install .[audio]` from failing outright on a newer
+# interpreter — but the module will then raise at import, which is the honest
+# outcome. Use a 3.11/3.12 environment for voice.
+audio = [
+  "kokoro>=0.9.0; python_version < '3.13'",
+  "soundfile>=0.12",
+  "numpy>=1.26",
+]
+
+# Hosted image/video/music models, plus the procedural boil renderer's PNG path.
+generate = [
+  "google-genai>=0.3",
+  "pillow>=10",
+]
+
+# Segmentation, compositing and hand tracking. The heaviest extra by far.
+vision = [
+  "mediapipe>=0.10",
+  "numpy>=1.26",
+  "opencv-python>=4.9",
+]
+
+# Timeline interchange. CapCut and FCPXML need nothing; OTIO is only for
+# export_edit.
+export = [
+  "opentimelineio>=0.17",
+  "otio-fcpx-xml-adapter",
+]
+
+all = [
+  "video-studio-engine[sourcing,audio,generate,vision,export]",
+]
+
+[project.scripts]
+video-studio = "video_studio.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/scrollmark/social-skills"
+Source = "https://github.com/scrollmark/social-skills"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/video_studio"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/video_studio", "pyproject.toml", "README.md", "LICENSE"]

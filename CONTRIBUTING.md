@@ -109,30 +109,43 @@ your machine and fails on everyone else's. See [MIGRATION-NOTES.md](MIGRATION-NO
 
 ## 6. Declare your dependencies
 
-Some skills describe work that a machine outside this repo performs — most of the video
-production skills lean on the private `scrollmark/video-studio` engine (Python + Remotion).
-That is allowed. Hiding it is not.
+Some skills need a program to do their work. That is allowed. Hiding it is not.
 
-**Never vendor the external machinery.** No `.py`, no `package.json`, no vendored renderer,
-no checked-in binary. This repo ships prose. The engine is invoked, never copied.
+**A skill may never reference a path outside its own folder.** `npx skills add` copies
+`skills/<name>/` and nothing else, so `../../src/` resolves under the symlink install and
+dangles under the copy install — the two routes would silently disagree. There are exactly
+two legal answers, and which one applies is decided by the program, not by preference:
 
-If your skill needs something this repo does not contain, it must:
+- **Bundle it** at `skills/<name>/scripts/<script>.py` when it is standard-library only,
+  stateless, and takes its input on the command line. It then travels with every install.
+- **Reach it through an installed package** — `pip install video-studio-engine`, invoked as
+  `video-studio <command>` — when it carries third-party dependencies or reads a project's
+  state. Never a relative path to `src/`.
+
+If your skill needs either, it must:
 
 1. **Say so in the `SKILL.md` itself**, in a `## Requires` section directly under the H1,
-   naming the specific script or service and the repo it lives in — see `brand-kit` and
-   `studio-setup`. (`video-formats` predates this convention and calls its section
+   naming the specific script and either its bundled path ("ships with this skill,
+   `scripts/foo.py`") or its exact `pip install` line — see `audio-acquisition` and
+   `edit-handoff`. (`video-formats` predates this convention and calls its section
    `## Toolchain Assumptions` at the foot of the file; new skills use `## Requires`.)
 2. **Be honest about the degraded case.** State what a reader *without* the dependency can
    still do and what they cannot. "Requires X" is not enough; say whether the skill is
-   still 90% useful or entirely inert. `video-formats` does this per-format: eight formats
-   are pure structure, `boil` loses roughly 40% of its workflow without `gen_boil.py`, and
-   `pointer-popups` has no usable grammar at all without `track_pointing.py`.
+   still 90% useful or entirely inert. A skill that needs a `pip install` is **not**
+   self-contained for a reader who skips it, and the Requires block says so plainly.
+   `video-formats` does this per-format: eight formats are pure structure, `boil` loses
+   roughly 40% of its workflow without `gen_boil`, and `pointer-popups` has no usable
+   grammar at all without `track_pointing`.
 3. **Carry the same caveat into the README** row and the
-   [engine boundary section](README.md#the-video-studio-boundary).
+   [what-ships-where section](README.md#what-ships-where).
+
+`verify-skills.sh` checks the mechanical half of this: a bundled script a `SKILL.md` names
+must exist, a script shipped under `scripts/` must be invoked by the `SKILL.md`, and a
+script shipped by two skills must be byte-identical in both. The honesty is on you.
 
 Do not write a skill whose instructions only make sense to someone inside Scrollmark. If
-the honest version of the skill would be unreadable to an outside user, it belongs in the
-private repo instead.
+the honest version of the skill would be unreadable to an outside user, it does not belong
+here.
 
 ## 7. Before you open a PR
 
@@ -196,8 +209,8 @@ Two rules, both from `video-formats` itself:
 - **The Grammar section must be able to say no.** A grammar that only describes what a
   video may contain is a mood board.
 
-If the format depends on a video-studio script, rule 6 applies: say so in *Render notes*,
-and say what is left without it.
+If the format depends on an engine program, rule 6 applies: say so in *Render notes*, and
+say what is left without it.
 
 ## Updating slang-and-signals.md
 
