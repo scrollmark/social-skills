@@ -106,6 +106,24 @@ for skill_dir in "$SKILLS_ROOT"/*/; do
   fi
 done
 
+# 5. A shared reference duplicated into a skill must match the canonical copy at
+#    the repo root. Duplication is the price of self-containment; drift is not.
+#    This is the check that catches an edit applied to references/ but not to the
+#    copies — the failure mode that silently ships stale guidance.
+if [ -d "$REPO_DIR/references" ]; then
+  while IFS= read -r copy; do
+    rel="${copy#*/references/}"
+    canonical="$REPO_DIR/references/$rel"
+    # A skill may own references nothing else shares (no root copy). That is
+    # fine — only files that ALSO exist at the root are shared, and only those
+    # can drift.
+    [ -f "$canonical" ] || continue
+    if ! cmp -s "$copy" "$canonical"; then
+      err "${copy#$REPO_DIR/} has drifted from references/$rel (edit both, in the same commit)"
+    fi
+  done < <(find "$SKILLS_ROOT" -path '*/references/*' -type f -name '*.md' 2>/dev/null)
+fi
+
 if [ "$skill_count" -eq 0 ]; then
   echo "FAIL: no skills with a SKILL.md found under skills/" >&2
   exit 1

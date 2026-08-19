@@ -55,3 +55,5 @@ Rule of thumb: if you have to ask "is this still trending?" — you're probably 
 ## Platform-Specific Mechanics
 
 Load the relevant platform reference from `references/platforms/{platform}.md` in this skill's own directory. Key differences: TikTok trends are often sound-driven, Instagram trends are format/template-driven, YouTube trends are topic/challenge-driven and move slower. X trends are conversation-driven and move fastest but burn out within hours.
+
+For X trend checks, if `XQUIK_API_KEY` is set, query `https://xquik.com/api/v1/x/tweets/search` with `q` and `limit` before deciding. Log the query, collection time, sample size, source URLs or post IDs, and caveats. Treat results as directional evidence; weak or missing data should not override prompt and platform signals.
