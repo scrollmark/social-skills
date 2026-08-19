@@ -1,6 +1,6 @@
 ---
 name: voice-matching
-description: Use when writing in a creator's voice, analyzing a creator's style, or maintaining consistency across content.
+description: Use when writing in a creator's voice, analyzing a creator's style, or maintaining voice consistency across content.
 ---
 
 # Voice Matching

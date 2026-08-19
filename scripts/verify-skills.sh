@@ -6,13 +6,22 @@ set -euo pipefail
 #   reference files inside its own directory, and every referenced file
 #   must actually exist there. No .root indirection anywhere.
 #
+# Also enforces the frontmatter shape and README listing described in
+# CONTRIBUTING.md, and warns on SKILL.md length outside 45-80 lines.
+#
 # Exits non-zero on the first class of failure found. Run from anywhere.
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 SKILLS_ROOT="$REPO_DIR/skills"
+README="$REPO_DIR/README.md"
 fail=0
+warned=0
 
 err() { echo "FAIL: $*" >&2; fail=1; }
+warn() { echo "WARN: $*" >&2; warned=$((warned + 1)); }
+
+# Prints the frontmatter block (between the first two --- lines) of a file.
+frontmatter() { awk 'NR==1 && $0!="---"{exit} /^---$/{n++; next} n==1' "$1"; }
 
 [ -d "$SKILLS_ROOT" ] || { echo "FAIL: no skills/ directory at $SKILLS_ROOT" >&2; exit 1; }
 
@@ -27,6 +36,37 @@ for skill_dir in "$SKILLS_ROOT"/*/; do
   [ -f "$skill_md" ] || continue
   name="$(basename "$skill_dir")"
   skill_count=$((skill_count + 1))
+
+  # 2a. Frontmatter shape: exactly `name` + `description`, name matches the
+  #     directory, description is a "Use when" trigger under 1024 chars.
+  fm="$(frontmatter "$skill_md")"
+  if [ -z "$fm" ]; then
+    err "$name/SKILL.md has no YAML frontmatter"
+  else
+    fm_name="$(printf '%s\n' "$fm" | sed -n 's/^name:[[:space:]]*//p' | head -1)"
+    fm_desc="$(printf '%s\n' "$fm" | sed -n 's/^description:[[:space:]]*//p' | head -1)"
+    fm_keys="$(printf '%s\n' "$fm" | grep -cE '^[A-Za-z_-]+:' || true)"
+
+    [ "$fm_name" = "$name" ] || err "$name/SKILL.md frontmatter name is '$fm_name', expected '$name'"
+    case "$fm_desc" in
+      "Use when"*) ;;
+      "") err "$name/SKILL.md frontmatter has no description" ;;
+      *) err "$name/SKILL.md description must start with 'Use when' (got: ${fm_desc:0:40}...)" ;;
+    esac
+    [ "${#fm_desc}" -le 1024 ] || err "$name/SKILL.md description is ${#fm_desc} chars (max 1024)"
+    [ "$fm_keys" -eq 2 ] || err "$name/SKILL.md frontmatter has $fm_keys keys; only 'name' and 'description' are allowed"
+  fi
+
+  # 2b. Every skill must appear in the README skill table.
+  if [ -f "$README" ] && ! grep -q "\`$name\`" "$README"; then
+    err "$name is not listed in README.md (add a row to the skill table)"
+  fi
+
+  # 2c. Length discipline — advisory only, see CONTRIBUTING.md rule 3.
+  lines="$(wc -l < "$skill_md" | tr -d ' ')"
+  if [ "$lines" -lt 45 ] || [ "$lines" -gt 80 ]; then
+    warn "$name/SKILL.md is $lines lines (target 45-80)"
+  fi
 
   # 2. No escape-hatch indirection or paths reaching above the skill folder.
   if grep -qn '\.root' "$skill_md"; then
@@ -77,4 +117,8 @@ if [ "$fail" -ne 0 ]; then
   exit 1
 fi
 
-echo "verify-skills: OK — $skill_count skill(s) are self-contained."
+if [ "$warned" -ne 0 ]; then
+  echo "verify-skills: OK with $warned warning(s) — $skill_count skill(s) are self-contained."
+else
+  echo "verify-skills: OK — $skill_count skill(s) are self-contained."
+fi
