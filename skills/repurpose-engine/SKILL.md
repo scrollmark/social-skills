@@ -23,7 +23,7 @@ For each target platform, run through these:
 
 **Audience context** — the same person on LinkedIn and TikTok wants different things from the same topic. Professional framing for LinkedIn. Entertainment framing for TikTok. Educational framing for YouTube. The core insight can be identical — the packaging changes.
 
-**Convention check** — load the target platform's reference file (read `.root` for repo path, then `{repo}/references/platforms/{platform}.md`). Does the adapted version feel native? Would someone scrolling past think "this was made for this platform"?
+**Convention check** — load the target platform's reference file `references/platforms/{platform}.md` from this skill's own directory. Does the adapted version feel native? Would someone scrolling past think "this was made for this platform"?
 
 ## Repurposing Hierarchy
 

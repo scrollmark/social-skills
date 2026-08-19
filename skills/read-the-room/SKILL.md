@@ -51,7 +51,7 @@ Context matters: who's talking to whom, what's the post about, what platform is 
 
 ## When to Load References
 
-If you encounter unfamiliar slang or emoji usage, read the `.root` file in this skill's directory for the repo path, then read `{repo}/references/slang-and-signals.md`. For platform-specific comment culture, read `{repo}/references/platforms/{platform}.md`. If the references can't be loaded, work with the patterns above and note the gap to the user.
+If you encounter unfamiliar slang or emoji usage, read `references/slang-and-signals.md` from this skill's own directory. For platform-specific comment culture, read `references/platforms/{platform}.md` from this skill's own directory. If the references can't be loaded, work with the patterns above and note the gap to the user.
 
 ## Anti-patterns
 

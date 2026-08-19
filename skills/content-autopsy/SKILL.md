@@ -50,4 +50,4 @@ When investigating why something performed the way it did, check these in order:
 
 It's usually one or two of these, not all five. Start with the most likely culprit based on the metrics.
 
-For platform-specific metric interpretation, read the `.root` file in this skill's directory for the repo path, then load `{repo}/references/platforms/{platform}.md`.
+For platform-specific metric interpretation, load `references/platforms/{platform}.md` from this skill's own directory.
