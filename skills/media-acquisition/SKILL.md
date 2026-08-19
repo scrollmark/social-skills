@@ -9,9 +9,11 @@ One shot, one source, decided by a rule rather than by which vendor sounds impre
 
 ## Requires
 
-The sourcing scripts from **scrollmark/video-studio** (private): `source_clips.py` (user URLs and licence-filtered search), `stock_archive.py`, `stock_pexels.py`, `stock_pixabay.py`, `stock_shutterstock.py` (stock), `gen_image.py`, `gen_veo.py`, `gen_minimax.py`, `gen_replicate.py` (generation), `verify_clips.py` (the return check) and `prekey.py` (keying a generated clip to alpha).
+`scripts/prekey.py` (keying a generated clip to alpha) **ships with this skill** — stdlib-only, wants `ffmpeg` on PATH.
 
-**This skill is not usable standalone.** It is a selection rule wrapped around ten scripts. Without them you keep the ladder as a briefing document — it will tell a human which library to open and why — but nothing searches, nothing generates, nothing checks what arrived, and the licence filtering that makes the tiers safe is inside the scripts, not in this prose.
+Everything that actually fetches needs `pip install video-studio-engine`, invoked as `video-studio <name> …`. The base install covers `stock_archive`, `stock_pexels`, `stock_pixabay`, `stock_shutterstock`, `gen_image`, `gen_minimax`, `gen_replicate` and `verify_clips` (the return check). Add `[sourcing]` for `source_clips` (user URLs and licence-filtered search, needs yt-dlp) and `[generate]` for `gen_veo`. `pip install 'video-studio-engine[sourcing,generate]'` gets all of it.
+
+**Skip that install and this skill is not usable as a workflow.** It is a selection rule wrapped around ten programs; the ladder still reads as a briefing that tells a human which library to open and why, but nothing searches, nothing generates, nothing checks what arrived, and the licence filtering that makes the tiers safe is inside those programs, not in this prose.
 
 ## The Ladder
 
@@ -43,7 +45,7 @@ Generation's known weaknesses — faces, legible text, identity across shots —
 
 ## Check What Came Back
 
-Search results are untrustworthy in five specific ways and none of them announce themselves. `verify_clips.py --project <dir>` catches all five — two queries returning the byte-identical clip, a monochrome clip in a colour piece, a clip shorter than its scene (it loops and the jump lands mid-shot), a silent score, narration text with no audio. **Nonzero means do not build.** Orientation mismatch is a warning, not a failure; a 4:3 archival clip in a vertical piece is often deliberate.
+Search results are untrustworthy in five specific ways and none of them announce themselves. `video-studio verify_clips --project <dir>` catches all five — two queries returning the byte-identical clip, a monochrome clip in a colour piece, a clip shorter than its scene (it loops and the jump lands mid-shot), a silent score, narration text with no audio. **Nonzero means do not build.** Orientation mismatch is a warning, not a failure; a 4:3 archival clip in a vertical piece is often deliberate.
 
 Frame-check real footage for unwanted text the same way you would a generated frame. Pseudo-text reads as texture; the stock clip with "MAKE MONEY" burned into it reads as a statement.
 

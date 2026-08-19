@@ -17,11 +17,11 @@ not re-tagging it. Voice: usually none here, but ask rather than assume.
 Round 1 — header "Mood": What feeling? (tension/joy/awe/nostalgia) What's
 the subject?
 Round 2 — header "Arc": Build-up → peak → release: what is each, concretely?
-Round L — header "Look": Which caption/card preset — `styles.py --list`?
-Any look they describe should be saved with `styles.py --save`.
+Round L — header "Look": Which caption/card preset — `video-studio styles --list`?
+Any look they describe should be saved with `video-studio styles --save`.
 Freeform: references, shots you already know you want.
 
-Do not ask the user where the drop is — MEASURE it. `scripts/measure.py --music`
+Do not ask the user where the drop is — MEASURE it. `measure --music` (bundled in `audio-acquisition`)
 reports the real energy transitions. A remembered timestamp is off by enough to
 miss a cut, and a freshly generated track has no timestamps to remember.
 

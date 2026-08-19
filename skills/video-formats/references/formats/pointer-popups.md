@@ -7,7 +7,7 @@ composition: the footage dictates the layout, not the storyboard.
 
 ## Composition
 Match the source clip's orientation/dimensions (probe with
-`scripts/measure.py`). Base layer: the user's clip (with its own audio —
+`measure` (bundled in `audio-acquisition`)). Base layer: the user's clip (with its own audio —
 set `muted: false`, no TTS unless they want VO added). Popup layers:
 image layers with `rect` from the tracker, `atMs`/`untilMs` windows,
 `pop: true`, `fit: contain`.
@@ -23,20 +23,20 @@ Round 3 — header "Style": Popup size (small 0.22 / medium 0.30 / large
 Round A — header "Audio": Score (supply a file / generate / none)?
 Voice (built-in / supplied recording / none)? If generating the score, say
 which backend and its rights terms before they choose, not after.
-Round L — header "Look": Which caption/card preset — `styles.py --list`?
-Any look they describe should be saved with `styles.py --save`.
+Round L — header "Look": Which caption/card preset — `video-studio styles --list`?
+Any look they describe should be saved with `video-studio styles --save`.
 Freeform: anything about timing, linger duration, or what each point means.
 
 ## Slots
 `me` (the footage), `popup-N` images (assigned to pointing events in order).
 
 ## Grammar / pipeline
-1. `uv run scripts/track_pointing.py analyze --in <clip> --out events.json`
+1. `video-studio track_pointing analyze --in <clip> --out events.json`
 2. Review events with the user (count + timestamps) — if the tracker found
    more/fewer points than they expect, show extracted frames at event
    timestamps and reconcile before composing (extra events → drop by index;
    missed events → hand-add from frame inspection).
-3. `uv run scripts/track_pointing.py layers --events events.json
+3. `video-studio track_pointing layers --events events.json
    --images a.png,b.png [--size 0.30]` → paste emitted layers into the
    scene after the base layer.
 4. Scene `plannedSeconds` = clip duration (measure it); no TTS narration

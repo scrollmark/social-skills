@@ -12,13 +12,13 @@ take — settle the footage before you promise the shot.
 
 ## Requires
 
-`scripts/composite_subject.py` and `scripts/track_pointing.py` from
-**scrollmark/video-studio** (private). Both run MediaPipe — selfie segmentation and
-pose landmarks for the composite, hand landmarks for the gestures. Without them
-nothing here executes: no matte, no feathered occlusion seam, no arm punch-through, no
-gesture timing. What still holds is the footage guidance below — it tells the user
-what to shoot, and is worth giving before they shoot rather than after. The pointing
-format's scene grammar lives in `video-formats`.
+`pip install 'video-studio-engine[vision]'`, then `video-studio composite_subject …`
+and `video-studio track_pointing …`. Neither is bundled here — both import MediaPipe,
+NumPy and OpenCV and download model files on first run, so neither can ship as a plain
+file inside a skill; `[vision]` is the heaviest extra in the package. Without it nothing
+here executes: no matte, no feathered occlusion seam, no arm punch-through, no gesture
+timing. What still holds is the footage guidance below — it tells the user what to shoot,
+and is worth giving before they shoot. The pointing grammar lives in `video-formats`.
 
 ## What the Segmenter Needs From the Take
 
@@ -42,7 +42,7 @@ distance. Everything it fails at follows from that.
 
 ## The Composite
 
-    scripts/composite_subject.py out.mp4 --in take.mp4 --ss 39.9 --t 2.5 \
+    video-studio composite_subject out.mp4 --in take.mp4 --ss 39.9 --t 2.5 \
         --bg crowd.webm --bg-crop 405:600:430:15 --bg-eq eq=contrast=1.9:saturation=0 \
         --fg art/car.png --occlude-below 1215 --free-arm --travel -330 430 --flip-h
 
@@ -62,7 +62,7 @@ footage is full of legible third-party advertising you have just put in a brand 
 
 ## Pointing
 
-`track_pointing.py analyze` emits events — windows where an extended index finger
+`video-studio track_pointing analyze` emits events — windows where an extended index finger
 holds a stable position — with the pointed-*at* location extrapolated past the
 fingertip, as canvas fractions. `layers` turns those into storyboard layers offset
 toward frame centre so the popup never covers the hand. Here the footage dictates the

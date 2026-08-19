@@ -1,7 +1,7 @@
 # Third-party tooling — inventory, triage, and how to switch each on
 
 What exists, what it costs, what it buys, and how to turn it on. This is the
-map. Run `doctor.py` (from scrollmark/video-studio) for live state on the
+map. Run this skill's bundled `scripts/doctor.py` for live state on the
 machine in front of you — this file never knows whether a key is set.
 
 Every entry is something a bundled script actually calls. Nothing here is
@@ -104,9 +104,9 @@ Ranked by what actually went wrong in production, not by feature count.
 ```bash
 cp .env.example .env          # gitignored
 $EDITOR .env                  # paste the keys you have
-uv run scripts/doctor.py      # what is reachable right now
-uv run scripts/setup.py       # what is missing and what can be installed
-uv run scripts/setup.py --yes # actually install it — ask the user first
+python3 scripts/doctor.py      # what is reachable right now (ships with this skill)
+video-studio setup             # what is missing and what can be installed
+video-studio setup --yes       # actually install it — ask the user first
 ```
 
 Keys live in `.env` at the toolchain root. Every script reads plain environment

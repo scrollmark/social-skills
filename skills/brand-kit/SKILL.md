@@ -9,14 +9,16 @@ A look is something the USER has, not something a project has. It is reusable ac
 
 ## Requires
 
-The preset mechanism is `scripts/styles.py` from **scrollmark/video-studio** (private). Without that script there is no `--list`, `--show`, `--apply` or `--save`, and nothing expands a preset into a storyboard — you can still agree a brand with the user and hand-write the files, but applying it becomes manual editing. `--apply` and `--save` also assume a storyboard JSON in that repo's shape.
+The preset mechanism is `styles`, which needs `pip install video-studio-engine` (base install, no extras) and then runs as `video-studio styles …`. It is not bundled here: it reads and writes a styles tree and a storyboard document, so it is not a lone file that can live in a skill folder.
+
+Without that install there is no `--list`, `--show`, `--apply` or `--save`, and nothing expands a preset into a storyboard — you can still agree a brand with the user and hand-write the files, but applying it becomes manual editing. `--apply` and `--save` also assume a storyboard JSON in the engine's shape.
 
 ## What Ships Today: Look Presets
 
-    uv run scripts/styles.py --list
-    uv run scripts/styles.py --show tourism
-    uv run scripts/styles.py --apply tourism --storyboard <project>/storyboard.json
-    uv run scripts/styles.py --save theirs --from <project>/storyboard.json
+    video-studio styles --list
+    video-studio styles --show tourism
+    video-studio styles --apply tourism --storyboard <project>/storyboard.json
+    video-studio styles --save theirs --from <project>/storyboard.json
 
 A preset is one markdown file: frontmatter (`name`, `description`), prose saying when to reach for it, and a single fenced JSON block holding the values. The JSON covers exactly two things — `captions` (colour, `stroke`, `strokeWidth`, `fontSize`, `wordGap`, `wordsPerPage`, `uppercase`, `bottom`, `palette`) and `cards`, a named role such as `label`, `stat`, `title` or `cta` mapped to `bg`, `fg`, `tracking`, `align` and a `rect`. Unknown keys are reported, not silently dropped, because a misspelled key renders as nothing and reads like a styling choice.
 
@@ -48,7 +50,7 @@ Presets cover colour, captions and card geometry. They do not cover the rest of 
 - `voice.md` — narration identity: which voice, pace, and the words this brand does not say.
 - `cta.md` — the closing lines, in the two or three lengths different formats ask for.
 
-**None of that resolves today.** `styles.py` reads `captions` and `cards` and flags every other key as unknown, so a brand bundle needs new code before you can promise it. Until it exists: agree the extra pieces with the user, write them into the project, and say plainly that only captions, card colours and card geometry survive to the next video automatically.
+**None of that resolves today.** `styles` reads `captions` and `cards` and flags every other key as unknown, so a brand bundle needs new code before you can promise it. Until it exists: agree the extra pieces with the user, write them into the project, and say plainly that only captions, card colours and card geometry survive to the next video automatically.
 
 ## Anti-patterns
 

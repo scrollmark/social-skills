@@ -5,16 +5,18 @@ description: Use when checking whether a machine can actually produce video, tri
 
 # Studio Setup
 
-Two questions, two scripts. *What can I use right now* is `doctor.py`. *How do I get the rest* is `setup.py`. Answer both against the machine in front of you — describing an installed tool as missing wastes the user's time and makes everything else you say suspect.
+Two questions, two scripts. *What can I use right now* is the bundled `scripts/doctor.py`. *How do I get the rest* is `video-studio setup`. Answer both against the machine in front of you — describing an installed tool as missing wastes the user's time and makes everything else you say suspect.
 
 ## Requires
 
-`scripts/doctor.py` and `scripts/setup.py` from **scrollmark/video-studio** (private). Without them you can still check binaries by hand (`which ffmpeg ffprobe node uv`) and read the env vars listed below, but there is no single status report, no install plan, and no auto/system/manual classification — so you lose the one thing that stops an agent from running a package-manager install nobody asked for. `references/tooling-inventory.md` in this skill is the map; only doctor knows the state.
+`scripts/doctor.py` **ships with this skill** — stdlib-only, so the status report works the moment the skill is installed. It reads keys from `.env` in the current project, then `~/.config/video-studio/.env`, then the shell.
+
+`setup.py` does not ship here: it installs into the engine's own composer directory, so it is not a lone file. It needs `pip install video-studio-engine` and runs as `video-studio setup`. **Without that install there is no install plan and no auto/system/manual classification** — you keep doctor's report of what is reachable, but you lose the one thing that stops an agent from running a package-manager install nobody asked for, and you are back to fixing gaps by hand. `references/tooling-inventory.md` in this skill is the map; only doctor knows the state.
 
 ## Checking an Environment
 
-    uv run scripts/doctor.py           # what is reachable right now
-    uv run scripts/doctor.py --json    # same, machine-readable
+    python3 scripts/doctor.py           # what is reachable right now
+    python3 scripts/doctor.py --json    # same, machine-readable
 
 Doctor reports per category — public-domain archives, stock, generated video, generated images, generated audio, voice — plus the required binaries. It checks that a key is *present*, not that it works; a key can still be rejected at call time for spent quota or a withdrawn model, and the individual scripts report that.
 
@@ -22,9 +24,9 @@ Run it **before** offering sourcing options. Offering a source that turns out to
 
 ## Fixing a Broken One
 
-    uv run scripts/setup.py            # report + the exact plan, changes NOTHING
-    uv run scripts/setup.py --yes      # actually run the runnable fixes
-    uv run scripts/setup.py --yes --only composer,voice
+    video-studio setup                  # report + the exact plan, changes NOTHING
+    video-studio setup --yes            # actually run the runnable fixes
+    video-studio setup --yes --only composer,voice
 
 Every missing component is classified, and the split is the whole point:
 
@@ -51,7 +53,7 @@ redistribution rights are unclear, the paid one is licensed catalogue.
 
 ## showwatcher Is Not Installed
 
-The automated quality gate documented as step 8 of the workflow is a separate internal CLI, installed from its own repo, and it has been **absent on every machine seen so far**. `setup.py` lists it as an optional system component with no install command; `doctor.py` reports it as an optional tool that is missing.
+The automated quality gate documented as step 8 of the workflow is a separate internal CLI, installed from its own repo, and it has been **absent on every machine seen so far**. `video-studio setup` lists it as an optional system component with no install command; `doctor.py` reports it as an optional tool that is missing.
 
 So: do not tell a user the quality check will run. Verify frames by hand and **say out loud that you are doing so**. It is the only step in the pipeline whose guarantee depends on somebody remembering, and a hand check silently skipped is worse than no gate at all.
 
