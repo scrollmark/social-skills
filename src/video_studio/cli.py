@@ -34,7 +34,10 @@ COMMANDS: dict[str, str] = {
     "stock_shutterstock": "video_studio.sourcing.stock_shutterstock",
     "verify_clips": "video_studio.sourcing.verify_clips",
     # audio
+    "duck_music": "video_studio.audio.duck_music",
+    "gen_captions": "video_studio.audio.gen_captions",
     "gen_music": "video_studio.audio.gen_music",
+    "music_catalog": "video_studio.audio.music_catalog",
     "tts_kokoro": "video_studio.audio.tts_kokoro",
     # generation
     "gen_boil": "video_studio.generate.gen_boil",
@@ -46,6 +49,7 @@ COMMANDS: dict[str, str] = {
     "composite_subject": "video_studio.vision.composite_subject",
     "track_pointing": "video_studio.vision.track_pointing",
     # export
+    "burn_captions": "video_studio.export.burn_captions",
     "export_capcut": "video_studio.export.export_capcut",
     "export_edit": "video_studio.export.export_edit",
     "export_fcpxml": "video_studio.export.export_fcpxml",
@@ -61,10 +65,10 @@ COMMANDS: dict[str, str] = {
 
 GROUPS = [
     ("sourcing", "stock APIs, downloads, and verifying what came back"),
-    ("audio", "voice synthesis and generated music"),
+    ("audio", "voice, word timings, and the music bed"),
     ("generate", "generated images, video and procedural motion"),
     ("vision", "segmentation, compositing, hand tracking"),
-    ("export", "CapCut / Final Cut / OTIO handoff"),
+    ("export", "burnt-in captions, CapCut / Final Cut / OTIO handoff"),
     ("project", "props, preflight, editor, looks, tutorials, digest"),
 ]
 
@@ -103,7 +107,19 @@ def main(argv: list[str] | None = None) -> int:
     try:
         runpy.run_module(module, run_name="__main__", alter_sys=True)
     except SystemExit as exc:  # scripts call sys.exit(); honour their code
-        return int(exc.code or 0)
+        # `raise SystemExit("message")` is the house style for a fatal error in
+        # these scripts, and its code is that STRING, not a number. Coercing it
+        # with int() raised ValueError and buried the message under a traceback
+        # — but only when invoked as `video-studio <cmd>`, never when the file
+        # was run directly, which is why it survived. Follow the interpreter's
+        # own rule instead: None is 0, an int is the code, anything else prints
+        # to stderr and exits 1.
+        if exc.code is None:
+            return 0
+        if isinstance(exc.code, int):
+            return exc.code
+        print(exc.code, file=sys.stderr)
+        return 1
     return 0
 
 

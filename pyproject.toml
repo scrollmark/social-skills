@@ -50,6 +50,11 @@ audio = [
   "numpy>=1.26",
 ]
 
+# Word timings for narration this studio did not synthesise. Optional because
+# it pulls a ~200MB CTranslate2 inference runtime that only gen_captions needs;
+# tts_kokoro already emits timings for anything it speaks itself.
+captions = ["faster-whisper>=1.0"]
+
 # Hosted image/video/music models, plus the procedural boil renderer's PNG path.
 generate = [
   "google-genai>=0.3",
@@ -71,7 +76,7 @@ export = [
 ]
 
 all = [
-  "video-studio-engine[sourcing,audio,generate,vision,export]",
+  "video-studio-engine[sourcing,audio,captions,generate,vision,export]",
 ]
 
 [project.scripts]

@@ -68,7 +68,7 @@ skill is missing from it.
 
 The engine used to live in a separate private repo, `scrollmark/video-studio`, and no
 skill here could touch it. That split is gone: the engine is in this repo now, and the
-31 programs behind these skills land in one of three places.
+35 programs behind these skills land in one of three places.
 
 **1. Bundled inside a skill — nothing to install.** Five programs are pure standard
 library and take their input on the command line, so they ship in the skill folder that
@@ -87,7 +87,7 @@ programs are bundled in two skills each; each skill carries its own copy, becaus
 may never reach outside its own folder. `./scripts/verify-skills.sh` fails if those copies
 drift apart, or if a `SKILL.md` names a bundled script that is not there.
 
-**2. The `video-studio-engine` package — one `pip install`.** The other 26 programs
+**2. The `video-studio-engine` package — one `pip install`.** The other 30 programs
 either carry third-party dependencies or read a project's state (a props document, a
 composer directory, a styles tree), which makes them unfit to sit in a skill folder as a
 lone file. They are built from `src/video_studio/` in this repo and run as
@@ -98,6 +98,7 @@ lone file. They are built from `src/video_studio/` in this repo and run as
     pip install 'video-studio-engine[audio]'     # + tts_kokoro, gen_music
     pip install 'video-studio-engine[generate]'  # + gen_veo, gen_boil
     pip install 'video-studio-engine[vision]'    # + composite_subject, track_pointing
+    pip install 'video-studio-engine[captions]'  # + gen_captions (whisper word timings)
     pip install 'video-studio-engine[export]'    # + export_edit (OpenTimelineIO)
     pip install 'video-studio-engine[all]'       # everything
 
