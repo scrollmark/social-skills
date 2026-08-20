@@ -39,6 +39,24 @@ def run(ctx: Context) -> None:
         )
         return
 
+    # The rendered file may carry no audio at all — a titled-video or a stock
+    # supercut with no voiceover is a legitimate output here, where in
+    # showrunner every render had narration welded in. Reaching for the mix
+    # envelope in that case runs `ffmpeg -map 0:a:0` against a video with no
+    # audio stream, which exits 234 and took the whole detector down as a
+    # crash. Say what is true instead, the way av_sync already does.
+    if ctx.video.audio is None:
+        r.add(
+            Finding(
+                "audio_sync",
+                "NO_AUDIO_STREAM",
+                "info",
+                "Rendered video has no audio stream, so per-scene narration cannot "
+                "be aligned against the mix — audio sync analysis skipped",
+            )
+        )
+        return
+
     mix_env = ctx.audio.envelope
     offsets: dict[str, float] = {}
 

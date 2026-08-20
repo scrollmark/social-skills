@@ -1,4 +1,4 @@
-"""On-screen caption timing vs captions/*.json ground truth. [ocr]
+"""On-screen caption timing vs audio/<scene>.timings.json ground truth. [ocr]
 
 v1 port, now PURE over Artifacts.caption_sightings — the OCR pass rides the
 shared decode (services.model_services.CaptionOcrService, 5 fps caption-band
@@ -32,7 +32,9 @@ def run(ctx: Context) -> None:
                 "caption_sync",
                 "NO_CAPTION_DATA",
                 "info",
-                "No captions/*.json in the workdir (captions disabled?) — caption sync skipped",
+                "No audio/<scene>.timings.json in the project — narration was never "
+                "synthesised or transcribed, so there is nothing to compare the "
+                "on-screen words against",
             )
         )
         return

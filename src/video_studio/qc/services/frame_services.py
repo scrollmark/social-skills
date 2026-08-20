@@ -47,7 +47,7 @@ class VisualService:
         self._np = np
         gt = ctx.ground_truth
         fmt = gt.format if gt else None
-        graphics = fmt in {"faceless-explainer", "manim-explainer"}
+        graphics = fmt in {"faceless-explainer", "manim-explainer", "video-studio-graphics"}
         self.palette = load_palette(gt.workdir) if (gt and graphics) else None
         self.stats = FrameStats(palette_checked=self.palette is not None)
         ctx.artifacts.frame_stats = self.stats

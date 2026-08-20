@@ -16,7 +16,7 @@ from video_studio.qc.report.model import Finding
 
 SAMPLE_FPS = 1.0
 CONFIDENCE = 0.35
-FOOTAGE_FORMATS = {"ai-video", "composite"}
+FOOTAGE_FORMATS = {"ai-video", "composite", "video-studio-footage"}
 
 # prompt keyword (regex, word-boundary) -> COCO class name
 KEYWORD_CLASSES: list[tuple[str, str]] = [
