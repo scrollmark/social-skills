@@ -68,9 +68,9 @@ skill is missing from it.
 
 The engine used to live in a separate private repo, `scrollmark/video-studio`, and no
 skill here could touch it. That split is gone: the engine is in this repo now, and the
-35 programs behind these skills land in one of three places.
+36 programs behind these skills land in one of three places.
 
-**1. Bundled inside a skill — nothing to install.** Five programs are pure standard
+**1. Bundled inside a skill — nothing to install.** Six programs are pure standard
 library and take their input on the command line, so they ship in the skill folder that
 uses them and travel with every install route:
 
@@ -80,6 +80,7 @@ uses them and travel with every install route:
 | `scripts/measure.py` | `audio-acquisition` | durations, and a track's per-second energy structure |
 | `scripts/normalize_audio.py` | `audio-acquisition`, `video-production` | loudness after a render |
 | `scripts/poster.py` | `video-production` | ranked thumbnail shortlist plus a contact sheet |
+| `scripts/qc_render.py` | `video-production` | a render against the plan it was built from — duration, black tail, frozen ending |
 | `scripts/prekey.py` | `media-acquisition` | key a generated clip to alpha |
 
 They want `ffmpeg` and `ffprobe` on PATH — the one thing this repo cannot ship. Two
