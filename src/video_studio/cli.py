@@ -103,7 +103,15 @@ def main(argv: list[str] | None = None) -> int:
     try:
         runpy.run_module(module, run_name="__main__", alter_sys=True)
     except SystemExit as exc:  # scripts call sys.exit(); honour their code
-        return int(exc.code or 0)
+        # `raise SystemExit("message")` is the house style for a fatal error in
+        # these scripts, and its code is that STRING, not a number. Coercing it
+        # with int() raised ValueError and buried the message under a traceback
+        # — but only when invoked as `video-studio <cmd>`, never when the file
+        # was run directly, which is why it survived. Follow the interpreter's
+        # own rule instead: None is 0, an int is the code, anything else prints
+        # to stderr and exits 1.
+        if exc.code is None:
+        
     return 0
 
 
