@@ -11,7 +11,7 @@ Audio is a question, never a leftover. Ask it every time, including for formats 
 
 `scripts/measure.py` (durations, and a track's per-second energy structure) and `scripts/normalize_audio.py` (loudness) **ship with this skill**. Both are stdlib-only and need `ffmpeg`/`ffprobe` on PATH; nothing else has to be installed for the measure-don't-trust discipline below to be executable rather than aspirational.
 
-Synthesis and sourcing do not ship here. `pip install 'video-studio-engine[audio]'` adds `tts_kokoro` (local voice plus word timings) and `gen_music` (score); the base `pip install video-studio-engine` is enough for `stock_freesound` (effects, licence-filtered). Run them as `video-studio tts_kokoro …`. **A user who skips that install has no voice, no music and no licence-filtered effects** — the tiering below still tells them which service to buy and what to check, but nothing synthesises. ElevenLabs has no script on either side of the line: that is a paid API call you make yourself.
+Synthesis and sourcing do not ship here. `pip install 'video-studio-engine[audio] @ git+https://github.com/scrollmark/social-skills.git'` adds `tts_kokoro` (local voice plus word timings) and `gen_music` (score); the same command without the `[audio]` bracket is enough for `stock_freesound` (effects, licence-filtered). Run them as `video-studio tts_kokoro …`. **A user who skips that install has no voice, no music and no licence-filtered effects** — the tiering below still tells them which service to buy and what to check, but nothing synthesises. ElevenLabs has no script on either side of the line: that is a paid API call you make yourself.
 
 ## Voice
 

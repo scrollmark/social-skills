@@ -11,7 +11,7 @@ One shot, one source, decided by a rule rather than by which vendor sounds impre
 
 `scripts/prekey.py` (keying a generated clip to alpha) **ships with this skill** — stdlib-only, wants `ffmpeg` on PATH.
 
-Everything that actually fetches needs `pip install video-studio-engine`, invoked as `video-studio <name> …`. The base install covers `stock_archive`, `stock_pexels`, `stock_pixabay`, `stock_shutterstock`, `gen_image`, `gen_minimax`, `gen_replicate` and `verify_clips` (the return check). Add `[sourcing]` for `source_clips` (user URLs and licence-filtered search, needs yt-dlp) and `[generate]` for `gen_veo`. `pip install 'video-studio-engine[sourcing,generate]'` gets all of it.
+Everything that actually fetches needs `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'`, invoked as `video-studio <name> …`. The base install covers `stock_archive`, `stock_pexels`, `stock_pixabay`, `stock_shutterstock`, `gen_image`, `gen_minimax`, `gen_replicate` and `verify_clips` (the return check). Add `[sourcing]` for `source_clips` (user URLs and licence-filtered search, needs yt-dlp) and `[generate]` for `gen_veo`; the bracket takes both at once, `[sourcing,generate]`.
 
 **Skip that install and this skill is not usable as a workflow.** It is a selection rule wrapped around ten programs; the ladder still reads as a briefing that tells a human which library to open and why, but nothing searches, nothing generates, nothing checks what arrived, and the licence filtering that makes the tiers safe is inside those programs, not in this prose.
 

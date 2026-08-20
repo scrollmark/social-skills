@@ -169,6 +169,27 @@ done < <(find "$SKILLS_ROOT" -path '*/scripts/*' -type f \
            \( -name '*.py' -o -name '*.sh' -o -name '*.mjs' -o -name '*.js' \) 2>/dev/null \
          | xargs -n1 basename 2>/dev/null | sort | uniq -d)
 
+# 5. No document may tell a reader to install the engine from PyPI.
+#    `video-studio-engine` is NOT published there. A bare
+#    `pip install video-studio-engine` therefore resolves to nothing (or, worse,
+#    to whatever someone else registers under that name later) — and the reader
+#    finds out only when the command fails, or does not fail.
+#
+#    This is the fourth time this repo has shipped an instruction that worked
+#    in the checkout it was written in and not for the person following it: the
+#    `.root` path, then showrunner's own README (#75), then the website, then
+#    every skill here. The guard is cheaper than the fifth.
+while IFS= read -r hit; do
+  err "${hit%%:*} tells the reader to install from PyPI — the engine is not published there. Use: pip install 'video-studio-engine[extras] @ git+https://github.com/scrollmark/social-skills.git'"
+done < <(grep -rn --binary-files=without-match "pip install ['\"]*video-studio-engine" \
+           --exclude-dir=.git --exclude-dir=__pycache__ "$REPO_DIR" 2>/dev/null \
+         | grep -v 'git+https' | grep -v 'verify-skills.sh' \
+         | grep -v 'not published there')
+#    The last exclusion is deliberate: README and the website both quote the
+#    bare command in order to say it does NOT work. Naming the wrong form is
+#    how a reader learns not to retype it, so a line that also says "not
+#    published there" is documentation, not an instruction.
+
 if [ "$skill_count" -eq 0 ]; then
   echo "FAIL: no skills with a SKILL.md found under skills/" >&2
   exit 1

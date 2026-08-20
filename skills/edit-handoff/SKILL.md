@@ -12,8 +12,8 @@ does not move, because being vague there costs an editor an afternoon.
 
 ## Requires
 
-`pip install video-studio-engine` for `export_fcpxml` and `export_capcut`;
-`pip install 'video-studio-engine[export]'` for `export_edit`, which needs
+`pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'` for `export_fcpxml` and `export_capcut`;
+add the `[export]` extra to that same command for `export_edit`, which needs
 OpenTimelineIO. Run them as `video-studio export_fcpxml …`. None of the three is
 bundled here — each reads the engine's per-project timeline document and composer
 directory, so none is a lone file a skill folder can hold. Without that install
