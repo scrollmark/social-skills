@@ -76,7 +76,7 @@ export = [
 ]
 
 all = [
-  "video-studio-engine[sourcing,audio,generate,vision,export]",
+  "video-studio-engine[sourcing,audio,captions,generate,vision,export]",
 ]
 
 [project.scripts]
