@@ -109,7 +109,7 @@ def check_local_voice() -> tuple[bool, str]:
             capture_output=True, text=True, timeout=300,
         )
     except FileNotFoundError:
-        return False, "not installed — pip install 'video-studio-engine[audio]'"
+        return False, "not installed — pip install 'video-studio-engine[audio] @ git+https://github.com/scrollmark/social-skills.git'"
     except subprocess.TimeoutExpired:
         return False, "voice check timed out (first run installs dependencies; retry)"
     if r.returncode == 0:

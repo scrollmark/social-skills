@@ -45,11 +45,11 @@ execution ships inside the skill; the rest is one `pip install` away.
 |-------|----------|-------------|
 | `video-formats` | Planning, structuring, or critiquing a short-form video — choosing a format, laying out its scenes, or defining a new format. Covers ten scene grammars from talking-head to hand-drawn motion graphics. | Mostly — 8 of the 10 formats are pure structure. **Boil** and **PointerPopups** need the engine's generator and hand tracker (see below). |
 | `brand-kit` | A user wants their videos to stay visually consistent — saving caption styling, card colours and geometry, title treatment, logos, fonts, voice and CTA copy once instead of redeciding them per video. | Deciding and recording a brand, yes. Applying a preset is `video-studio styles`, from the pip package. |
-| `media-acquisition` | Deciding where a shot's footage or stills should come from — public-domain archive, free stock, a paid generator, or a URL the user supplied — and when checking that what came back is actually usable before anything is built on it. | Partly. Ships `scripts/prekey.py`. The ten searching, generating and checking programs need `pip install 'video-studio-engine[sourcing,generate]'`; without it the ladder is a briefing, not a workflow. |
-| `audio-acquisition` | A video needs narration, a music bed or sound effects — choosing a voice, deciding which music source is safe to publish with, timing a cut to a track, or fixing a render that came out quiet. | Partly. Ships `scripts/measure.py` and `scripts/normalize_audio.py`, so measuring and loudness work out of the box. Voice, music and licence-filtered effects need `pip install 'video-studio-engine[audio]'`. |
-| `subject-compositing` | A filmed person has to appear somewhere they never were — dropping a subject over replacement footage, putting a drawn prop in front of them, driving the pair across frame, or pinning popup images to where they point on camera. | **No.** Segmentation, occlusion seam, arm punch-through and gesture timing all need `pip install 'video-studio-engine[vision]'` — MediaPipe and OpenCV cannot be bundled. What survives is knowing what footage to shoot. |
-| `edit-handoff` | A finished cut has to leave the pipeline and continue in a human editor — exporting a timeline to Premiere Pro, DaVinci Resolve, Final Cut Pro or CapCut, or answering what survives the trip and what an editor has to rebuild. | **No.** The exporters read the engine's timeline document, so they stay in the package (`pip install 'video-studio-engine[export]'`). No install, no file. The format judgement generalises. |
-| `video-production` | Actually producing a short-form video end to end — running the interview, storyboarding, sourcing, previewing, rendering and quality-checking in order — or when a run has stalled and you need to know which step comes next and who owns it. | **No.** Ships `scripts/doctor.py`, `scripts/normalize_audio.py` and `scripts/poster.py`, but it drives the whole engine: props, preview and preflight need `pip install video-studio-engine`, and the renderer is Remotion (Node). The step order and hard rules still read as a production discipline. |
+| `media-acquisition` | Deciding where a shot's footage or stills should come from — public-domain archive, free stock, a paid generator, or a URL the user supplied — and when checking that what came back is actually usable before anything is built on it. | Partly. Ships `scripts/prekey.py`. The ten searching, generating and checking programs need `pip install 'video-studio-engine[sourcing,generate] @ git+https://github.com/scrollmark/social-skills.git'`; without it the ladder is a briefing, not a workflow. |
+| `audio-acquisition` | A video needs narration, a music bed or sound effects — choosing a voice, deciding which music source is safe to publish with, timing a cut to a track, or fixing a render that came out quiet. | Partly. Ships `scripts/measure.py` and `scripts/normalize_audio.py`, so measuring and loudness work out of the box. Voice, music and licence-filtered effects need `pip install 'video-studio-engine[audio] @ git+https://github.com/scrollmark/social-skills.git'`. |
+| `subject-compositing` | A filmed person has to appear somewhere they never were — dropping a subject over replacement footage, putting a drawn prop in front of them, driving the pair across frame, or pinning popup images to where they point on camera. | **No.** Segmentation, occlusion seam, arm punch-through and gesture timing all need `pip install 'video-studio-engine[vision] @ git+https://github.com/scrollmark/social-skills.git'` — MediaPipe and OpenCV cannot be bundled. What survives is knowing what footage to shoot. |
+| `edit-handoff` | A finished cut has to leave the pipeline and continue in a human editor — exporting a timeline to Premiere Pro, DaVinci Resolve, Final Cut Pro or CapCut, or answering what survives the trip and what an editor has to rebuild. | **No.** The exporters read the engine's timeline document, so they stay in the package (`pip install 'video-studio-engine[export] @ git+https://github.com/scrollmark/social-skills.git'`). No install, no file. The format judgement generalises. |
+| `video-production` | Actually producing a short-form video end to end — running the interview, storyboarding, sourcing, previewing, rendering and quality-checking in order — or when a run has stalled and you need to know which step comes next and who owns it. | **No.** Ships `scripts/doctor.py`, `scripts/normalize_audio.py` and `scripts/poster.py`, but it drives the whole engine: props, preview and preflight need `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'`, and the renderer is Remotion (Node). The step order and hard rules still read as a production discipline. |
 
 ### Working method and toolchain
 
@@ -93,14 +93,22 @@ composer directory, a styles tree), which makes them unfit to sit in a skill fol
 lone file. They are built from `src/video_studio/` in this repo and run as
 `video-studio <command>`:
 
-    pip install video-studio-engine              # stock, generation, exporters, project tooling
-    pip install 'video-studio-engine[sourcing]'  # + source_clips (yt-dlp)
-    pip install 'video-studio-engine[audio]'     # + tts_kokoro, gen_music
-    pip install 'video-studio-engine[generate]'  # + gen_veo, gen_boil
-    pip install 'video-studio-engine[vision]'    # + composite_subject, track_pointing
-    pip install 'video-studio-engine[captions]'  # + gen_captions (whisper word timings)
-    pip install 'video-studio-engine[export]'    # + export_edit (OpenTimelineIO)
-    pip install 'video-studio-engine[all]'       # everything
+    pip install 'video-studio-engine[all] @ git+https://github.com/scrollmark/social-skills.git'
+
+It installs **from this repo, not from PyPI**. The name `video-studio-engine` is
+not published there, so a bare `pip install video-studio-engine` does not get you
+this — the URL is the install. Swap the bracket to take only what you need:
+
+| extra | adds |
+|-------|------|
+| *(none)* | stock, generation, exporters, project tooling |
+| `[sourcing]` | `source_clips` (yt-dlp) |
+| `[audio]` | `tts_kokoro`, `gen_music`, `duck_music` |
+| `[captions]` | `gen_captions` (local whisper word timings) |
+| `[generate]` | `gen_veo`, `gen_boil` |
+| `[vision]` | `composite_subject`, `track_pointing` |
+| `[export]` | `export_edit` (OpenTimelineIO) |
+| `[all]` | everything above |
 
 **3. Still elsewhere — this repo does not ship it.** The Remotion composer is Node, not
 Python: `npx remotion render` is what actually renders, and neither route above installs
@@ -177,7 +185,7 @@ The video skills that drive the engine also want the Python package. It is indep
 the skills and installed separately:
 
 ```bash
-pip install 'video-studio-engine[all]'
+pip install 'video-studio-engine[all] @ git+https://github.com/scrollmark/social-skills.git'
 ```
 
 See [What ships where](#what-ships-where) for which skills need it and what skipping it
