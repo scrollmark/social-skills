@@ -48,6 +48,8 @@ COMMANDS: dict[str, str] = {
     # vision
     "composite_subject": "video_studio.vision.composite_subject",
     "track_pointing": "video_studio.vision.track_pointing",
+    # qc
+    "qc_analyze": "video_studio.qc.qc_analyze",
     # export
     "burn_captions": "video_studio.export.burn_captions",
     "export_capcut": "video_studio.export.export_capcut",
@@ -68,6 +70,7 @@ GROUPS = [
     ("audio", "voice, word timings, and the music bed"),
     ("generate", "generated images, video and procedural motion"),
     ("vision", "segmentation, compositing, hand tracking"),
+    ("qc", "checking a render against the plan it was built from"),
     ("export", "burnt-in captions, CapCut / Final Cut / OTIO handoff"),
     ("project", "props, preflight, editor, looks, tutorials, digest"),
 ]
