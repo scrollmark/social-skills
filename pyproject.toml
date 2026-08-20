@@ -50,6 +50,25 @@ audio = [
   "numpy>=1.26",
 ]
 
+# Checking a render against the plan it was built from: decoded frames, motion,
+# audio structure, composition. Ported from the showwatcher analyzer. No models
+# here — the model-backed checks live behind the qc-* extras below, so this one
+# stays installable on a laptop.
+qc = [
+  "numpy>=1.26",
+  "opencv-python-headless>=4.9",
+  "scenedetect>=0.6.4",
+  "rapidfuzz>=3.9",
+  "scipy>=1.14,<1.18",
+]
+
+# Model-backed QC, one extra per model so no single install drags in every one.
+# Each maps to detectors the engine skips cleanly when the extra is absent.
+qc-ocr = ["video-studio-engine[qc]", "easyocr>=1.7"]        # caption_sync, layout
+qc-yolo = ["video-studio-engine[qc]", "ultralytics>=8.2"]   # objects, entity_tracking
+qc-face = ["video-studio-engine[qc]", "mediapipe>=0.10"]    # lip_sync's real backend
+qc-clip = ["video-studio-engine[qc]", "fastembed>=0.3"]     # prompt_visual
+
 # Word timings for narration this studio did not synthesise. Optional because
 # it pulls a ~200MB CTranslate2 inference runtime that only gen_captions needs;
 # tts_kokoro already emits timings for anything it speaks itself.
@@ -76,7 +95,7 @@ export = [
 ]
 
 all = [
-  "video-studio-engine[sourcing,audio,captions,generate,vision,export]",
+  "video-studio-engine[sourcing,audio,captions,generate,vision,export,qc]",
 ]
 
 [project.scripts]
