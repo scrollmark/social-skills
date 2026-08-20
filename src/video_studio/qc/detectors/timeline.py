@@ -18,7 +18,7 @@ from __future__ import annotations
 from video_studio.qc.context import Context
 from video_studio.qc.report import ids
 from video_studio.qc.report.model import Finding
-from video_studio.qc.showrunner.timeline import (
+from video_studio.qc.timelines import (
     CLOCK_SKEW_ERROR_SEC,
     detect_generation,
     resolve_timelines,
@@ -59,11 +59,43 @@ def run(ctx: Context) -> None:
                     f"The visual and audio timelines diverge by {skew:.2f}s at scene "
                     f"'{scene_id}' (video clock ends {video_end:.2f}s, audio clock "
                     f"{audio_end:.2f}s) — narration and visuals are built on different "
-                    "clocks and drift apart scene by scene. Detected from the workdir's own "
-                    "concat manifests, before any video decoding.",
+                    "clocks and drift apart scene by scene. Detected from plan.json and "
+                    "the measured narration WAVs, before any video decoding.",
                     scene_id=scene_id,
                     metrics={
                         "maxSkewSec": round(skew, 3),
+                        "videoClockSec": round(video_end, 3),
+                        "audioClockSec": round(audio_end, 3),
+                    },
+                    rubric_dimension="audio",
+                )
+            )
+
+    # Start-skew is blind to the final scene: a scene that overruns its plan
+    # pushes every LATER scene late, and the last one has nothing after it to
+    # push. A two-scene video whose second scene runs two seconds long therefore
+    # scores a perfect zero skew while the narration outlasts the picture. So
+    # compare the totals too, and only when the per-scene check stayed quiet —
+    # otherwise the same drift is reported twice.
+    if timelines.video and timelines.audio:
+        video_end = timelines.video[-1].end_sec
+        audio_end = timelines.audio[-1].end_sec
+        total_gap = abs(video_end - audio_end)
+        already_reported = worst is not None and worst[1] > CLOCK_SKEW_ERROR_SEC
+        if total_gap > CLOCK_SKEW_ERROR_SEC and not already_reported:
+            longer = "narration" if audio_end > video_end else "picture"
+            r.add(
+                Finding(
+                    "timeline",
+                    "TIMELINE_TOTAL_MISMATCH",
+                    "error",
+                    f"The visual timeline runs {video_end:.2f}s and the narration "
+                    f"{audio_end:.2f}s — a {total_gap:.2f}s gap, with the {longer} "
+                    f"outlasting the other. Every scene starts where the plan says, so "
+                    f"the drift is all in the last one: re-run build_props so the plan "
+                    f"picks up the measured audio.",
+                    metrics={
+                        "totalGapSec": round(total_gap, 3),
                         "videoClockSec": round(video_end, 3),
                         "audioClockSec": round(audio_end, 3),
                     },
