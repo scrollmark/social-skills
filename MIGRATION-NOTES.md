@@ -322,6 +322,21 @@ same preset that sets the look. The mood vocabulary already matched.
 
 Net: roughly 600 lines carried, roughly 10,800 dropped.
 
+### The rename question is closed
+
+`showrunner` is taken on PyPI by an unrelated live-performance library, which is
+why PR #75 had to rewrite sixteen install commands to point at the repo, and why
+a rename — `callsheet` was the candidate — sat on the list for a while.
+
+Retirement moots it. An archived repository stays cloneable, so
+`pip install 'showrunner @ git+…'` keeps working after archiving, and nothing
+here installs it at all. A package that is never published needs no name on
+PyPI. If it is ever revived or published the question comes back; until then it
+is not a pending decision, and should not be carried as one.
+
+The same rule now applies to this repo's own engine: `video-studio-engine` is
+not on PyPI either, and installs by URL. See the install section in the README.
+
 ### Why the showrunner skill did not move
 
 `skills/showrunner/SKILL.md` (354 lines) is a driving guide for the
