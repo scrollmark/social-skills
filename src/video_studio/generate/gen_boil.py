@@ -23,9 +23,13 @@ Shapes: rings, laptop, tag, chip, battery, feather, ring, bars, arrow, blank.
 Use --list to print them. `blank` is a flat background for text-only beats.
 Project-local marks can be loaded with --shape-file; define functions named
 s_<shape>(d, c, rng, w, p, cx, cy, s) and use the same wob/circle/box helpers.
+Such a file may ONLY define those functions: it is checked before it runs, and
+no imports, no module-level statements, no dunder attributes and no
+eval/exec/open are permitted anywhere in it. `math` and the drawing helpers are
+injected, so nothing legitimate needs an import. See check_shape_source.
 """
 import argparse
-import importlib.util
+import ast
 import json
 import math
 import os
@@ -147,28 +151,114 @@ SHAPES = {"rings": s_rings, "laptop": s_laptop, "tag": s_tag, "chip": s_chip,
           "bars": s_bars, "arrow": s_arrow, "blank": s_blank}
 
 
-def load_shape_file(path):
-    """Load project-local shape functions.
+#: Builtins a drawing function plausibly needs. Everything else — including
+#: `open`, `eval`, `exec`, `compile`, `__import__`, `getattr` and `globals` —
+#: is absent from the namespace a shape file runs in.
+SAFE_BUILTINS = {
+    name: __builtins__[name] if isinstance(__builtins__, dict)
+    else getattr(__builtins__, name)
+    for name in (
+        "abs", "all", "any", "bool", "divmod", "enumerate", "filter", "float",
+        "int", "len", "list", "map", "max", "min", "pow", "range", "reversed",
+        "round", "set", "sorted", "str", "sum", "tuple", "zip", "print", "repr",
+        "IndexError", "TypeError", "ValueError", "ZeroDivisionError",
+    )
+}
 
-    A shape file is intentionally just Python: this is a local production tool,
-    and the agent often needs to draw a bespoke mark faster than a tiny DSL
-    could express it. To keep those files small and readable, drawing helpers
-    are injected before execution.
+#: Names that turn a drawing file into a general-purpose program. Rejected
+#: anywhere in the file, not just at module level: shape functions run when
+#: they are DRAWN, so a check that only read the top level would pass a file
+#: whose payload sits inside `s_something`.
+FORBIDDEN_NAMES = frozenset({
+    "__import__", "eval", "exec", "compile", "open", "input", "breakpoint",
+    "globals", "locals", "vars", "getattr", "setattr", "delattr", "memoryview",
+    "exit", "quit", "help",
+})
+
+
+def check_shape_source(source, path):
+    """Reject a shape file that does more than define shapes.
+
+    A shape file is Python because a bespoke mark is faster to draw than to
+    describe in a tiny DSL. That was a safe trade while this ran from a private
+    checkout. It is not one now: `boil.md` tells an agent to WRITE these files,
+    so text arriving in a brief can reach this function, and the file used to
+    execute in full the moment it was loaded — every check on what it defined
+    ran afterwards, when any top-level code had already had its turn.
+
+    So: module level may hold a docstring, function definitions, and plain
+    assignments (a `SHAPES` dict). No imports, no calls, no class definitions.
+    Nowhere in the file may there be a dunder attribute (`__class__`,
+    `__globals__` and the rest of the usual traversal to the interpreter) or a
+    name from FORBIDDEN_NAMES.
+
+    This is a GUARD, NOT A SANDBOX, and the difference matters: it stops a
+    shape file from being a program, and it is not a boundary to run hostile
+    code behind. Anyone who can write this file can usually write the
+    storyboard next to it.
+    """
+    try:
+        tree = ast.parse(source, filename=str(path))
+    except SyntaxError as exc:
+        raise SystemExit(f"{path}:{exc.lineno}: shape file does not parse — {exc.msg}")
+
+    problems = []
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Assign,
+                             ast.AnnAssign)):
+            continue
+        if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) \
+                and isinstance(node.value.value, str):
+            continue  # module docstring
+        problems.append(
+            f"line {node.lineno}: {type(node).__name__} at module level — a shape "
+            f"file may only define functions (and a SHAPES dict)"
+        )
+
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            problems.append(
+                f"line {node.lineno}: import — `math` and the drawing helpers "
+                f"`wob`, `circle`, `box` are injected already"
+            )
+        elif isinstance(node, ast.Attribute) and node.attr.startswith("__"):
+            problems.append(f"line {node.lineno}: attribute {node.attr!r}")
+        elif isinstance(node, ast.Name) and node.id in FORBIDDEN_NAMES:
+            problems.append(f"line {node.lineno}: {node.id!r}")
+
+    if problems:
+        raise SystemExit(
+            f"{path} is not a shape file — it does things a drawing does not "
+            f"need to do:\n  " + "\n  ".join(problems[:10])
+            + (f"\n  ... and {len(problems) - 10} more" if len(problems) > 10 else "")
+            + "\n\nA shape file defines `s_<name>(d, c, rng, w, p, cx, cy, s)` "
+              "functions and nothing else.\nIf this file is yours and you meant "
+              "it, it belongs in its own script, not behind --shape-file."
+        )
+
+
+def load_shape_file(path):
+    """Load project-local shape functions, after checking they are only that.
+
+    Compiles the source read here rather than handing the path to an importer,
+    so the bytes that were checked are the bytes that run — no window between
+    the two in which the file could change.
     """
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"shape file does not exist: {path}")
-    spec = importlib.util.spec_from_file_location(f"boil_shapes_{path.stem}", path)
-    if spec is None or spec.loader is None:
-        raise ValueError(f"could not load shape file: {path}")
-    module = importlib.util.module_from_spec(spec)
-    module.math = math
-    module.wob = wob
-    module.circle = circle
-    module.box = box
-    spec.loader.exec_module(module)
 
-    explicit = getattr(module, "SHAPES", None)
+    source = path.read_text(encoding="utf-8")
+    check_shape_source(source, path)
+
+    namespace = {
+        "__builtins__": SAFE_BUILTINS,
+        "__name__": f"boil_shapes_{path.stem}",
+        "math": math, "wob": wob, "circle": circle, "box": box,
+    }
+    exec(compile(source, str(path), "exec"), namespace)
+
+    explicit = namespace.get("SHAPES")
     if explicit is not None:
         if not isinstance(explicit, dict):
             raise TypeError(f"{path}: SHAPES must be a dict")
@@ -176,7 +266,7 @@ def load_shape_file(path):
     else:
         shapes = {
             name[2:]: fn
-            for name, fn in vars(module).items()
+            for name, fn in namespace.items()
             if name.startswith("s_") and callable(fn)
         }
     if not shapes:
@@ -216,7 +306,19 @@ def render(shape, shapes, seconds, out, bg, fg, size, hold, stroke, pos, scale, 
         if i % hold == 0:
             rng = random.Random(seed + i // hold)
             img = Image.new("RGB", (W, H), bg)
-            fn(ImageDraw.Draw(img), fg, rng, stroke, i / max(1, n - 1), cx, cy, s)
+            try:
+                fn(ImageDraw.Draw(img), fg, rng, stroke, i / max(1, n - 1), cx, cy, s)
+            except NameError as exc:
+                # Custom shapes run with a trimmed builtins namespace, so a name
+                # that exists in ordinary Python can be missing here. Say that,
+                # rather than leaving a bare NameError that reads like a typo.
+                raise SystemExit(
+                    f"shape {shape!r} used {exc.name!r}, which is not available to "
+                    f"shape files.\nThey run with a reduced set of builtins — "
+                    f"arithmetic, sequences and the injected `math`, `wob`, "
+                    f"`circle`, `box`.\nIf the drawing genuinely needs more than "
+                    f"that, it belongs in its own script."
+                ) from None
             frame = img.tobytes()
         enc.stdin.write(frame)
     enc.stdin.close()
