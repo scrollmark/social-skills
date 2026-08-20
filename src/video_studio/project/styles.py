@@ -58,6 +58,11 @@ CARD_KEYS = {"bg", "fg", "tracking", "fontSize", "align", "size"}
 PLACEMENT_KEYS = {"rect", "pop", "fade", "atMs", "untilMs", "enter", "exit"}
 
 
+#: Presets shipped inside the installed package. Lowest precedence of all, so
+#: every other tier can shadow one by name.
+PACKAGE_STYLES = Path(__file__).resolve().parent.parent / "styles"
+
+
 def style_roots(project: Path | None) -> list[Path]:
     roots = []
     if project:
@@ -66,6 +71,13 @@ def style_roots(project: Path | None) -> list[Path]:
         roots.append(Path(os.environ["VIDEO_STUDIO_STYLES"]))
     roots.append(USER_STYLES)
     roots.append(SKILL_ROOT / "styles")
+    # SKILL_ROOT is the studio tree, which an installed copy does not have: with
+    # no marker directory to find, studio_root() falls back to the cwd, so the
+    # tier above resolves to <wherever you happen to be>/styles. That is present
+    # for a developer standing in the checkout and absent for everyone who ran
+    # `pip install` — the shipped presets would simply never appear for them.
+    # This tier travels with the package instead.
+    roots.append(PACKAGE_STYLES)
     return roots
 
 

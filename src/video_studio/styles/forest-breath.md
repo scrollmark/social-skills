@@ -1,0 +1,64 @@
+---
+name: forest-breath
+description: Sage green + off-white, grounded and calm
+---
+
+# forest-breath
+
+Sage green + off-white, grounded and calm. Ported from the showrunner style set, which described a whole design
+system — a six-step type scale, a spacing scale, motion curves. Only the parts
+this studio renders survived the translation: caption styling, three card roles,
+and the music mood so `music_catalog --pick` can choose a bed that matches.
+
+Motion curves and the spacing scale were dropped rather than faked; nothing here
+reads them, and a value nothing reads is a value that drifts.
+
+```json
+{
+  "captions": {
+    "color": "#1a2e1f",
+    "highlight": "#c19a6b",
+    "fontFamily": "Inter",
+    "fontSize": 28,
+    "stroke": "#f5f5f0",
+    "strokeWidth": 3,
+    "bottom": 0.12,
+    "wordsPerPage": 4
+  },
+  "cards": {
+    "title": {
+      "bg": "#f5f5f0",
+      "fg": "#1a2e1f",
+      "fontSize": 80,
+      "align": "left",
+      "tracking": -0.01
+    },
+    "label": {
+      "bg": "#4a7c59",
+      "fg": "#1a2e1f",
+      "fontSize": 22,
+      "align": "left",
+      "tracking": 0.14
+    },
+    "stat": {
+      "bg": "#c19a6b",
+      "fg": "#f5f5f0",
+      "fontSize": 132,
+      "align": "center",
+      "tracking": -0.02
+    }
+  },
+  "music": {
+    "moods": [
+      "gentle",
+      "ambient",
+      "warm",
+      "contemplative"
+    ]
+  },
+  "rhythm": {
+    "bpm": 80,
+    "fps": 30
+  }
+}
+```
