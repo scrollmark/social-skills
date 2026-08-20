@@ -6,6 +6,8 @@ Two structural migrations are recorded here, oldest first:
    `references/`, and what to do about an old install.
 2. **[The video-studio split](#migration-the-video-studio-split)** — why this repo holds
    prose only, and where the video toolchain went.
+3. **[Retiring showrunner](#migration-retiring-showrunner)** — what was carried across from
+   the second engine, what was deliberately dropped, and why its skill did not move.
 
 ---
 
@@ -273,3 +275,67 @@ gives worse answers, and nobody finds out.
 - The README is grouped rather than flat. Seven social-media skills, two video-production
   skills, two working-method/toolchain skills — the split is visible in the table of
   contents, not buried.
+
+
+---
+
+<a id="migration-retiring-showrunner"></a>
+
+## Migration: retiring showrunner
+
+`scrollmark/showrunner` was the other half of the video toolchain: 11,550 lines
+across `src/showrunner/`, a `showrunner` console script, and four video formats
+registered through entry points. It is being retired in favour of the skills in
+this repo plus `video-studio-engine`. This records what crossed over and what
+did not, so the decision does not have to be re-derived from an empty directory
+later.
+
+### What was ported
+
+| from | to | why it was a gap |
+|---|---|---|
+| `music/ducking.py` | `audio/duck_music.py` | Nothing here ducked music. A grep for "duck" across `src/video_studio/` returned zero hits: the bed played at one volume through the narration. |
+| `music/catalog.py`, `music/picker.py` | `audio/music_catalog.py` | `gen_music` *generates* a bed; there was no way to use music the user already owned, and no deterministic pick, so a re-render could change the score. |
+| `captions/generate.py` (whisper path) | `audio/gen_captions.py` | `tts_kokoro` emits word timings for what it speaks. Narration it did not speak — a recorded read, a client-supplied track — had no timings at all and rendered uncaptioned. |
+| `captions/ass.py`, `captions/pages.py` | `export/burn_captions.py` | Captions reached the screen only through Remotion props. Anything cut in ffmpeg had no captions. |
+| `styles/presets/*.json` (11) | `video_studio/styles/*.md` | `styles.py` shipped the mechanism with **no presets at all**. Translated to this repo's caption/card vocabulary; the type scale, spacing scale and motion curves were dropped rather than faked, because nothing here reads them. |
+| `costs.py` pricing tables | `references/generation-costs.md` | The lifecycle (estimate → reserve → reconcile) only worked with `Pipeline`. The numbers were worth keeping; the machinery was not. |
+
+The presets carry two keys `styles.py` itself ignores — `music.moods` and
+`rhythm.bpm` — so `music_catalog --pick --style <name>` derives a bed from the
+same preset that sets the look. The mood vocabulary already matched.
+
+### What was deliberately dropped
+
+- **`cloud/`** (1,704 lines) — a client for the platform drafts API: multipart
+  upload with a client-minted idempotency id, analysis polling, Firebase auth.
+  That surface is reachable through the platform's own connector; a second
+  bespoke OAuth client is not worth carrying.
+- **`pipeline.py`, `formats/`, `events.py`, `checkpoints.py`, `plan.py`**
+  (~2,950 lines) — the embedded pipeline with an LLM planner. This is the thing
+  being deprecated, not a casualty of it: in this repo the agent plans, and the
+  programs are what it drives.
+- **`exporters/otio.py`** — already covered. `export/export_edit.py` declares
+  `opentimelineio` and the FCPX adapter directly.
+- **`providers/tts/kokoro.py`, `providers/video/{minimax,gemini}.py`** — already
+  covered by `audio/tts_kokoro.py` and `generate/gen_{minimax,veo}.py`.
+
+Net: roughly 600 lines carried, roughly 10,800 dropped.
+
+### Why the showrunner skill did not move
+
+`skills/showrunner/SKILL.md` (354 lines) is a driving guide for the
+`showrunner` CLI: `init`, `create`, `refine`, `export`, `analyze`, and a
+troubleshooting table keyed to that CLI's errors. Sections 1–8 and 10 document
+commands that are going away. Section 9's frame-extraction quality pass is
+already covered here by `showwatcher` (see `setup.py`, step `qc`), which the
+workflow degrades gracefully without.
+
+So it is **superseded, not moved** — importing a guide to an archived tool would
+have made this repo's skill count go up and its accuracy go down. `video-formats`
+and `video-production` carry the parts that outlive the CLI.
+
+One thing it did prove: line 35 of that skill still reads `pip install
+showrunner`, which installs an unrelated project of the same name. PR #75 fixed
+that across four files in the showrunner repo and missed the skill — worth
+checking before the repo is archived, since the skill is what an agent reads.
