@@ -9,7 +9,7 @@ description: Use when actually producing a short-form video end to end — runni
 
 ## Requires
 
-Three scripts **ship with this skill**: `scripts/doctor.py` (step 0's status report), `scripts/normalize_audio.py` (step 7's loudness fix) and `scripts/poster.py` (step 9's thumbnail shortlist). All stdlib-only; all want `ffmpeg`/`ffprobe`.
+Four scripts **ship with this skill**: `scripts/doctor.py` (step 0's status report), `scripts/normalize_audio.py` (step 7's loudness fix), `scripts/qc_render.py` (step 8's gate) and `scripts/poster.py` (step 9's thumbnail shortlist). All stdlib-only; all want `ffmpeg`/`ffprobe`.
 
 The rest of the sequence needs `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'` — `video-studio setup` (step 0's install plan), `build_props` (steps 5 and 7), `studio` (the preview editor) and `preflight` (the render gate) — plus the composer's `npx remotion render`, which is Node and is neither bundled nor pip-installable from here. Sourcing, voice and export belong to the step skills named below and carry their own install lines.
 
@@ -27,7 +27,7 @@ The rest of the sequence needs `pip install 'video-studio-engine @ git+https://g
 | 5 | `video-studio build_props --placeholders`, open the editor, re-read `props.json` | here |
 | 6 | Resolve sources — TTS first, then footage; then `video-studio verify_clips` | `audio-acquisition`, `media-acquisition` |
 | 7 | `video-studio build_props` (no flag) → `video-studio preflight` → render → `scripts/normalize_audio.py` | here |
-| 8 | Quality gate: pull frames, confirm duration and loudness | `studio-setup` |
+| 8 | `scripts/qc_render.py` — the render against its plan — then **pull frames and look at them** | here |
 | 9 | `scripts/poster.py` — pick the thumbnail, and **open the candidate sheet** | here |
 
 A brand kit (`brand-kit`) is applied at step 4. An export to a human editor (`edit-handoff`) and a composited subject (`subject-compositing`) are branches off steps 7 and 6, not extra steps. Per-step mechanics and the exact invocations are in `references/run-mechanics.md`.
@@ -53,6 +53,21 @@ Projects cannot collide on content — each owns its props file, its media direc
 ## Read Before Rendering
 
 `references/hard-rules.md` — the rules learned the expensive way: the placeholder-render trap, the clock rule, the cost table, and the render-side composer landmines. Do not start step 7 without it.
+
+## Step 8: what the gate does and does not cover
+
+`scripts/qc_render.py --video <render> --plan project/plan.json` checks the file
+against the plan `build_props` wrote for it: total duration, the plan's internal
+consistency, a black tail, a frozen ending, and — with `--storyboard` — resolution
+and fps. It exits non-zero on a failure, so it can gate.
+
+It does not judge the picture. Blur, caption overlap, off-palette colour and text
+clipping need decoded frames and mostly models; that is a different tool with a
+different dependency budget, and it is not installed here.
+
+So the gate is two moves, not one: run `qc_render.py`, then run `scripts/poster.py`
+and **open the contact sheet**. The script can prove the render matches the plan.
+Only looking can tell you the plan was worth rendering. Say which one you did.
 
 ## Anti-patterns
 

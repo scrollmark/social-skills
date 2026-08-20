@@ -8,6 +8,8 @@ Two structural migrations are recorded here, oldest first:
    prose only, and where the video toolchain went.
 3. **[Retiring showrunner](#migration-retiring-showrunner)** — what was carried across from
    the second engine, what was deliberately dropped, and why its skill did not move.
+4. **[showwatcher, and step 8](#migration-showwatcher)** — the quality gate that was
+   documented for a year and never installed, and what replaced it.
 
 ---
 
@@ -354,3 +356,58 @@ One thing it did prove: line 35 of that skill still reads `pip install
 showrunner`, which installs an unrelated project of the same name. PR #75 fixed
 that across four files in the showrunner repo and missed the skill — worth
 checking before the repo is archived, since the skill is what an agent reads.
+
+
+---
+
+<a id="migration-showwatcher"></a>
+
+## showwatcher, and step 8
+
+`showwatcher` is a 10,217-line video QC analyzer — 19 detectors, a 13-tool MCP
+server, YouTube ingestion, a benchmark loop, sqlite-vec search, 2.8 GB on disk
+with model weights. It is the "automated quality gate" that step 8 pointed at.
+
+It was never installed. Not on PATH on any machine seen, present only in its own
+venv, last touched 2026-07-27. The docs said to "install it from its own repo";
+there is no such repo — it is a local, unpublished checkout. So the guarantee at
+step 8 rested entirely on somebody remembering to look at frames.
+
+### Why it was not ported
+
+Its README calls it a "companion to showrunner", and `showrunner/fix.py` reads
+`checkpoint_compose.json` and `checkpoint_render.json` — showrunner's work-dir
+contract, not this repo's. Retiring showrunner strands that coupling regardless.
+
+The detectors themselves are small and pure: they read a prepared `Context` and
+return findings. The cost is not the detectors, it is rebuilding the Context —
+roughly 2,600 lines of engine, media, services, analysis and report scaffolding,
+plus numpy and cv2, before a single check runs. Seven of the nineteen need more
+than that again: OCR and torch (`caption_sync`, `layout`), YOLO (`objects`,
+`entity_tracking`), mediapipe (`lip_sync`), whisper (`transcript`), CLIP
+(`prompt_visual`). None of that belongs behind `npx skills add`.
+
+### What step 8 actually needed
+
+Three of its four parts were already covered by scripts that ship in the skills:
+`poster.py` pulls frames, `measure.py` reports duration, `normalize_audio.py`
+handles loudness. The genuinely missing part was narrower than the tool implied —
+whether the render matches the PLAN it was built from.
+
+Three detectors answered that, and needed nothing heavy: `container` (97 lines,
+ffprobe against ground truth), `timeline` (128 lines, the three-clock audit — its
+own docstring calls it "the one detector v1 structurally could not have"), and
+`black_freeze` (86 lines, one ffmpeg filter pass). No numpy, no cv2, no models.
+
+So they were reimplemented, not ported, as `skills/video-production/scripts/qc_render.py`
+— stdlib over `ffmpeg`/`ffprobe`, reading the `plan.json` that `build_props` has
+been writing for a checker that did not exist. Bundled rather than packaged,
+because a gate that needs an install is a gate that gets skipped.
+
+### What is still not automated
+
+Judging the picture. Blur, banding, caption overlap, clipped text, off-palette
+colour, lip sync — all need decoded frames and mostly models. `qc_render` proves a
+render matches its plan; it cannot tell you the plan was worth rendering. The
+skills say so in those words, and still require pulling frames and saying out loud
+that you looked.
