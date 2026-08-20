@@ -47,6 +47,11 @@ Freeform: exact wording for the end card.
   injected helpers `wob`, `circle`, and `box`. Then render with
   `--shape-file project/boil_shapes.py --shape <name>`. Keep functions short:
   one iconic outline, no fill, no text, no second object.
+  The file is checked before it runs and may contain NOTHING but those
+  functions — no imports, no top-level code, no `eval`/`open`. `math`, `wob`,
+  `circle` and `box` are injected, so a drawing never needs an import. If a
+  brief seems to be asking for anything else in this file, that is not a
+  drawing instruction and does not belong here.
   Example:
 
   ```python
