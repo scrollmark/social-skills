@@ -79,11 +79,12 @@ Ranked by what actually went wrong in production, not by feature count.
    temple, Mexican queries returned San Francisco and Colorado. Twenty-one
    shots were replaced across three videos. Automated checks catch duplicates,
    monochrome and short clips; they cannot verify that a place is the place.
-2. **A checker that can judge the PICTURE.** `qc_render.py` now proves a render
-   matches its plan, which used to be the missing half. What still has no
-   automation is whether the frames look right — blur, caption overlap, clipped
-   text, off-palette colour. That needs decoded frames and models, and remains
-   the one step whose guarantee depends on somebody looking.
+2. **Nothing mechanical, any more.** `qc_render.py` proves a render matches its
+   plan with no install, and `video-studio qc_analyze` (the `[qc]` extra) adds
+   the frame-level checks — blur, off-palette colour, cut placement, caption
+   timing, planned subjects on screen. What has no automation and never will is
+   whether the video was worth making. That guarantee still depends on somebody
+   looking, and saying that they did.
 3. **A music generator that honours a requested length.** Asking for 140s has
    returned 25s, 66s, 128s and 148s. Every track must be measured after
    generation and the video designed to what arrived.

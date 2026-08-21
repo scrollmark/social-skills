@@ -57,17 +57,19 @@ Projects cannot collide on content — each owns its props file, its media direc
 ## Step 8: what the gate does and does not cover
 
 `scripts/qc_render.py --video <render> --plan project/plan.json` checks the file
-against the plan `build_props` wrote for it: total duration, the plan's internal
-consistency, a black tail, a frozen ending, and — with `--storyboard` — resolution
-and fps. It exits non-zero on a failure, so it can gate.
+against the plan `build_props` wrote for it: duration, the plan's own
+consistency, a black tail, a frozen ending, and with `--storyboard`, resolution
+and fps. Non-zero exit on failure, so it can gate. It decodes no frames, which
+is what keeps it install-free — run it on every render.
 
-It does not judge the picture. Blur, caption overlap, off-palette colour and text
-clipping need decoded frames and mostly models; that is a different tool with a
-different dependency budget, and it is not installed here.
+The heavier gate decodes: `video-studio qc_analyze --video <render> --project
+<dir>` adds blur, off-palette colour, cut placement, caption timing against the
+word timings, and with the model extras, whether the planned subject is on
+screen. Needs the `[qc]` extra. Reach for it when a render surprises you, or
+before anything ships to a client.
 
-So the gate is two moves, not one: run `qc_render.py`, then run `scripts/poster.py`
-and **open the contact sheet**. The script can prove the render matches the plan.
-Only looking can tell you the plan was worth rendering. Say which one you did.
+Neither judges whether the video was worth making. The gate is two moves: run a
+checker, then `scripts/poster.py` and **open the contact sheet**. Say which.
 
 ## Anti-patterns
 

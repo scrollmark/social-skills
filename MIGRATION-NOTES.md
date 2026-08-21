@@ -373,19 +373,26 @@ venv, last touched 2026-07-27. The docs said to "install it from its own repo";
 there is no such repo — it is a local, unpublished checkout. So the guarantee at
 step 8 rested entirely on somebody remembering to look at frames.
 
-### Why it was not ported
+### How it was ported, and in what order
 
 Its README calls it a "companion to showrunner", and `showrunner/fix.py` reads
 `checkpoint_compose.json` and `checkpoint_render.json` — showrunner's work-dir
-contract, not this repo's. Retiring showrunner strands that coupling regardless.
+contract. That coupling looked total from the outside, and the first estimate
+here was a ~2,600-line reimplementation of the `Context` the detectors read.
 
-The detectors themselves are small and pure: they read a prepared `Context` and
-return findings. The cost is not the detectors, it is rebuilding the Context —
-roughly 2,600 lines of engine, media, services, analysis and report scaffolding,
-plus numpy and cv2, before a single check runs. Seven of the nineteen need more
-than that again: OCR and torch (`caption_sync`, `layout`), YOLO (`objects`,
-`entity_tracking`), mediapipe (`lip_sync`), whisper (`transcript`), CLIP
-(`prompt_visual`). None of that belongs behind `npx skills add`.
+That estimate was wrong in a useful direction. The decode layer, report model
+and detectors were never coupled to showrunner; only the ground truth was. So
+it went across as a port with one new seam — `ground_truth.py` — plus one
+genuine rewrite, `timelines.py`, because the three-clock audit resolved its
+clocks from `concat.txt` and `captions.ass` and this repo writes neither.
+
+All eighteen detectors now run (`video-studio qc_analyze`). The model-backed
+ones sit behind one extra each — `[qc-ocr]`, `[qc-yolo]`, `[qc-face]`,
+`[qc-clip]` — so no single install drags in every model, and a detector whose
+extra is absent skips and says so rather than failing the run. `[all]` takes
+`[qc]` and none of the model extras, matching showwatcher's own decision to
+keep mediapipe out of its "all": it pulls `opencv-contrib-python`, a second
+`cv2` provider, which is a footgun rather than a feature.
 
 ### What step 8 actually needed
 
@@ -406,8 +413,20 @@ because a gate that needs an install is a gate that gets skipped.
 
 ### What is still not automated
 
-Judging the picture. Blur, banding, caption overlap, clipped text, off-palette
-colour, lip sync — all need decoded frames and mostly models. `qc_render` proves a
-render matches its plan; it cannot tell you the plan was worth rendering. The
-skills say so in those words, and still require pulling frames and saying out loud
-that you looked.
+Taste. Every mechanical property of a render is now checkable — duration
+against the plan, cut placement, black tails and frozen endings, blur and
+banding, off-palette colour, caption timing against the word timings, whether
+the planned subject is actually on screen, whether each scene's footage matches
+its own prompt. What no detector reports is whether the video was worth making:
+whether the hook earns the next second, whether the cut lands, whether the plan
+deserved a render at all.
+
+So the instruction in the skills has not changed and should not: pull frames,
+look at them, and say out loud that you looked. `qc_analyze` proves a render
+matches its plan more thoroughly than a person would bother to. It still cannot
+tell you the plan was any good.
+
+One honest limit worth keeping in view: a skip is not a pass. `qc_analyze`
+reports which checks did not run and why, because "clean" and "clean as far as
+we looked" are different claims and the difference is exactly where an
+uninstalled extra hides.
