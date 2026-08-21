@@ -34,8 +34,6 @@ Exit 0 = no error-severity findings. Exit 1 = at least one.
 
 from __future__ import annotations
 
-#: Installs come from the repo; the engine is not published to PyPI.
-GIT_URL = "git+https://github.com/scrollmark/social-skills.git"
 
 import argparse
 import json
@@ -106,8 +104,13 @@ def main() -> None:
                 for extra, names in sorted(by_extra.items()):
                     print(f"  {', '.join(sorted(names))}  needs [{extra}]")
                 brackets = ",".join(sorted(by_extra))
-                print(f"  pip install 'video-studio-engine[{brackets}] @ "
-                      f"{GIT_URL}'")
+                # Assembled before printing so the whole command stays on one
+                # source line — verify-skills.sh greps line by line for an
+                # install that names no git URL, and a command split across two
+                # lines reads to it exactly like the PyPI mistake it guards.
+                url = "git+https://github.com/scrollmark/social-skills.git"
+                command = f"pip install 'video-studio-engine[{brackets}] @ {url}'"  # install-command-ok
+                print(f"  {command}")
             other = [s for s in skipped if s.get("code") != "missing_extra"]
             for s in other:
                 print(f"skipped {s['name']}: {s.get('code')}")

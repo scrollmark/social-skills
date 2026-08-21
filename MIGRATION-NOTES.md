@@ -389,7 +389,7 @@ clocks from `concat.txt` and `captions.ass` and this repo writes neither.
 All eighteen detectors now run (`video-studio qc_analyze`). The model-backed
 ones sit behind one extra each — `[qc-ocr]`, `[qc-yolo]`, `[qc-face]`,
 `[qc-clip]` — so no single install drags in every model, and a detector whose
-extra is absent skips and says so rather than failing the run. `[all]` takes
+extra is absent skips and says so rather than failing the run. `[standard]` takes
 `[qc]` and none of the model extras, matching showwatcher's own decision to
 keep mediapipe out of its "all": it pulls `opencv-contrib-python`, a second
 `cv2` provider, which is a footgun rather than a feature.
