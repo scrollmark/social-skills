@@ -1,8 +1,8 @@
 # Explainer — narrated concept walkthrough
 
 Voiceover explains a concept over a sequence of illustrative visuals: b-roll
-cuts, text cards, big-number stat beats. No on-camera host. (Descends from
-showrunner's faceless-explainer, minus the LLM planner — the agent plans.)
+cuts, text cards, big-number stat beats. No on-camera host. The agent plans the
+storyboard; nothing here plans it for you.
 
 ## Composition
 Vertical 1080x1920 @30fps (ask if landscape 1920x1080 wanted for YouTube).

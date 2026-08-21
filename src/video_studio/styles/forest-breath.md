@@ -5,13 +5,15 @@ description: Sage green + off-white, grounded and calm
 
 # forest-breath
 
-Sage green + off-white, grounded and calm. Ported from the showrunner style set, which described a whole design
-system — a six-step type scale, a spacing scale, motion curves. Only the parts
-this studio renders survived the translation: caption styling, three card roles,
-and the music mood so `music_catalog --pick` can choose a bed that matches.
+Sage green + off-white, grounded and calm. This preset carries only what the
+composer actually renders: caption styling, three card roles, and the music
+mood, so `music_catalog --pick` can choose a bed that matches the look rather
+than fighting it.
 
-Motion curves and the spacing scale were dropped rather than faked; nothing here
-reads them, and a value nothing reads is a value that drifts.
+It began as a fuller design system — a six-step type scale, a spacing scale,
+motion curves. Those were dropped rather than translated into keys nothing
+reads, because a value nothing reads is a value that drifts: it stays in the
+file, stops matching the render, and misleads whoever edits it next.
 
 ```json
 {
