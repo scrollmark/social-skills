@@ -11,7 +11,7 @@ Two questions, two scripts. *What can I use right now* is the bundled `scripts/d
 
 `scripts/doctor.py` **ships with this skill** — stdlib-only, so the status report works the moment the skill is installed. It reads keys from `.env` in the current project, then `~/.config/video-studio/.env`, then the shell.
 
-`setup.py` does not ship here: it installs into the engine's own composer directory, so it is not a lone file. It needs `pip install video-studio-engine` and runs as `video-studio setup`. **Without that install there is no install plan and no auto/system/manual classification** — you keep doctor's report of what is reachable, but you lose the one thing that stops an agent from running a package-manager install nobody asked for, and you are back to fixing gaps by hand. `references/tooling-inventory.md` in this skill is the map; only doctor knows the state.
+`setup.py` does not ship here: it installs into the engine's own composer directory, so it is not a lone file. It needs `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'` and runs as `video-studio setup`. **Without that install there is no install plan and no auto/system/manual classification** — you keep doctor's report of what is reachable, but you lose the one thing that stops an agent from running a package-manager install nobody asked for, and you are back to fixing gaps by hand. `references/tooling-inventory.md` in this skill is the map; only doctor knows the state.
 
 ## Checking an Environment
 
@@ -51,11 +51,22 @@ with the output, is in `SERVICES.md` next to this file. Check it before anything
 gets published. The music row is the one that actually bites: the free backend's
 redistribution rights are unclear, the paid one is licensed catalogue.
 
-## showwatcher Is Not Installed
+## showwatcher Is Not Available, And Step 8 No Longer Waits For It
 
-The automated quality gate documented as step 8 of the workflow is a separate internal CLI, installed from its own repo, and it has been **absent on every machine seen so far**. `video-studio setup` lists it as an optional system component with no install command; `doctor.py` reports it as an optional tool that is missing.
+`showwatcher` is an internal analyzer that is **not published anywhere** — no
+package, no repository you can install from. `video-studio setup` lists it with no
+install command and `doctor.py` reports it missing, which is accurate; treat any
+instruction to "install it from its own repo" as stale.
 
-So: do not tell a user the quality check will run. Verify frames by hand and **say out loud that you are doing so**. It is the only step in the pipeline whose guarantee depends on somebody remembering, and a hand check silently skipped is worse than no gate at all.
+Step 8 does not depend on it. The `video-production` skill ships a `qc_render`
+script of its own, which checks a render against the `plan.json` `build_props` wrote for it —
+duration, the plan's own consistency, a black tail, a frozen ending, resolution
+and fps. Pure stdlib over `ffmpeg`/`ffprobe`, so it needs no install at all.
+
+What no bundled script can do is judge the picture: blur, caption overlap,
+off-palette colour and clipped text need decoded frames and models. So the gate is
+still two moves — run that script, then pull frames and **look at them, and say
+out loud that you did**. A hand check silently skipped is worse than no gate.
 
 ## Anti-patterns
 

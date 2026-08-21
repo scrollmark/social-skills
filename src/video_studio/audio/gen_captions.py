@@ -86,7 +86,7 @@ def transcribe(audio: Path, model_name: str, language: str | None) -> list[dict]
     except ImportError:
         raise SystemExit(
             "faster-whisper is not installed. Install the extra:\n"
-            "  pip install 'video-studio-engine[captions]'\n"
+            "  pip install 'video-studio-engine[captions] @ git+https://github.com/scrollmark/social-skills.git'\n"
             "It is optional because it pulls a ~200MB inference runtime that "
             "only this program needs."
         )

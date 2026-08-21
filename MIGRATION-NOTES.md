@@ -8,6 +8,8 @@ Two structural migrations are recorded here, oldest first:
    prose only, and where the video toolchain went.
 3. **[Retiring showrunner](#migration-retiring-showrunner)** — what was carried across from
    the second engine, what was deliberately dropped, and why its skill did not move.
+4. **[showwatcher, and step 8](#migration-showwatcher)** — the quality gate that was
+   documented for a year and never installed, and what replaced it.
 
 ---
 
@@ -322,6 +324,21 @@ same preset that sets the look. The mood vocabulary already matched.
 
 Net: roughly 600 lines carried, roughly 10,800 dropped.
 
+### The rename question is closed
+
+`showrunner` is taken on PyPI by an unrelated live-performance library, which is
+why PR #75 had to rewrite sixteen install commands to point at the repo, and why
+a rename — `callsheet` was the candidate — sat on the list for a while.
+
+Retirement moots it. An archived repository stays cloneable, so
+`pip install 'showrunner @ git+…'` keeps working after archiving, and nothing
+here installs it at all. A package that is never published needs no name on
+PyPI. If it is ever revived or published the question comes back; until then it
+is not a pending decision, and should not be carried as one.
+
+The same rule now applies to this repo's own engine: `video-studio-engine` is
+not on PyPI either, and installs by URL. See the install section in the README.
+
 ### Why the showrunner skill did not move
 
 `skills/showrunner/SKILL.md` (354 lines) is a driving guide for the
@@ -339,3 +356,77 @@ One thing it did prove: line 35 of that skill still reads `pip install
 showrunner`, which installs an unrelated project of the same name. PR #75 fixed
 that across four files in the showrunner repo and missed the skill — worth
 checking before the repo is archived, since the skill is what an agent reads.
+
+
+---
+
+<a id="migration-showwatcher"></a>
+
+## showwatcher, and step 8
+
+`showwatcher` is a 10,217-line video QC analyzer — 19 detectors, a 13-tool MCP
+server, YouTube ingestion, a benchmark loop, sqlite-vec search, 2.8 GB on disk
+with model weights. It is the "automated quality gate" that step 8 pointed at.
+
+It was never installed. Not on PATH on any machine seen, present only in its own
+venv, last touched 2026-07-27. The docs said to "install it from its own repo";
+there is no such repo — it is a local, unpublished checkout. So the guarantee at
+step 8 rested entirely on somebody remembering to look at frames.
+
+### How it was ported, and in what order
+
+Its README calls it a "companion to showrunner", and `showrunner/fix.py` reads
+`checkpoint_compose.json` and `checkpoint_render.json` — showrunner's work-dir
+contract. That coupling looked total from the outside, and the first estimate
+here was a ~2,600-line reimplementation of the `Context` the detectors read.
+
+That estimate was wrong in a useful direction. The decode layer, report model
+and detectors were never coupled to showrunner; only the ground truth was. So
+it went across as a port with one new seam — `ground_truth.py` — plus one
+genuine rewrite, `timelines.py`, because the three-clock audit resolved its
+clocks from `concat.txt` and `captions.ass` and this repo writes neither.
+
+All eighteen detectors now run (`video-studio qc_analyze`). The model-backed
+ones sit behind one extra each — `[qc-ocr]`, `[qc-yolo]`, `[qc-face]`,
+`[qc-clip]` — so no single install drags in every model, and a detector whose
+extra is absent skips and says so rather than failing the run. `[all]` takes
+`[qc]` and none of the model extras, matching showwatcher's own decision to
+keep mediapipe out of its "all": it pulls `opencv-contrib-python`, a second
+`cv2` provider, which is a footgun rather than a feature.
+
+### What step 8 actually needed
+
+Three of its four parts were already covered by scripts that ship in the skills:
+`poster.py` pulls frames, `measure.py` reports duration, `normalize_audio.py`
+handles loudness. The genuinely missing part was narrower than the tool implied —
+whether the render matches the PLAN it was built from.
+
+Three detectors answered that, and needed nothing heavy: `container` (97 lines,
+ffprobe against ground truth), `timeline` (128 lines, the three-clock audit — its
+own docstring calls it "the one detector v1 structurally could not have"), and
+`black_freeze` (86 lines, one ffmpeg filter pass). No numpy, no cv2, no models.
+
+So they were reimplemented, not ported, as `skills/video-production/scripts/qc_render.py`
+— stdlib over `ffmpeg`/`ffprobe`, reading the `plan.json` that `build_props` has
+been writing for a checker that did not exist. Bundled rather than packaged,
+because a gate that needs an install is a gate that gets skipped.
+
+### What is still not automated
+
+Taste. Every mechanical property of a render is now checkable — duration
+against the plan, cut placement, black tails and frozen endings, blur and
+banding, off-palette colour, caption timing against the word timings, whether
+the planned subject is actually on screen, whether each scene's footage matches
+its own prompt. What no detector reports is whether the video was worth making:
+whether the hook earns the next second, whether the cut lands, whether the plan
+deserved a render at all.
+
+So the instruction in the skills has not changed and should not: pull frames,
+look at them, and say out loud that you looked. `qc_analyze` proves a render
+matches its plan more thoroughly than a person would bother to. It still cannot
+tell you the plan was any good.
+
+One honest limit worth keeping in view: a skip is not a pass. `qc_analyze`
+reports which checks did not run and why, because "clean" and "clean as far as
+we looked" are different claims and the difference is exactly where an
+uninstalled extra hides.

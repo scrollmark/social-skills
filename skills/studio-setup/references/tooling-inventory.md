@@ -65,7 +65,7 @@ public API below enterprise.
 
 | Tool | State | Notes |
 |---|---|---|
-| `showwatcher` | **Not installed, on any machine seen so far** | The automated quality gate in step 8. Internal tool, installed from its own repo. Without it, verify frames by hand and SAY that you are doing so |
+| `showwatcher` | **Not published anywhere — no package, no repo to install from** | Was the intended step-8 gate. Superseded: the `video-production` skill ships a `qc_render` script that checks the render against `plan.json` with no install. Judging the PICTURE still needs human eyes — pull frames and say that you did |
 | `yt-dlp` | One call site | Used for `url:` sources. `brew install yt-dlp` if you intend to pull from URLs |
 
 ---
@@ -79,9 +79,12 @@ Ranked by what actually went wrong in production, not by feature count.
    temple, Mexican queries returned San Francisco and Colorado. Twenty-one
    shots were replaced across three videos. Automated checks catch duplicates,
    monochrome and short clips; they cannot verify that a place is the place.
-2. **`showwatcher`, actually installed.** Documented as step 8, absent
-   everywhere, so every render has been verified by hand. It is the only step
-   whose guarantee depends on somebody remembering.
+2. **Nothing mechanical, any more.** `qc_render.py` proves a render matches its
+   plan with no install, and `video-studio qc_analyze` (the `[qc]` extra) adds
+   the frame-level checks — blur, off-palette colour, cut placement, caption
+   timing, planned subjects on screen. What has no automation and never will is
+   whether the video was worth making. That guarantee still depends on somebody
+   looking, and saying that they did.
 3. **A music generator that honours a requested length.** Asking for 140s has
    returned 25s, 66s, 128s and 148s. Every track must be measured after
    generation and the video designed to what arrived.
@@ -116,8 +119,8 @@ per shell. Holding a key costs nothing — only calls do.
 ## What this actually runs on
 
 User-facing prose says "the editor", "the quality check", "the built-in voice".
-Behind those names: Remotion 4.0.x for composing and rendering, showwatcher for
-the quality gate, MiniMax and Veo for clip generation, Kokoro locally for
+Behind those names: Remotion 4.0.x for composing and rendering, video-production's
+`qc_render` for the quality gate, MiniMax and Veo for clip generation, Kokoro locally for
 voice, MediaPipe HandLandmarker for gesture analysis, ffmpeg for probing and
 keying. The abstraction exists because every row is expected to change and because a
 creative session is the wrong place to field "why MiniMax?". Answer honestly
