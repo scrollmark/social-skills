@@ -130,6 +130,42 @@ def _aspect(width: int, height: int) -> str:
     return f"{width // g}:{height // g}"
 
 
+#: Layer source prefixes that put real or generated footage on screen. A
+#: `prompt:` clip counts: a generated shot of a person still contains a person,
+#: which is what the object detectors are looking for.
+_FOOTAGE_PREFIXES = ("file:", "find:", "url:", "prompt:")
+
+#: What this repo calls its two shapes. showwatcher's vocabulary was
+#: showrunner's format plugins ("ai-video", "faceless-explainer"); reusing those
+#: names here would be a lie that happens to work, so the detector-side sets
+#: were widened to accept these instead.
+FOOTAGE_FORMAT = "video-studio-footage"
+GRAPHICS_FORMAT = "video-studio-graphics"
+
+
+def _infer_format(storyboard: dict) -> str:
+    """Footage-bearing, or motion graphics?
+
+    Four separate behaviours hang off this — whether object and entity
+    detection run at all, how tolerant the cut check is, which blur threshold
+    applies, and whether frames are measured against the style palette. A
+    project here can be either kind, unlike a showrunner format which was fixed
+    when the video was created, so it has to be read off the storyboard.
+
+    The rule: any layer that names a footage source makes the whole video
+    footage. Cards, effects and drawn marks alone make it graphics. A video
+    that mixes them is treated as footage, because a wrong "no footage here"
+    silently disables the object checks, while a wrong "footage" only costs a
+    detection pass that finds nothing.
+    """
+    for scene in storyboard.get("scenes") or []:
+        for layer in scene.get("layers") or []:
+            source = str(layer.get("source", ""))
+            if source.startswith(_FOOTAGE_PREFIXES):
+                return FOOTAGE_FORMAT
+    return GRAPHICS_FORMAT
+
+
 def load_ground_truth(project: str | Path) -> GroundTruth:
     """Build a GroundTruth from a video_studio project directory."""
     root = Path(project)
@@ -193,10 +229,7 @@ def load_ground_truth(project: str | Path) -> GroundTruth:
 
     return GroundTruth(
         workdir=root,
-        # video_studio has no pluggable "format" the way showrunner did; the
-        # storyboard's own name is the closest true answer, and detectors that
-        # branch on format treat an unknown one as "no format-specific rule".
-        format=str(storyboard.get("format", "video-studio")),
+        format=_infer_format(storyboard),
         aspect_ratio=_aspect(width or 0, height or 0),
         style=storyboard.get("styleApplied") or storyboard.get("style"),
         topic=plan.get("title") or storyboard.get("title"),

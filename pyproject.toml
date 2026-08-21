@@ -65,7 +65,9 @@ qc = [
 # Model-backed QC, one extra per model so no single install drags in every one.
 # Each maps to detectors the engine skips cleanly when the extra is absent.
 qc-ocr = ["video-studio-engine[qc]", "easyocr>=1.7"]        # caption_sync, layout
-qc-yolo = ["video-studio-engine[qc]", "ultralytics>=8.2"]   # objects, entity_tracking
+qc-yolo = ["video-studio-engine[qc]", "ultralytics>=8.2", "supervision>=0.22"]
+  # objects (YOLO detections) and entity_tracking (those detections through
+  # ByteTrack, which is supervision — without it entity_tracking alone skips)
 qc-face = ["video-studio-engine[qc]", "mediapipe>=0.10"]    # lip_sync's real backend
 qc-clip = ["video-studio-engine[qc]", "fastembed>=0.3"]     # prompt_visual
 
