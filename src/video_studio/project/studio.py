@@ -37,6 +37,7 @@ import json
 import os
 import socket
 import subprocess
+import sys
 from pathlib import Path
 
 from video_studio.paths import studio_root
@@ -147,8 +148,13 @@ def main() -> None:
 
     # Rebuild THIS project's props before opening, or the editor shows whichever
     # project was built last — the same global-file trap the exporter hit.
+    # Invoke the installed module, not a path. This used to run
+    # `uv run $SKILL_ROOT/scripts/build_props.py`, which is where the script sat
+    # BEFORE the engine was packaged — a path that exists in the old studio tree
+    # and in no pip install, so opening the editor failed for every installed
+    # copy. sys.executable keeps it in the interpreter already running.
     r = subprocess.run(
-        ["uv", "run", str(SKILL_ROOT / "scripts" / "build_props.py"),
+        [sys.executable, "-m", "video_studio.cli", "build_props",
          "--storyboard", str(project / "storyboard.json"), "--project", str(project),
          "--placeholders"],
         capture_output=True, text=True,
