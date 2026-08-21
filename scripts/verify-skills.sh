@@ -184,7 +184,15 @@ while IFS= read -r hit; do
 done < <(grep -rn --binary-files=without-match "pip install ['\"]*video-studio-engine" \
            --exclude-dir=.git --exclude-dir=__pycache__ "$REPO_DIR" 2>/dev/null \
          | grep -v 'git+https' | grep -v 'verify-skills.sh' \
-         | grep -v 'not published there')
+         | grep -v 'not published there' \
+         | grep -v 'install-command-ok')
+#    Two exclusions, both deliberate. A line saying "not published there" is
+#    quoting the wrong command in order to warn against it, which is how a
+#    reader learns not to retype it. A line marked `install-command-ok` is code
+#    that BUILDS the command from a variable — the grep is line-based and
+#    cannot see a URL that lives in a name, so without a marker the only way to
+#    satisfy it is to inline the literal at every construction site, which is
+#    the duplication this check exists to make unnecessary.
 #    The last exclusion is deliberate: README and the website both quote the
 #    bare command in order to say it does NOT work. Naming the wrong form is
 #    how a reader learns not to retype it, so a line that also says "not

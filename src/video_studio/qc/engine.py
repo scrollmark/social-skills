@@ -100,21 +100,21 @@ KNOWN_DETECTORS: list[DetectorSpec] = [
     DetectorSpec("black_freeze", False, None),
     DetectorSpec("scene_sync", True, None),
     DetectorSpec("audio_sync", True, None),
-    DetectorSpec("caption_sync", True, "ocr"),
-    DetectorSpec("layout", False, "ocr"),
-    DetectorSpec("transcript", True, "audio"),
+    DetectorSpec("caption_sync", True, "qc-ocr"),
+    DetectorSpec("layout", False, "qc-ocr"),
+    DetectorSpec("transcript", True, "captions"),
     DetectorSpec("audio_quality", False, None),
     DetectorSpec("visual", False, None),
     DetectorSpec("motion", False, None),
-    DetectorSpec("objects", True, "yolo"),
+    DetectorSpec("objects", True, "qc-yolo"),
     # New in showwatcher — not part of the v1 parity set.
     DetectorSpec("timeline", True, None),
     DetectorSpec("av_sync", False, None),
     DetectorSpec("composition", False, None),
     DetectorSpec("lip_sync", False, None),
-    DetectorSpec("entity_tracking", True, "yolo"),
+    DetectorSpec("entity_tracking", True, "qc-yolo"),
     DetectorSpec("prompt_fit", False, None),
-    DetectorSpec("prompt_visual", True, "store"),  # CLIP via fastembed
+    DetectorSpec("prompt_visual", True, "qc-clip"),  # CLIP via fastembed
 ]
 
 
@@ -203,8 +203,8 @@ def analyze(video_path: str | Path, opts: AnalyzeOptions | None = None) -> Repor
                     )
         return present
 
-    have_ocr = _drop_missing_extra(("caption_sync", "layout"), "easyocr", "ocr")
-    have_yolo = _drop_missing_extra(("objects", "entity_tracking"), "ultralytics", "yolo")
+    have_ocr = _drop_missing_extra(("caption_sync", "layout"), "easyocr", "qc-ocr")
+    have_yolo = _drop_missing_extra(("objects", "entity_tracking"), "ultralytics", "qc-yolo")
 
     # OCR/YOLO frame streams are wasted work when the detector would return
     # early anyway — mirror those cheap early-out conditions here.

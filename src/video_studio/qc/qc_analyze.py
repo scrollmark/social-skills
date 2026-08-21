@@ -34,6 +34,7 @@ Exit 0 = no error-severity findings. Exit 1 = at least one.
 
 from __future__ import annotations
 
+
 import argparse
 import json
 import sys
@@ -92,9 +93,24 @@ def main() -> None:
             # difference between "clean" and "clean as far as we looked".
             missing = [s for s in skipped if s.get("code") == "missing_extra"]
             if missing:
-                print(f"{len(missing)} check(s) did NOT run for want of an extra: "
-                      + ", ".join(f"{s['name']} ({s.get('extra') or s.get('detail')})"
-                                  for s in missing))
+                # Name the extra AND the command. Naming only the extra leaves
+                # the reader to work out that it is bracketed onto a git URL,
+                # and a guess that installs the wrong thing succeeds silently:
+                # an unknown extra is a pip warning, not an error.
+                by_extra: dict[str, list[str]] = {}
+                for s in missing:
+                    by_extra.setdefault(s.get("extra") or "?", []).append(s["name"])
+                print(f"{len(missing)} check(s) did NOT run — a skip is not a pass:")
+                for extra, names in sorted(by_extra.items()):
+                    print(f"  {', '.join(sorted(names))}  needs [{extra}]")
+                brackets = ",".join(sorted(by_extra))
+                # Assembled before printing so the whole command stays on one
+                # source line — verify-skills.sh greps line by line for an
+                # install that names no git URL, and a command split across two
+                # lines reads to it exactly like the PyPI mistake it guards.
+                url = "git+https://github.com/scrollmark/social-skills.git"
+                command = f"pip install 'video-studio-engine[{brackets}] @ {url}'"  # install-command-ok
+                print(f"  {command}")
             other = [s for s in skipped if s.get("code") != "missing_extra"]
             for s in other:
                 print(f"skipped {s['name']}: {s.get('code')}")

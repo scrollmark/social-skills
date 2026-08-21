@@ -96,7 +96,20 @@ export = [
   "otio-fcpx-xml-adapter",
 ]
 
-all = [
+# Named "standard" and not "all" on purpose. It is everything a laptop wants and
+# nothing that ships a model: no OCR, no YOLO, no CLIP, no mediapipe. It was
+# called [all] for a day, which was a lie in the name — someone installing "all"
+# and then watching four checks skip has been told two different things by the
+# same package.
+#
+# [all] is gone rather than aliased, and that removal is NOT free: pip does not
+# error on an unknown extra in a URL requirement, it does not even warn — it
+# quietly installs the base package. So an old `[all]` command now silently
+# gets less than it asks for. That is acceptable here only because the name
+# existed for part of one day, was never published to an index, and every
+# reference to it in this repo and on the website is rewritten in the same
+# change. If it had ever shipped, the alias would be the right call.
+standard = [
   "video-studio-engine[sourcing,audio,captions,generate,vision,export,qc]",
 ]
 

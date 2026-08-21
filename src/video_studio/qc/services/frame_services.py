@@ -188,7 +188,7 @@ class MouthService:
                     "face",
                     "missing_extra",
                     kind="service",
-                    extra="face",
+                    extra="qc-face",
                     detail="no face backend (OpenCV 5 removed the Haar "
                     "CascadeClassifier — install the [face] extra for mediapipe)",
                 )

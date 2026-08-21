@@ -94,7 +94,7 @@ composer directory, a styles tree), which makes them unfit to sit in a skill fol
 lone file. They are built from `src/video_studio/` in this repo and run as
 `video-studio <command>`:
 
-    pip install 'video-studio-engine[all] @ git+https://github.com/scrollmark/social-skills.git'
+    pip install 'video-studio-engine[standard] @ git+https://github.com/scrollmark/social-skills.git'
 
 It installs **from this repo, not from PyPI**. The name `video-studio-engine` is
 not published there, so a bare `pip install video-studio-engine` does not get you
@@ -111,7 +111,9 @@ this — the URL is the install. Swap the bracket to take only what you need:
 | `[export]` | `export_edit` (OpenTimelineIO) |
 | `[qc]` | `qc_analyze` — the render checked against its plan, with decoded frames |
 | `[qc-ocr]` `[qc-yolo]` `[qc-face]` `[qc-clip]` | the model-backed QC checks, one extra per model |
-| `[all]` | everything above except the model-backed `qc-*` extras |
+| `[standard]` | everything above except the model-backed `qc-*` extras |
+
+There is no `[all]`. This set is named for what it is rather than for how much of it there is: it holds nothing that ships a model, so `[qc-ocr]`, `[qc-yolo]`, `[qc-face]` and `[qc-clip]` are still opt-in on top. An extra called `all` that left four checks uninstalled would tell you two different things at once.
 
 **3. Still elsewhere — this repo does not ship it.** The Remotion composer is Node, not
 Python: `npx remotion render` is what actually renders, and neither route above installs
@@ -188,7 +190,7 @@ The video skills that drive the engine also want the Python package. It is indep
 the skills and installed separately:
 
 ```bash
-pip install 'video-studio-engine[all] @ git+https://github.com/scrollmark/social-skills.git'
+pip install 'video-studio-engine[standard] @ git+https://github.com/scrollmark/social-skills.git'
 ```
 
 See [What ships where](#what-ships-where) for which skills need it and what skipping it
