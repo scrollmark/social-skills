@@ -12,14 +12,13 @@ does not move, because being vague there costs an editor an afternoon.
 
 ## Requires
 
-`pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'` for `export_fcpxml` and `export_capcut`;
-add the `[export]` extra to that same command for `export_edit`, which needs
-OpenTimelineIO. Run them as `video-studio export_fcpxml …`. None of the three is
-bundled here — each reads the engine's per-project timeline document and composer
-directory, so none is a lone file a skill folder can hold. Without that install
-there is no degraded mode that still writes a file: no engine, no export. What
-survives is the judgement below — which format an editor should be asked for, and
-what to warn them about — which applies to any OTIO or FCPXML handoff.
+`pip install 'video-studio-engine[export] @ git+https://github.com/scrollmark/social-skills.git'`
+covers all three exporters (`export_fcpxml`, `export_capcut`, `export_edit`); only
+`export_edit` needs the `[export]` bracket, for OpenTimelineIO. None is bundled —
+each reads the engine's timeline document and composer directory. No install, no
+export. What survives is the judgement below, which applies to any OTIO or FCPXML
+handoff. Captions do not survive either — the composer draws them from the props —
+so `video-studio burn_captions` bakes them in as pixels, or writes an `.ass`.
 
 ## Which Export, Which Application
 

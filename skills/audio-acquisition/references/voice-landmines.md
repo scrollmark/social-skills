@@ -45,9 +45,13 @@ quietly.
 
 ## The composer's mix
 
-- Music plays at a **fixed volume and does not duck under narration.** Balance
-  is set once, not per phrase — so a bed that competes with a loud line will
-  compete with it for the whole video.
+- Music plays at a **fixed volume until you duck it.** The composer sets balance
+  once, not per phrase, so a bed that competes with a loud line competes with it
+  for the whole video. `video-studio duck_music --project <dir>` fixes that after
+  `build_props`: it reads the narration WAVs, measures one RMS reading per frame,
+  and writes a per-frame volume envelope into the props so the bed drops under
+  speech and returns in the gaps. Run it after build_props and before rendering —
+  build_props owns the clock, so re-running it overwrites the envelope.
 - Adding any music track halves everything (see the 6 dB note in the SKILL).
   Normalise after every render that has music.
 
