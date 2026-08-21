@@ -389,10 +389,23 @@ clocks from `concat.txt` and `captions.ass` and this repo writes neither.
 All eighteen detectors now run (`video-studio qc_analyze`). The model-backed
 ones sit behind one extra each — `[qc-ocr]`, `[qc-yolo]`, `[qc-face]`,
 `[qc-clip]` — so no single install drags in every model, and a detector whose
-extra is absent skips and says so rather than failing the run. `[standard]` takes
-`[qc]` and none of the model extras, matching showwatcher's own decision to
-keep mediapipe out of its "all": it pulls `opencv-contrib-python`, a second
-`cv2` provider, which is a footgun rather than a feature.
+extra is absent skips and says so rather than failing the run. `[standard]`
+takes `[qc]` and none of the model extras.
+
+That last part came with a rationale that did not survive checking. It was
+written as "mediapipe is kept out because it pulls `opencv-contrib-python`, a
+second `cv2` provider" — borrowed from showwatcher, where it was true. Here it
+was not: `[standard]` includes `[vision]`, `[vision]` requires mediapipe, and
+mediapipe requires contrib, so the thing supposedly being kept out arrived
+anyway. Worse, `[vision]` also named `opencv-python` and `[qc]` named
+`opencv-python-headless`, putting THREE providers of the same `cv2` module in
+the default install with the winner decided by installation order.
+
+Resolved by naming one distribution everywhere: `[qc]` takes
+`opencv-contrib-python`, the same one mediapipe forces, and `[vision]` names no
+opencv at all. `[qc-face]` still exists and still matters — it is what makes
+`lip_sync` work for someone who installed `[qc]` without `[vision]` — but it is
+not a quarantine, and the notes no longer claim it is.
 
 ### What step 8 actually needed
 

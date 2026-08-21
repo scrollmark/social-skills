@@ -113,7 +113,7 @@ this — the URL is the install. Swap the bracket to take only what you need:
 | `[qc-ocr]` `[qc-yolo]` `[qc-face]` `[qc-clip]` | the model-backed QC checks, one extra per model |
 | `[standard]` | everything above except the model-backed `qc-*` extras |
 
-There is no `[all]`. This set is named for what it is rather than for how much of it there is: it holds nothing that ships a model, so `[qc-ocr]`, `[qc-yolo]`, `[qc-face]` and `[qc-clip]` are still opt-in on top. An extra called `all` that left four checks uninstalled would tell you two different things at once.
+There is no `[all]`. This set is named for what it is rather than for how much of it there is, because an extra called `all` that left four checks uninstalled would tell you two different things at once. What `[standard]` leaves out is the four model-backed QC extras — `[qc-ocr]`, `[qc-yolo]`, `[qc-face]`, `[qc-clip]` — which are opt-in on top. It is not model-free: `[vision]` requires mediapipe for hand tracking, so that one arrives either way.
 
 **3. Still elsewhere — this repo does not ship it.** The Remotion composer is Node, not
 Python: `npx remotion render` is what actually renders, and neither route above installs
