@@ -20,6 +20,8 @@ Two questions, two scripts. *What can I use right now* is the bundled `scripts/d
 
 Doctor reports per category — public-domain archives, stock, generated video, generated images, generated audio, voice — plus the required binaries. It checks that a key is *present*, not that it works; a key can still be rejected at call time for spent quota or a withdrawn model, and the individual scripts report that.
 
+To teach the workflow rather than describe it, `video-studio tutor --list` names the shipped tutorials; `--step <name> <n>` serves ONE step, and that is the design. A tutorial pasted whole is a document, not a lesson — nobody reads the middle and you cannot tell what landed. Serve a step, let them try it, ask whether it worked, then move. `--show` is for you to plan with, never to paste. Start with `getting-started`; it says up front which steps need a composer this repo does not ship.
+
 Run it **before** offering sourcing options. Offering a source that turns out to have no key makes the estimate wrong as well as the offer.
 
 ## Fixing a Broken One

@@ -44,11 +44,22 @@ SKILL_ROOT = studio_root()
 USER_TUTORIALS = Path.home() / ".config" / "video-studio" / "tutorials"
 
 
+#: Tutorials shipped inside the installed package. Lowest precedence, so a user
+#: or a project can shadow one by name.
+PACKAGE_TUTORIALS = Path(__file__).resolve().parent.parent / "tutorials"
+
+
 def roots() -> list[Path]:
     out = []
     if os.environ.get("VIDEO_STUDIO_TUTORIALS"):
         out.append(Path(os.environ["VIDEO_STUDIO_TUTORIALS"]))
     out += [USER_TUTORIALS, SKILL_ROOT / "tutorials"]
+    # SKILL_ROOT is the studio tree, which an installed copy does not have: with
+    # no marker directory to find, studio_root() falls back to the cwd, so the
+    # tier above means <wherever you are standing>/tutorials. That is why
+    # `tutor --list` printed "no tutorials found" and exited 0 for everyone who
+    # pip installed — the same trap styles.py had, and the same fix.
+    out.append(PACKAGE_TUTORIALS)
     return out
 
 
