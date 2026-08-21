@@ -56,7 +56,13 @@ audio = [
 # stays installable on a laptop.
 qc = [
   "numpy>=1.26",
-  "opencv-python-headless>=4.9",
+  # opencv-contrib-python, not -headless and not plain opencv-python. All three
+  # ship a module called cv2; installing more than one leaves whichever landed
+  # last in charge, which is not a thing pip resolves or warns about. mediapipe
+  # hard-requires opencv-contrib-python, and [vision] hard-requires mediapipe,
+  # so contrib is already present in any environment that has [vision]. Naming
+  # the same distribution here is what keeps [standard] down to one provider.
+  "opencv-contrib-python>=4.9",
   "scenedetect>=0.6.4",
   "rapidfuzz>=3.9",
   "scipy>=1.14,<1.18",
@@ -68,7 +74,11 @@ qc-ocr = ["video-studio-engine[qc]", "easyocr>=1.7"]        # caption_sync, layo
 qc-yolo = ["video-studio-engine[qc]", "ultralytics>=8.2", "supervision>=0.22"]
   # objects (YOLO detections) and entity_tracking (those detections through
   # ByteTrack, which is supervision — without it entity_tracking alone skips)
-qc-face = ["video-studio-engine[qc]", "mediapipe>=0.10"]    # lip_sync's real backend
+# lip_sync's real mouth backend. Note this is NOT a quarantine for mediapipe:
+# [vision] already requires it, so anything installing [standard] has it
+# regardless. This extra is what makes lip_sync work for someone who took
+# [qc] on its own.
+qc-face = ["video-studio-engine[qc]", "mediapipe>=0.10"]
 qc-clip = ["video-studio-engine[qc]", "fastembed>=0.3"]     # prompt_visual
 
 # Word timings for narration this studio did not synthesise. Optional because
@@ -86,7 +96,10 @@ generate = [
 vision = [
   "mediapipe>=0.10",
   "numpy>=1.26",
-  "opencv-python>=4.9",
+  # No opencv named here on purpose. mediapipe hard-requires
+  # opencv-contrib-python, so declaring opencv-python alongside it put two
+  # providers of the same cv2 module in one environment and left the winner to
+  # installation order. [qc] names contrib for the same reason.
 ]
 
 # Timeline interchange. CapCut and FCPXML need nothing; OTIO is only for
