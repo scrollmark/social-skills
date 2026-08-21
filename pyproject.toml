@@ -56,15 +56,31 @@ audio = [
 # stays installable on a laptop.
 qc = [
   "numpy>=1.26",
-  # opencv-contrib-python, not -headless and not plain opencv-python. All three
-  # ship a module called cv2; installing more than one leaves whichever landed
-  # last in charge, which is not a thing pip resolves or warns about. mediapipe
-  # hard-requires opencv-contrib-python, and [vision] hard-requires mediapipe,
-  # so contrib is already present in any environment that has [vision]. Naming
-  # the same distribution here is what keeps [standard] down to one provider.
-  "opencv-contrib-python>=4.9",
+  # NO opencv is named here, and the reason is not the one a previous version of
+  # this comment gave. It claimed naming opencv-contrib-python kept [standard]
+  # down to one cv2 provider. That was wrong: scenedetect hard-requires
+  # opencv-python (verified against its PyPI metadata; its only extras are pyav
+  # and moviepy, neither of which removes the dependency), so declaring contrib
+  # here produced TWO providers in [qc] alone rather than one.
+  #
+  # What is actually true, and is not fixable from this file:
+  #   [qc]       -> scenedetect -> opencv-python
+  #   [vision]   -> mediapipe   -> opencv-contrib-python
+  # Both are transitive, both are hard, and neither dependency accepts the
+  # other's distribution. So [standard], which takes both extras, installs two
+  # packages that each provide cv2, and the last one unpacked owns the module.
+  # pip neither resolves nor warns about that.
+  #
+  # Not naming one here is still strictly better: it makes [qc] on its own
+  # clean, and stops this file asserting a guarantee it cannot keep. Everything
+  # this package calls (cvtColor, Laplacian, the basic array ops) exists in both
+  # distributions, so the collision is a hygiene problem rather than a broken
+  # install — but it is real, and it should be recorded rather than papered over.
   "scenedetect>=0.6.4",
   "rapidfuzz>=3.9",
+  # prompt_fit reads checks.yaml. Undeclared until now, so the detector died one
+  # line past the missing data package it also died on.
+  "pyyaml>=6.0",
   "scipy>=1.14,<1.18",
 ]
 

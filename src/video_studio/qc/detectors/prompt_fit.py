@@ -35,7 +35,7 @@ class TaxonomyEntry:
 
 
 def load_taxonomy() -> dict[str, TaxonomyEntry]:
-    text = resources.files("showwatcher.data").joinpath("taxonomy.csv").read_text()
+    text = resources.files("video_studio.qc.data").joinpath("taxonomy.csv").read_text()
     out: dict[str, TaxonomyEntry] = {}
     for row in csv.DictReader(text.splitlines()):
         sub_no = (row.get("Subcategory #") or "").strip()
@@ -53,7 +53,7 @@ def load_taxonomy() -> dict[str, TaxonomyEntry]:
 def load_checks() -> dict[str, Any]:
     import yaml
 
-    text = resources.files("showwatcher.data").joinpath("checks.yaml").read_text()
+    text = resources.files("video_studio.qc.data").joinpath("checks.yaml").read_text()
     return dict(yaml.safe_load(text))
 
 

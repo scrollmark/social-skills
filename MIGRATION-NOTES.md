@@ -180,6 +180,20 @@ In all cases, restart Claude Code — skills are picked up at session start.
 
 # Migration: the video-studio split
 
+> [!IMPORTANT]
+> **The sections from here to "Consequences for the repo layout" describe a decision that
+> was later REVERSED.** They are the reasoning behind the 2026 split, kept because the
+> reasoning is worth reading — not because it is current policy.
+>
+> They say the engine stays in `video-studio` and is "invoked, never vendored", that "there
+> is no copy of the pipeline here, and there never should be one", and that "this repo is
+> MIT and public; the engine is not." All three are now false. The engine is in `src/` —
+> 13,000-odd lines — in this public MIT repo, and a further 5,800 lines of QC engine
+> followed it. See [the video-studio split](#migration-the-video-studio-split) and
+> [showwatcher, and step 8](#migration-showwatcher) for what actually happened and why.
+>
+> Read what follows as history. Do not follow it.
+
 ## The decision
 
 This repo started as seven skills about *understanding* social media. It now also covers
@@ -352,10 +366,17 @@ So it is **superseded, not moved** — importing a guide to an archived tool wou
 have made this repo's skill count go up and its accuracy go down. `video-formats`
 and `video-production` carry the parts that outlive the CLI.
 
-One thing it did prove: line 35 of that skill still reads `pip install
-showrunner`, which installs an unrelated project of the same name. PR #75 fixed
-that across four files in the showrunner repo and missed the skill — worth
-checking before the repo is archived, since the skill is what an agent reads.
+**A correction to what this file previously said here.** It claimed that PR #75
+fixed the `pip install showrunner` problem "across four files in the showrunner
+repo and missed the skill". That is false. `gh pr view 75 --json files` lists
+exactly four paths, and `skills/showrunner/SKILL.md` is one of them — the skill
+was fixed with everything else.
+
+The error came from reading a local checkout that was one commit behind
+`origin/main`, and then reporting the absence of a fix as a finding. It is
+recorded rather than quietly deleted because it is the same mistake this
+document keeps describing in other people's work: a claim that was true of the
+copy in front of me and false of the thing itself.
 
 
 ---
