@@ -37,13 +37,16 @@ COMMANDS: dict[str, str] = {
     "duck_music": "video_studio.audio.duck_music",
     "gen_captions": "video_studio.audio.gen_captions",
     "gen_music": "video_studio.audio.gen_music",
+    "tts_eleven": "video_studio.audio.tts_eleven",
     "music_catalog": "video_studio.audio.music_catalog",
     "tts_kokoro": "video_studio.audio.tts_kokoro",
     # generation
     "gen_boil": "video_studio.generate.gen_boil",
+    "gen_chalk": "video_studio.generate.gen_chalk",
     "gen_image": "video_studio.generate.gen_image",
     "gen_minimax": "video_studio.generate.gen_minimax",
     "gen_replicate": "video_studio.generate.gen_replicate",
+    "gen_sneaker_origin_art": "video_studio.generate.gen_sneaker_origin_art",
     "gen_veo": "video_studio.generate.gen_veo",
     # vision
     "composite_subject": "video_studio.vision.composite_subject",

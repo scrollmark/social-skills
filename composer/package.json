@@ -1,0 +1,21 @@
+{
+  "name": "video-studio-composer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic props-driven Remotion composer for the video-studio skill",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render Video out/video.mp4",
+    "still": "remotion still Video out/frame.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}
