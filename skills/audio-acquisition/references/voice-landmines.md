@@ -43,6 +43,14 @@ quietly.
 - **Generated music can arrive peaking at 0 dBFS**, leaving no headroom. This
   is why normalising after render is real work rather than cosmetics.
 
+## Clocks — the systemic bug class
+
+- A scene's duration is the **measured** narration WAV, never the planned
+  number. Building on planned durations desyncs audio, video and captions
+  cumulatively, and the drift grows scene by scene: 20-30 findings per video
+  before that rule, 0-6 after. `measure.py` exists so the measurement is
+  available before anything is built on a guess.
+
 ## The composer's mix
 
 - Music plays at a **fixed volume until you duck it.** The composer sets balance
