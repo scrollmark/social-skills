@@ -8,7 +8,7 @@ Usage:
   uv run scripts/measure.py --music TRACK      where the music actually changes
 
 The measured narration duration IS the scene clock — plans estimate,
-measurements decide (see references/api-landmines.md, "Clocks").
+measurements decide (see references/voice-landmines.md, "Clocks").
 
 --music exists because "cut to the music" is otherwise guesswork. It reports a
 per-second loudness profile and, more usefully, the transitions: the points
