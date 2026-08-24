@@ -52,6 +52,12 @@ quietly.
   and writes a per-frame volume envelope into the props so the bed drops under
   speech and returns in the gaps. Run it after build_props and before rendering —
   build_props owns the clock, so re-running it overwrites the envelope.
+- **Check the composer actually reads it.** `duck_music` writes `music.envelope`
+  into the props and prints a successful summary whether or not anything consumes
+  it. A composer that ignores that key plays the bed flat and reports nothing
+  wrong. So if ducking looks like it ran and the render still competes with the
+  narration, the envelope is being written and dropped: confirm the renderer
+  reads `music.envelope`, not only `music.volume`.
 - Adding any music track halves everything (see the 6 dB note in the SKILL).
   Normalise after every render that has music.
 

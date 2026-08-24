@@ -9,6 +9,24 @@ Usage:
       --base 0.16 --depth 0.65          # louder bed / deeper dip
   uv run scripts/duck_music.py ... --dry-run    # report, write nothing
 
+WHAT THE COMPOSER MUST DO WITH THIS. The envelope is written into the props as
+`music.envelope` — one value per COMPOSITION frame — alongside `music.baseVolume`.
+It does nothing on its own. A composer has to read it, and read it the right way:
+
+  <Audio src={...} volume={(f) => envelope[Math.min(f, envelope.length - 1)]} />
+
+Two details are load-bearing. The music element must sit ABOVE the per-scene
+sequences, because Remotion hands a volume callback a frame relative to its
+enclosing sequence — inside one, the ducking follows the wrong scene and nothing
+errors. And the lookup must clamp at the last entry, because re-running
+build_props can lengthen the composition without duck_music running again, and an
+undefined volume silences the bed rather than failing.
+
+A composer that ignores `music.envelope` plays the bed flat, and this program
+still prints a successful-looking summary. That is exactly what happened when
+this was ported: the envelope was computed correctly and consumed by nobody for
+as long as it took someone to read the renderer.
+
 RUN THIS AFTER build_props AND BEFORE rendering. It reads the props file that
 build_props wrote, adds a per-frame volume envelope to `props.music`, and writes
 the file back. build_props is the authority on the clock, so re-running it
