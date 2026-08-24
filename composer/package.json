@@ -4,6 +4,7 @@
   "private": true,
   "description": "Generic props-driven Remotion composer for the video-studio skill",
   "scripts": {
+    "postinstall": "node ensure-registry.mjs",
     "studio": "remotion studio",
     "render": "remotion render Video out/video.mp4",
     "still": "remotion still Video out/frame.png"
