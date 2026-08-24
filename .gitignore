@@ -18,3 +18,13 @@ venv/
 .ruff_cache/
 .coverage
 htmlcov/
+
+# The Remotion composer. Source is tracked; everything the pipeline GENERATES
+# into it is not. registry.ts in particular is written by build_props from the
+# props directory listing, so it names whatever projects a given machine has
+# built — committing it would leak project names and conflict on every build.
+composer/node_modules/
+composer/props/
+composer/public/
+composer/out/
+composer/src/registry.ts

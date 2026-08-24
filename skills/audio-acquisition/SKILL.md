@@ -16,7 +16,7 @@ Synthesis and sourcing do not ship here. `pip install 'video-studio-engine[audio
 `music_catalog` (tracks you already hold a licence for, picked deterministically
 so a re-render never changes the score). Narration this studio did not speak —
 a recorded read, a supplied track — gets word timings from `gen_captions`, which
-needs the `[captions]` bracket instead. **A user who skips that install has no voice, no music and no licence-filtered effects** — the tiering below still tells them which service to buy and what to check, but nothing synthesises. ElevenLabs has no script on either side of the line: that is a paid API call you make yourself.
+needs the `[captions]` bracket instead. **A user who skips that install has no voice, no music and no licence-filtered effects** — the tiering below still tells them which service to buy and what to check, but nothing synthesises. ElevenLabs has a script now — `video-studio tts_eleven` — but it bills per character and needs `ELEVENLABS_API_KEY`, so reach for it only when the local voice genuinely will not do: a language Kokoro does not speak, or a delivery the client has signed off on. It returns no word timings, so captions for an ElevenLabs read come from `gen_captions`.
 
 ## Voice
 

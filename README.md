@@ -68,7 +68,7 @@ skill is missing from it.
 
 The engine used to live in a separate private repo, `scrollmark/video-studio`, and no
 skill here could touch it. That split is gone: the engine is in this repo now, and the
-37 programs behind these skills land in one of three places.
+40 programs behind these skills land in one of three places.
 
 **1. Bundled inside a skill — nothing to install.** Six programs are pure standard
 library and take their input on the command line, so they ship in the skill folder that
@@ -88,7 +88,7 @@ programs are bundled in two skills each; each skill carries its own copy, becaus
 may never reach outside its own folder. `./scripts/verify-skills.sh` fails if those copies
 drift apart, or if a `SKILL.md` names a bundled script that is not there.
 
-**2. The `video-studio-engine` package — one `pip install`.** The other 31 programs
+**2. The `video-studio-engine` package — one `pip install`.** The other 34 programs
 either carry third-party dependencies or read a project's state (a props document, a
 composer directory, a styles tree), which makes them unfit to sit in a skill folder as a
 lone file. They are built from `src/video_studio/` in this repo and run as
@@ -115,11 +115,20 @@ this — the URL is the install. Swap the bracket to take only what you need:
 
 There is no `[all]`. This set is named for what it is rather than for how much of it there is, because an extra called `all` that left four checks uninstalled would tell you two different things at once. What `[standard]` leaves out is the four model-backed QC extras — `[qc-ocr]`, `[qc-yolo]`, `[qc-face]`, `[qc-clip]` — which are opt-in on top. It is not model-free: `[vision]` requires mediapipe for hand tracking, so that one arrives either way.
 
-**3. Still elsewhere — this repo does not ship it.** The Remotion composer is Node, not
-Python: `npx remotion render` is what actually renders, and neither route above installs
-it. The automated quality gate at step 8 is a separate internal CLI and has been absent on
-every machine seen so far. ElevenLabs voice has no script on either side of the line — it
-is a paid API call you make yourself.
+**3. The composer — in this repo, but Node and separately licensed.** `composer/` holds the
+Remotion project that actually draws and renders: 784 lines of React driven entirely by the
+props document `build_props` writes. Neither install route above sets it up, because it is
+Node — run `npm install` in `composer/` once, then `npx remotion studio` to preview and
+`npx remotion render` to render.
+
+**Remotion is not ours to license for you.** It requires a paid Company Licence above three
+people, and for hosted or automated rendering. This repo declares it as a dependency and
+vendors none of it, so that licence stays between you and Remotion. Read their terms before
+building on it.
+
+Only the source is tracked. `composer/props/`, `composer/public/`, `composer/out/` and
+`composer/src/registry.ts` are all generated — `registry.ts` in particular is written from
+whatever projects a given machine has built, so it is deliberately not committed.
 
 ### What a skipped `pip install` costs you
 
