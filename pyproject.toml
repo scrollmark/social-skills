@@ -97,6 +97,11 @@ qc-yolo = ["video-studio-engine[qc]", "ultralytics>=8.2", "supervision>=0.22"]
 qc-face = ["video-studio-engine[qc]", "mediapipe>=0.10"]
 qc-clip = ["video-studio-engine[qc]", "fastembed>=0.3"]     # prompt_visual
 
+# Running the test suite. pytest only — the suite deliberately builds real
+# WAVs and real mp4s with ffmpeg rather than mocking them, because every bug it
+# exists to catch was one where the code ran happily and produced nothing.
+dev = ["video-studio-engine[qc]", "pytest>=8.0", "build>=1.0"]
+
 # Word timings for narration this studio did not synthesise. Optional because
 # it pulls a ~200MB CTranslate2 inference runtime that only gen_captions needs;
 # tts_kokoro already emits timings for anything it speaks itself.
