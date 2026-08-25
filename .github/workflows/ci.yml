@@ -1,0 +1,66 @@
+name: ci
+
+# Two things run here, and they check different kinds of claim.
+#
+# verify-skills.sh guards the invariants that make a skill installable on
+# someone else's machine: no path escaping a skill folder, duplicated scripts
+# byte-identical, no document telling a reader to install from PyPI. Those are
+# the failures this repo has actually shipped, repeatedly, and none of them is
+# visible from inside a working checkout.
+#
+# pytest guards the ones that need running code — that no QC detector reports a
+# skip that hides our own packaging bug, that scene durations come from
+# measured audio, that karaoke tags sum to their page.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Skill invariants
+        run: bash scripts/verify-skills.sh
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The suite builds real media. ubuntu-latest ships ffmpeg, but pin the
+      # dependency explicitly rather than inherit it from the image.
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - uses: actions/setup-python@v5
+        with:
+          # 3.12, not 3.13: the [audio] extra's kokoro marker is
+          # `python_version < "3.13"`, so a 3.13 job would install cleanly and
+          # silently have no voice — the exact failure mode this suite is for.
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Test
+        run: pytest tests/unit -q
+
+  composer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # `npm ci` also fires the postinstall that writes an empty registry.ts,
+      # which Root.tsx imports and which is deliberately not committed. A clone
+      # cannot typecheck without it, and that is exactly what broke before.
+      - name: Install composer
+        run: npm ci
+        working-directory: composer
+      - name: Typecheck composer
+        run: npx tsc --noEmit -p tsconfig.json
+        working-directory: composer
