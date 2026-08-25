@@ -1,6 +1,20 @@
 # Testing Social Skills
 
-These are behavioral tests for documentation, not code tests. Each scenario checks whether Claude reasons differently (better) with a skill loaded.
+Two suites, checking different kinds of claim.
+
+**`unit/` — executable tests.** `pytest tests/unit` — or `pip install -e '.[dev]'`
+first. These check the things that need running code: that no QC detector reports
+a skip which hides our own packaging bug, that scene durations come from measured
+audio rather than a plan, that karaoke tags sum to their page, that the README's
+counts match the code, that the wheel actually ships its data files.
+
+They deliberately build real WAVs and real mp4s with ffmpeg rather than mocking
+them. Every bug this suite exists to catch was one where the code ran happily and
+produced nothing useful — and a mock reproduces that state perfectly.
+
+**`scenarios/` — behavioral tests for documentation.** Each scenario checks whether
+Claude reasons differently (better) with a skill loaded. Every skill must have at
+least one; `tests/unit/test_packaging.py` enforces it.
 
 ## How to Run a Scenario
 
