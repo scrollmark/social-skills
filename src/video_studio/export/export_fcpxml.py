@@ -4,7 +4,7 @@
 """Write a Final Cut Pro project (.fcpxml) with real titles and real motion.
 
 Usage:
-  uv run scripts/export_fcpxml.py --project projects/brand-origin-brick
+  video-studio export_fcpxml --project projects/brand-origin-brick
   ... --out somewhere/name.fcpxml
 
 Why this exists alongside the OTIO export: the generic interchange path drops

@@ -10,7 +10,7 @@
 
 Analysis (MediaPipe Hands, bundled models — no downloads):
 
-  uv run scripts/track_pointing.py analyze --in me.mp4 --out events.json
+  video-studio track_pointing analyze --in me.mp4 --out events.json
 
 Emits pointing EVENTS: windows where an extended index finger holds a
 stable position, with the pointed-AT location (fingertip extrapolated
@@ -21,7 +21,7 @@ along the finger's direction), as canvas fractions:
 Layer emission (deterministic geometry — offset away from the point
 toward frame center, clamped on-canvas):
 
-  uv run scripts/track_pointing.py layers --events events.json \
+  video-studio track_pointing layers --events events.json \
       --images product.png,chart.png [--size 0.30]
 
 Prints storyboard-ready layers (file: sources, rect, atMs/untilMs,

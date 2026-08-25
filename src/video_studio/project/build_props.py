@@ -4,7 +4,7 @@
 """Storyboard → composer props. The invariant enforcer.
 
 Usage:
-  uv run scripts/build_props.py --storyboard project/storyboard.json \
+  video-studio build_props --storyboard project/storyboard.json \
       --project project/ --composer composer/ [--placeholders]
 
 What it enforces (never trust upstream to have done it):

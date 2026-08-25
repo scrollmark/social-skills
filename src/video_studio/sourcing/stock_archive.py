@@ -5,9 +5,9 @@
 """Search and download from public-domain institutional archives. No key.
 
 Usage:
-  uv run scripts/stock_archive.py --source nasa --query "aurora" \
+  video-studio stock_archive --source nasa --query "aurora" \
       --kind video --out projects/x/clips/beat-1-still.mp4
-  uv run scripts/stock_archive.py --source wikimedia --query "shipping container" \
+  video-studio stock_archive --source wikimedia --query "shipping container" \
       --kind image --out projects/x/clips/b4-still.jpg
   ... --list      # candidates only, download nothing
 

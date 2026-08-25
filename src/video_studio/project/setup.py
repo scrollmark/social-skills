@@ -4,10 +4,10 @@
 """Check every prerequisite and offer to install what is missing.
 
 Usage:
-  uv run scripts/setup.py              # report + the exact plan, changes NOTHING
-  uv run scripts/setup.py --json       # same, machine-readable
-  uv run scripts/setup.py --yes        # actually run the runnable fixes
-  uv run scripts/setup.py --yes --only composer,voice
+  video-studio setup              # report + the exact plan, changes NOTHING
+  video-studio setup --json       # same, machine-readable
+  video-studio setup --yes        # actually run the runnable fixes
+  video-studio setup --yes --only composer,voice
 
 `doctor.py` answers "what can I use right now". This answers "how do I get the
 rest", and can do it for you.
@@ -131,11 +131,13 @@ def node_modules_ok() -> bool:
 
 
 def voice_ok() -> bool:
-    script = SKILL_ROOT / "scripts" / "tts_kokoro.py"
-    if not script.exists() or not have("uv"):
-        return False
+    # Invoke the installed module, not a path. This probed
+    # SKILL_ROOT/scripts/tts_kokoro.py — where the script sat BEFORE the engine
+    # was packaged. That path exists in the old studio tree and in no pip
+    # install, so the check returned False for every installed copy and setup
+    # reported the voice broken even where kokoro was working.
     try:
-        r = subprocess.run(["uv", "run", str(script), "--check"],
+        r = subprocess.run([sys.executable, "-m", "video_studio.cli", "tts_kokoro", "--check"],
                            capture_output=True, text=True, timeout=600)
     except (FileNotFoundError, subprocess.TimeoutExpired):
         return False
@@ -221,8 +223,8 @@ def build_components() -> list[dict]:
             "kind": "auto",
             # Running --check IS the install: uv resolves the pinned 3.12
             # interpreter and the dependencies on first use.
-            "cmd": ["uv", "run", str(SKILL_ROOT / "scripts" / "tts_kokoro.py"), "--check"],
-            "note": "uv run scripts/tts_kokoro.py --check  (first run downloads the model, a few minutes)",
+            "cmd": [sys.executable, "-m", "video_studio.cli", "tts_kokoro", "--check"],
+            "note": "video-studio tts_kokoro --check  (first run downloads the model, a few minutes)",
             "needs": ["uv"],
         },
         {

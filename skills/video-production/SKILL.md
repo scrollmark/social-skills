@@ -57,19 +57,19 @@ Projects cannot collide on content — each owns its props file, its media direc
 ## Step 8: what the gate does and does not cover
 
 `scripts/qc_render.py --video <render> --plan project/plan.json` checks the file
-against the plan `build_props` wrote for it: duration, the plan's own
-consistency, a black tail, a frozen ending, and with `--storyboard`, resolution
-and fps. Non-zero exit on failure, so it can gate. It decodes no frames, which
-is what keeps it install-free — run it on every render.
+against the plan `build_props` wrote: duration, the plan's own consistency, a
+black tail, a frozen ending, and with `--storyboard`, resolution and fps.
+Non-zero exit, so it can gate. It decodes no frames — run it on every render.
 
-The heavier gate decodes: `video-studio qc_analyze --video <render> --project
-<dir>` adds blur, off-palette colour, cut placement, caption timing against the
-word timings, and with the model extras, whether the planned subject is on
-screen. Needs the `[qc]` extra. Reach for it when a render surprises you, or
-before anything ships to a client.
+The heavier gate does decode. `video-studio qc_analyze --video <render>
+--project <dir>` adds blur, off-palette colour, cut placement and caption
+timing, plus planned-subject checks with the model extras. Needs `[qc]`. Reach
+for it when a render surprises you, or before anything ships to a client.
 
 Neither judges whether the video was worth making. The gate is two moves: run a
-checker, then `scripts/poster.py` and **open the contact sheet**. Say which.
+checker, then `scripts/poster.py` and **open the contact sheet** — say which. To
+report a day's output, `video-studio daily_digest` turns `git log` and a
+`runs/<date>/` tree into chat-sized plain text.
 
 ## Anti-patterns
 

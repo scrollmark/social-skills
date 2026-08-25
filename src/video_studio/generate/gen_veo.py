@@ -5,7 +5,7 @@
 """Generate one video clip with Veo (Gemini API).
 
 Usage:
-  GEMINI_API_KEY=... uv run scripts/gen_veo.py \
+  GEMINI_API_KEY=... video-studio gen_veo \
       --prompt "..." --seconds 6 --aspect 9:16 --out clips/scene-1.mp4
 
 Landmines encoded here (see references/api-landmines.md):

@@ -5,7 +5,7 @@
 """Export a finished project as an editable timeline (Premiere, Resolve, FCP).
 
 Usage:
-  uv run scripts/export_edit.py --project projects/brand-origin-brick   # do this one
+  video-studio export_edit --project projects/brand-origin-brick   # do this one
   ... --bundle          # also write a .otiod folder with the media copied in
   ... --fcpxml          # also write FCP X XML (needs otio-fcpx-xml-adapter)
 

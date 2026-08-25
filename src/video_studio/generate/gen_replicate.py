@@ -9,7 +9,7 @@ script rather than one per vendor — adding an option becomes a row in
 MODELS, not a new integration.
 
 Usage:
-  REPLICATE_API_TOKEN=... uv run scripts/gen_replicate.py \
+  REPLICATE_API_TOKEN=... video-studio gen_replicate \
       --kind image --preset flux --prompt "..." --aspect 9:16 \
       --out projects/x/clips/beat-1-still.png
   ... --kind video --preset kling --seconds 5 --out .../beat-1-still.mp4

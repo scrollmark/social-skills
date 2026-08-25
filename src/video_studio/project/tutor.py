@@ -4,10 +4,10 @@
 """Serve a tutorial one step at a time, so it can be taught in conversation.
 
 Usage:
-  uv run scripts/tutor.py --list
-  uv run scripts/tutor.py --show getting-started        # the whole thing, for you
-  uv run scripts/tutor.py --step getting-started 1      # ONE beat, for the user
-  uv run scripts/tutor.py --step getting-started next --after 3
+  video-studio tutor --list
+  video-studio tutor --show getting-started        # the whole thing, for you
+  video-studio tutor --step getting-started 1      # ONE beat, for the user
+  video-studio tutor --step getting-started next --after 3
 
 The one-step-at-a-time interface is the entire point, and it is a guard rail
 rather than a convenience.
