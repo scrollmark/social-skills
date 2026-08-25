@@ -4,10 +4,10 @@
 """Duck the music bed under the narration. A post-pass over built props.
 
 Usage:
-  uv run scripts/duck_music.py --composer composer/ --project projects/foo
-  uv run scripts/duck_music.py --composer composer/ --project projects/foo \
+  video-studio duck_music --composer composer/ --project projects/foo
+  video-studio duck_music --composer composer/ --project projects/foo \
       --base 0.16 --depth 0.65          # louder bed / deeper dip
-  uv run scripts/duck_music.py ... --dry-run    # report, write nothing
+  video-studio duck_music ... --dry-run    # report, write nothing
 
 WHAT THE COMPOSER MUST DO WITH THIS. The envelope is written into the props as
 `music.envelope` — one value per COMPOSITION frame — alongside `music.baseVolume`.

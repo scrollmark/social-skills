@@ -4,9 +4,9 @@
 """Refuse to render a build that is not actually finished.
 
 Usage:
-  uv run scripts/preflight.py --composer composer/            # before render
-  uv run scripts/preflight.py --composer composer/ --json
-  uv run scripts/preflight.py --composer composer/ --allow-placeholders
+  video-studio preflight --composer composer/            # before render
+  video-studio preflight --composer composer/ --json
+  video-studio preflight --composer composer/ --allow-placeholders
 
 Exit 0 = safe to render. Exit 1 = do not render; the reasons are printed.
 

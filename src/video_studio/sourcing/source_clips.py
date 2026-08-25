@@ -6,12 +6,12 @@
 
 Usage:
   # user-supplied URL (their rights call — a notice is printed regardless):
-  uv run scripts/source_clips.py url --url "https://..." \
+  video-studio source_clips url --url "https://..." \
       --out project/clips/scene-1-broll.mp4
 
   # find free footage: searches YouTube and only accepts results whose
   # license metadata is Creative Commons:
-  uv run scripts/source_clips.py find --query "city timelapse rain" \
+  video-studio source_clips find --query "city timelapse rain" \
       --out project/clips/scene-1-broll.mp4 [--max-seconds 120]
 
 Copyright rule (from SKILL.md): `find` NEVER falls back to standard-license

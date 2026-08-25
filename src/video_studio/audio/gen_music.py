@@ -6,11 +6,11 @@
 
 Usage:
   # auto-picks whichever provider has a key (Lyria preferred — see below):
-  uv run scripts/gen_music.py \
+  video-studio gen_music \
       --prompt "calm lo-fi bed, warm keys, no drums, unobtrusive under speech" \
       --seconds 35 --out projects/x/audio/music.mp3
 
-  uv run scripts/gen_music.py --provider elevenlabs ...   # force one
+  video-studio gen_music --provider elevenlabs ...   # force one
 
 Both options were chosen for RIGHTS, not for sound. The best-sounding music
 generators have unresolved training-data litigation and mostly no public API,

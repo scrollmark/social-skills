@@ -5,9 +5,9 @@
 """Kokoro TTS: narration WAV + word timings, or measured silence.
 
 Usage:
-  uv run scripts/tts_kokoro.py --text "Hello there" --voice am_adam \
+  video-studio tts_kokoro --text "Hello there" --voice am_adam \
       --out audio/hook.wav --timings-out audio/hook.timings.json
-  uv run scripts/tts_kokoro.py --silence 4.0 --out audio/beat.wav
+  video-studio tts_kokoro --silence 4.0 --out audio/beat.wav
 
 Never call with empty text — Kokoro raises "returned no audio"; use
 --silence for deliberate quiet beats (writes real silence so downstream

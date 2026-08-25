@@ -4,8 +4,8 @@
 """Draft the daily team digest: what shipped, what it scored, what's next.
 
 Usage:
-  uv run scripts/daily_digest.py                      # today, repo default
-  uv run scripts/daily_digest.py --since 2026-08-03 --runs runs/ --out digest.txt
+  video-studio daily_digest                      # today, repo default
+  video-studio daily_digest --since 2026-08-03 --runs runs/ --out digest.txt
 
 Reads two things and asks nothing of the network:
 - `git log` since --since, for repo changes

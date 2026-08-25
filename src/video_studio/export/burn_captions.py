@@ -5,18 +5,18 @@
 
 Usage:
   # one scene, subtitle file only
-  uv run scripts/burn_captions.py --timings projects/x/audio/hook.timings.json \
+  video-studio burn_captions --timings projects/x/audio/hook.timings.json \
       --out projects/x/subs/hook.ass
 
   # burn onto a clip
-  uv run scripts/burn_captions.py --timings projects/x/audio/hook.timings.json \
+  video-studio burn_captions --timings projects/x/audio/hook.timings.json \
       --video projects/x/clips/hook.mp4 --out projects/x/clips/hook-capped.mp4
 
   # a whole project, one .ass per scene, offset onto the project timeline
-  uv run scripts/burn_captions.py --project projects/x --out projects/x/subs/
+  video-studio burn_captions --project projects/x --out projects/x/subs/
 
   # take the look from a style preset
-  uv run scripts/burn_captions.py --timings ... --out ... --style tourism
+  video-studio burn_captions --timings ... --out ... --style tourism
 
 Why this exists: captions currently reach the screen ONE way — build_props
 folds `<scene>.timings.json` into composer props and Remotion draws them. Every

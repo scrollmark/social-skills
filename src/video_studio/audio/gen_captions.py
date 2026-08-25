@@ -5,11 +5,11 @@
 """Word timings for narration this studio did not synthesise.
 
 Usage:
-  uv run scripts/gen_captions.py --audio projects/x/audio/hook.wav
-  uv run scripts/gen_captions.py --audio projects/x/audio/hook.wav \
+  video-studio gen_captions --audio projects/x/audio/hook.wav
+  video-studio gen_captions --audio projects/x/audio/hook.wav \
       --timings-out projects/x/audio/hook.timings.json
-  uv run scripts/gen_captions.py --project projects/x        # every scene WAV
-  uv run scripts/gen_captions.py --project projects/x --force # redo existing
+  video-studio gen_captions --project projects/x        # every scene WAV
+  video-studio gen_captions --project projects/x --force # redo existing
 
 Why this exists: tts_kokoro already emits `<scene>.timings.json` beside every
 WAV it synthesises, and build_props turns that into on-screen captions. Any

@@ -5,7 +5,7 @@
 """Search and download free stock footage or photos (Pixabay).
 
 Usage:
-  PIXABAY_API_KEY=... uv run scripts/stock_pixabay.py \
+  PIXABAY_API_KEY=... video-studio stock_pixabay \
       --query "city at dusk" --kind video --orientation vertical \
       --out projects/x/clips/beat-2-still.mp4
   ... --list     # candidates only

@@ -5,7 +5,7 @@
 # ///
 """Draw a "boil" clip — hand-drawn-looking outlined vector art that jitters.
 
-    uv run scripts/gen_boil.py --shape chip --seconds 6 \
+    video-studio gen_boil --shape chip --seconds 6 \
         --out projects/foo/clips/beat2-still.mp4 --bg "#0b0e20" --fg "#8f9bf0"
 
 Why draw instead of generate: a video generator cannot hold a clean

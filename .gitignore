@@ -1,4 +1,8 @@
 .root
+
+# Provider credentials. .env.example is the template and IS tracked; the
+# filled-in .env never is — setup's own repair step creates it by copying.
+.env
 .DS_Store
 
 # Python build artifacts

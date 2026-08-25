@@ -5,8 +5,8 @@
 # ///
 """Narration via ElevenLabs — the paid alternative to the local voice.
 
-    uv run scripts/tts_eleven.py --list
-    uv run scripts/tts_eleven.py --text "..." --voice <id> --out audio/hook.wav
+    video-studio tts_eleven --list
+    video-studio tts_eleven --text "..." --voice <id> --out audio/hook.wav
 
 The local voice (`tts_kokoro.py`) is free, runs offline, and returns word
 timings, so it stays the default and the only option for captioned formats.

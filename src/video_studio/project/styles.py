@@ -4,10 +4,10 @@
 """Reusable look presets: captions and card styling, defined once and reused.
 
 Usage:
-  uv run scripts/styles.py --list                       # every preset found
-  uv run scripts/styles.py --show tourism               # resolved values
-  uv run scripts/styles.py --apply tourism --storyboard project/storyboard.json
-  uv run scripts/styles.py --save mine --from project/storyboard.json
+  video-studio styles --list                       # every preset found
+  video-studio styles --show tourism               # resolved values
+  video-studio styles --apply tourism --storyboard project/storyboard.json
+  video-studio styles --save mine --from project/storyboard.json
 
 Why this exists: three tourism spots were built in one session and each one
 hand-rolled the same palette, the same label/stat/title rectangles and the same

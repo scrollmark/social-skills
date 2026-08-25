@@ -5,7 +5,7 @@
 """Search and download sound effects (Freesound), licence-filtered.
 
 Usage:
-  FREESOUND_API_KEY=... uv run scripts/stock_freesound.py \
+  FREESOUND_API_KEY=... video-studio stock_freesound \
       --query "camera shutter" --out projects/x/audio/sfx-shutter.mp3
   ... --allow-attribution     # widen to CC-BY (we must then emit credits)
   ... --list

@@ -4,8 +4,8 @@
 """Check fetched clips against the storyboard BEFORE anything is rendered.
 
 Usage:
-  uv run scripts/verify_clips.py --project <dir>
-  uv run scripts/verify_clips.py --project <dir> --json
+  video-studio verify_clips --project <dir>
+  video-studio verify_clips --project <dir> --json
 
 Every check here exists because it went wrong in a real video, and every one of
 them was caught by hand — which means it was caught only because somebody

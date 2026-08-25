@@ -4,14 +4,14 @@
 """The tracks you are licensed to use, and a deterministic way to pick one.
 
 Usage:
-  uv run scripts/music_catalog.py --where                  # where the catalog lives
-  uv run scripts/music_catalog.py --list                   # every track
-  uv run scripts/music_catalog.py --list --mood editorial  # filtered
-  uv run scripts/music_catalog.py --show warm-keys-01      # one track, resolved
-  uv run scripts/music_catalog.py --add path/to/track.mp3 --id warm-keys-01 \
+  video-studio music_catalog --where                  # where the catalog lives
+  video-studio music_catalog --list                   # every track
+  video-studio music_catalog --list --mood editorial  # filtered
+  video-studio music_catalog --show warm-keys-01      # one track, resolved
+  video-studio music_catalog --add path/to/track.mp3 --id warm-keys-01 \
       --moods editorial,warm --bpm 96 --license "Artlist, invoice 4471"
-  uv run scripts/music_catalog.py --remove warm-keys-01
-  uv run scripts/music_catalog.py --pick --moods editorial,warm --bpm 96 \
+  video-studio music_catalog --remove warm-keys-01
+  video-studio music_catalog --pick --moods editorial,warm --bpm 96 \
       --seed brand-origin-brick
 
 Why this exists: `gen_music` makes a bed from nothing, which is the right answer

@@ -4,9 +4,9 @@
 """Open the editor on a free port, without stepping on another agent.
 
 Usage:
-  uv run scripts/studio.py --project projects/brand-origin-brick
-  uv run scripts/studio.py --status          # who is editing what, right now
-  uv run scripts/studio.py --release         # drop a stale claim
+  video-studio studio --project projects/brand-origin-brick
+  video-studio studio --status          # who is editing what, right now
+  video-studio studio --release         # drop a stale claim
 
 Why this exists: the editor defaults to port 3000 and the composition reads a
 single global `props.json`. Two agents starting it therefore do not get two

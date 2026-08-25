@@ -5,7 +5,7 @@
 """Search and download free stock footage or photos (Pexels).
 
 Usage:
-  PEXELS_API_KEY=... uv run scripts/stock_pexels.py --check      # verify the key
+  PEXELS_API_KEY=... video-studio stock_pexels --check      # verify the key
   ... --query "rain on a window" --kind video --orientation portrait \
       --out projects/x/clips/beat-1-still.mp4
   ... --kind photo --size large --out projects/x/clips/beat-1-still.jpg

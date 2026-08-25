@@ -5,7 +5,7 @@
 """Generate one video clip with MiniMax (Hailuo).
 
 Usage:
-  MINIMAX_API_KEY=... uv run scripts/gen_minimax.py \
+  MINIMAX_API_KEY=... video-studio gen_minimax \
       --prompt "..." --seconds 6 --out clips/scene-1.mp4 [--resolution 1080P]
 
 Landmines encoded here (see references/api-landmines.md):

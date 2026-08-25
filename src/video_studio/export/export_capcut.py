@@ -4,9 +4,9 @@
 """Fill a CapCut project with this video's timeline — UNDOCUMENTED FORMAT.
 
 Usage:
-  uv run scripts/export_capcut.py --project projects/foo            # write the draft
-  uv run scripts/export_capcut.py --project projects/foo --install  # fill a CapCut project
-  uv run scripts/export_capcut.py --project foo --install --blank-project "Untitled"
+  video-studio export_capcut --project projects/foo            # write the draft
+  video-studio export_capcut --project projects/foo --install  # fill a CapCut project
+  video-studio export_capcut --project foo --install --blank-project "Untitled"
 
 WHAT CHANGED, AND WHY IT MATTERS
 --------------------------------

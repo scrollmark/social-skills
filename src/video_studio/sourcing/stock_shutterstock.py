@@ -5,7 +5,7 @@
 """Search and license stock footage or images (Shutterstock).
 
 Usage:
-  SHUTTERSTOCK_TOKEN=... uv run scripts/stock_shutterstock.py --check
+  SHUTTERSTOCK_TOKEN=... video-studio stock_shutterstock --check
   ... --query "tokyo crossing at night" --kind video --orientation vertical --list
   ... --query "..." --kind video --out projects/x/clips/beat-1-still.mp4
 

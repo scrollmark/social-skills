@@ -5,7 +5,7 @@
 """Generate one still image (Gemini image models, via the Gemini key).
 
 Usage:
-  GEMINI_API_KEY=... uv run scripts/gen_image.py \
+  GEMINI_API_KEY=... video-studio gen_image \
       --prompt "..." --aspect 9:16 --out clips/scene-1-broll.png
   ... --model gemini-3-pro-image     # slower, stronger
   ... --check                        # which image models this key can reach
