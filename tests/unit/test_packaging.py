@@ -73,7 +73,8 @@ def test_no_document_tells_a_reader_to_install_from_pypi():
         ["bash", "-c",
          "grep -rn --binary-files=without-match \"pip install ['\\\"]*video-studio-engine\" "
          "--exclude-dir=.git --exclude-dir=node_modules --exclude-dir=__pycache__ . "
-         "| grep -v 'git+https' | grep -v 'not published there' "
+         "| grep -v 'git+https' | grep -v 'archive/refs/heads' "
+         "| grep -v 'not published there' "
          "| grep -v 'install-command-ok' | grep -v verify-skills.sh || true"],
         capture_output=True, text=True, cwd=REPO)
     assert not out.stdout.strip(), f"PyPI install instructions found:\n{out.stdout}"
@@ -118,3 +119,39 @@ def test_scenarios_name_a_skill_that_exists():
         named = re.search(r"^skill:\s*(\S+)", head, re.M)
         assert named, f"{scenario} has no `skill:` frontmatter"
         assert named.group(1) in skills, f"{scenario} names unknown skill {named.group(1)}"
+
+
+def test_documented_install_urls_point_at_this_repo():
+    """Every install command must name a route that exists.
+
+    Two forms are legitimate — the tarball (needs no git) and git+https (does).
+    PyPI is not one: nothing is published there, and an unknown extra in a URL
+    requirement is not even a warning, so a wrong URL silently under-installs.
+    """
+    out = subprocess.run(
+        ["bash", "-c",
+         "grep -rhoE \"video-studio-engine[^'\\\"]*@ [^'\\\"]+\" "
+         "--exclude-dir=.git --exclude-dir=node_modules --exclude-dir=__pycache__ . || true"],
+        capture_output=True, text=True, cwd=REPO)
+    urls = {line.split("@", 1)[1].strip() for line in out.stdout.splitlines() if "@" in line}
+    assert urls, "no install commands found at all — the docs lost their install route"
+    # Source that BUILDS a command holds a placeholder, not a URL — qc_analyze
+    # assembles its remediation line from a variable so the whole command fits
+    # on one line for the linter. A template is not an instruction.
+    bad = [u for u in urls
+           if "{" not in u and "github.com/scrollmark/social-skills" not in u]
+    assert not bad, f"install commands pointing somewhere unexpected: {bad}"
+
+
+def test_the_install_route_is_reachable():
+    """The tarball endpoint is the documented default; a 404 there breaks every
+    documented install at once, and nothing else in this suite would notice."""
+    import urllib.error
+    import urllib.request
+    url = "https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz"
+    req = urllib.request.Request(url, method="HEAD")
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            assert r.status == 200, f"tarball endpoint returned {r.status}"
+    except urllib.error.URLError as e:
+        pytest.skip(f"no network: {e}")

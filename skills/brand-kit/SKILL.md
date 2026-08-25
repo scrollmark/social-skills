@@ -9,7 +9,7 @@ A look is something the USER has, not something a project has. It is reusable ac
 
 ## Requires
 
-The preset mechanism is `styles`, which needs `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'` (base install, no extras) and then runs as `video-studio styles …`. It is not bundled here: it reads and writes a styles tree and a storyboard document, so it is not a lone file that can live in a skill folder.
+The preset mechanism is `styles`, which needs `pip install 'video-studio-engine @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'` (base install, no extras) and then runs as `video-studio styles …`. It is not bundled here: it reads and writes a styles tree and a storyboard document, so it is not a lone file that can live in a skill folder.
 
 Without that install there is no `--list`, `--show`, `--apply` or `--save`, and nothing expands a preset into a storyboard — you can still agree a brand with the user and hand-write the files, but applying it becomes manual editing. `--apply` and `--save` also assume a storyboard JSON in the engine's shape.
 
