@@ -12,7 +12,7 @@ take — settle the footage before you promise the shot.
 
 ## Requires
 
-`pip install 'video-studio-engine[vision] @ git+https://github.com/scrollmark/social-skills.git'`, then `video-studio composite_subject …`
+`pip install 'video-studio-engine[vision] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`, then `video-studio composite_subject …`
 and `video-studio track_pointing …`. Neither is bundled here — both import MediaPipe,
 NumPy and OpenCV and download model files on first run, so neither can ship as a plain
 file inside a skill; `[vision]` is the heaviest extra in the package. Without it nothing

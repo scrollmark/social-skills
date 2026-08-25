@@ -11,7 +11,7 @@ description: Use when actually producing a short-form video end to end — runni
 
 Four scripts **ship with this skill**: `scripts/doctor.py` (step 0's status report), `scripts/normalize_audio.py` (step 7's loudness fix), `scripts/qc_render.py` (step 8's gate) and `scripts/poster.py` (step 9's thumbnail shortlist). All stdlib-only; all want `ffmpeg`/`ffprobe`.
 
-The rest of the sequence needs `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'` — `video-studio setup` (step 0's install plan), `build_props` (steps 5 and 7), `studio` (the preview editor) and `preflight` (the render gate) — plus the composer's `npx remotion render`, which is Node and is neither bundled nor pip-installable from here. Sourcing, voice and export belong to the step skills named below and carry their own install lines.
+The rest of the sequence needs `pip install 'video-studio-engine @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'` — `video-studio setup` (step 0's install plan), `build_props` (steps 5 and 7), `studio` (the preview editor) and `preflight` (the render gate) — plus the composer's `npx remotion render`, which is Node and is neither bundled nor pip-installable from here. Sourcing, voice and export belong to the step skills named below and carry their own install lines.
 
 **Skip the pip install and this skill still is not standalone — it drives the whole engine.** There is no props document, no preview and no preflight, so the sequence has nothing to sequence. What survives is the shape: which decision must precede which, and where money and silence enter a run.
 

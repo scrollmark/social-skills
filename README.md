@@ -45,11 +45,11 @@ execution ships inside the skill; the rest is one `pip install` away.
 |-------|----------|-------------|
 | `video-formats` | Planning, structuring, or critiquing a short-form video — choosing a format, laying out its scenes, or defining a new format. Covers ten scene grammars from talking-head to hand-drawn motion graphics. | Mostly — 8 of the 10 formats are pure structure. **Boil** and **PointerPopups** need the engine's generator and hand tracker (see below). |
 | `brand-kit` | A user wants their videos to stay visually consistent — saving caption styling, card colours and geometry, title treatment, logos, fonts, voice and CTA copy once instead of redeciding them per video. | Deciding and recording a brand, yes. Applying a preset is `video-studio styles`, from the pip package. |
-| `media-acquisition` | Deciding where a shot's footage or stills should come from — public-domain archive, free stock, a paid generator, or a URL the user supplied — and when checking that what came back is actually usable before anything is built on it. | Partly. Ships `scripts/prekey.py`. The ten searching, generating and checking programs need `pip install 'video-studio-engine[sourcing,generate] @ git+https://github.com/scrollmark/social-skills.git'`; without it the ladder is a briefing, not a workflow. |
-| `audio-acquisition` | A video needs narration, a music bed or sound effects — choosing a voice, deciding which music source is safe to publish with, timing a cut to a track, or fixing a render that came out quiet. | Partly. Ships `scripts/measure.py` and `scripts/normalize_audio.py`, so measuring and loudness work out of the box. Voice, music and licence-filtered effects need `pip install 'video-studio-engine[audio] @ git+https://github.com/scrollmark/social-skills.git'`. |
-| `subject-compositing` | A filmed person has to appear somewhere they never were — dropping a subject over replacement footage, putting a drawn prop in front of them, driving the pair across frame, or pinning popup images to where they point on camera. | **No.** Segmentation, occlusion seam, arm punch-through and gesture timing all need `pip install 'video-studio-engine[vision] @ git+https://github.com/scrollmark/social-skills.git'` — MediaPipe and OpenCV cannot be bundled. What survives is knowing what footage to shoot. |
-| `edit-handoff` | A finished cut has to leave the pipeline and continue in a human editor — exporting a timeline to Premiere Pro, DaVinci Resolve, Final Cut Pro or CapCut, or answering what survives the trip and what an editor has to rebuild. | **No.** The exporters read the engine's timeline document, so they stay in the package (`pip install 'video-studio-engine[export] @ git+https://github.com/scrollmark/social-skills.git'`). No install, no file. The format judgement generalises. |
-| `video-production` | Actually producing a short-form video end to end — running the interview, storyboarding, sourcing, previewing, rendering and quality-checking in order — or when a run has stalled and you need to know which step comes next and who owns it. | **No.** Ships `scripts/doctor.py`, `scripts/normalize_audio.py` and `scripts/poster.py`, but it drives the whole engine: props, preview and preflight need `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'`, and the renderer is Remotion (Node). The step order and hard rules still read as a production discipline. |
+| `media-acquisition` | Deciding where a shot's footage or stills should come from — public-domain archive, free stock, a paid generator, or a URL the user supplied — and when checking that what came back is actually usable before anything is built on it. | Partly. Ships `scripts/prekey.py`. The ten searching, generating and checking programs need `pip install 'video-studio-engine[sourcing,generate] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`; without it the ladder is a briefing, not a workflow. |
+| `audio-acquisition` | A video needs narration, a music bed or sound effects — choosing a voice, deciding which music source is safe to publish with, timing a cut to a track, or fixing a render that came out quiet. | Partly. Ships `scripts/measure.py` and `scripts/normalize_audio.py`, so measuring and loudness work out of the box. Voice, music and licence-filtered effects need `pip install 'video-studio-engine[audio] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`. |
+| `subject-compositing` | A filmed person has to appear somewhere they never were — dropping a subject over replacement footage, putting a drawn prop in front of them, driving the pair across frame, or pinning popup images to where they point on camera. | **No.** Segmentation, occlusion seam, arm punch-through and gesture timing all need `pip install 'video-studio-engine[vision] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'` — MediaPipe and OpenCV cannot be bundled. What survives is knowing what footage to shoot. |
+| `edit-handoff` | A finished cut has to leave the pipeline and continue in a human editor — exporting a timeline to Premiere Pro, DaVinci Resolve, Final Cut Pro or CapCut, or answering what survives the trip and what an editor has to rebuild. | **No.** The exporters read the engine's timeline document, so they stay in the package (`pip install 'video-studio-engine[export] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`). No install, no file. The format judgement generalises. |
+| `video-production` | Actually producing a short-form video end to end — running the interview, storyboarding, sourcing, previewing, rendering and quality-checking in order — or when a run has stalled and you need to know which step comes next and who owns it. | **No.** Ships `scripts/doctor.py`, `scripts/normalize_audio.py` and `scripts/poster.py`, but it drives the whole engine: props, preview and preflight need `pip install 'video-studio-engine @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`, and the renderer is Remotion (Node). The step order and hard rules still read as a production discipline. |
 
 ### Working method and toolchain
 
@@ -94,7 +94,7 @@ composer directory, a styles tree), which makes them unfit to sit in a skill fol
 lone file. They are built from `src/video_studio/` in this repo and run as
 `video-studio <command>`:
 
-    pip install 'video-studio-engine[standard] @ git+https://github.com/scrollmark/social-skills.git'
+    pip install 'video-studio-engine[standard] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'
 
 It installs **from this repo, not from PyPI**. The name `video-studio-engine` is
 not published there, so a bare `pip install video-studio-engine` does not get you
@@ -185,22 +185,73 @@ Also covered: **X**, **LinkedIn**
 
 ## Install
 
-### For users (recommended)
+### What you actually need first
+
+Nothing here is hard, but almost none of it is on a Mac by default, and the failures are
+quiet. In dependency order:
+
+| | needed for | how you get it |
+|---|---|---|
+| **Node 18+** (22.20+ for `npx skills add`) | the skills, and rendering | [nodejs.org](https://nodejs.org) `.pkg` — double-click, no terminal |
+| **`uv`** | the engine, without touching your system Python | `curl -LsSf https://astral.sh/uv/install.sh \| sh` — 2s, no admin |
+| **`ffmpeg`** and **`ffprobe`** | nearly every program | `brew install ffmpeg` |
+| **Python 3.11+** | the engine | uv fetches its own — you do not need to install one |
+
+Two things that bite people, both verified rather than guessed:
+
+- `/usr/bin/python3` on a Mac is **not** a Python. It is an `xcrun` shim sharing an inode
+  with `/usr/bin/git`, and on a machine without Xcode Command Line Tools it pops a ~2GB
+  install dialog. That is why the engine install below goes through `uv`, which brings its
+  own interpreter.
+- The uv installer edits your shell profile but **not the shell you are in**. Run
+  `source "$HOME/.local/bin/env"` or open a new terminal, or `uv` will be "command not
+  found" immediately after a successful install.
+
+### The skills
 
 ```bash
 npx skills add scrollmark/social-skills
 ```
 
-This copies each skill folder into your Claude Code skills directory. Every skill is
-self-contained — it ships the reference files *and the executables* it needs — so a copied
-install has the exact same behaviour as a cloned one.
-
-The video skills that drive the engine also want the Python package. It is independent of
-the skills and installed separately:
+Needs Node. If you would rather not install Node, the same thing without it — note the
+`--strip-components` and the permanent directory, both of which matter:
 
 ```bash
-pip install 'video-studio-engine[standard] @ git+https://github.com/scrollmark/social-skills.git'
+mkdir -p ~/social-skills
+curl -Ls https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz \
+  | tar xz --strip-components=1 -C ~/social-skills
+~/social-skills/install.sh
 ```
+
+`install.sh` **symlinks** into that directory, so it has to live somewhere permanent —
+extract to `/tmp` and every skill dies at the next purge, all at once and with no error.
+
+Every skill is self-contained — it ships the reference files *and the executables* it
+needs — so a copied install has the exact same behaviour as a cloned one.
+
+### The engine
+
+The video skills want the Python package. It is independent of the skills, and this route
+needs no git, no system Python and no Xcode tools:
+
+```bash
+uv tool install --python 3.12 --refresh \
+  'video-studio-engine[standard] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'
+```
+
+Three details are load-bearing:
+
+- **A tarball URL, not `git+https`.** The git form makes pip shell out to `git`; without it
+  pip reports *"No matching distribution found"*, and a reasonable person concludes the
+  package does not exist. The tarball needs no git at all.
+- **`--python 3.12`, pinned.** `requires-python` is `>=3.11` with no ceiling, so uv would
+  otherwise pick 3.13 — where the `[audio]` extra's `kokoro` marker excludes it, the
+  install succeeds, and you silently have no voice.
+- **`--refresh`.** GitHub's tarball endpoint returns only an `ETag`, and uv will serve its
+  cached copy indefinitely without so much as an HTTP request. Without this, "reinstall to
+  get the latest" quietly lies.
+
+Plain `pip install '<same URL>'` works too if you already have Python 3.11+.
 
 See [What ships where](#what-ships-where) for which skills need it and what skipping it
 actually costs.

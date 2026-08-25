@@ -12,7 +12,7 @@ does not move, because being vague there costs an editor an afternoon.
 
 ## Requires
 
-`pip install 'video-studio-engine[export] @ git+https://github.com/scrollmark/social-skills.git'`
+`pip install 'video-studio-engine[export] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`
 covers all three exporters (`export_fcpxml`, `export_capcut`, `export_edit`); only
 `export_edit` needs the `[export]` bracket, for OpenTimelineIO. None is bundled —
 each reads the engine's timeline document and composer directory. No install, no

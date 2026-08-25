@@ -118,7 +118,7 @@ two legal answers, and which one applies is decided by the program, not by prefe
 
 - **Bundle it** at `skills/<name>/scripts/<script>.py` when it is standard-library only,
   stateless, and takes its input on the command line. It then travels with every install.
-- **Reach it through an installed package** — `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'`, invoked as
+- **Reach it through an installed package** — `pip install 'video-studio-engine @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`, invoked as
   `video-studio <command>` — when it carries third-party dependencies or reads a project's
   state. Never a relative path to `src/`.
 

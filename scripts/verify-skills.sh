@@ -180,10 +180,11 @@ done < <(find "$SKILLS_ROOT" -path '*/scripts/*' -type f \
 #    `.root` path, then showrunner's own README (#75), then the website, then
 #    every skill here. The guard is cheaper than the fifth.
 while IFS= read -r hit; do
-  err "${hit%%:*} tells the reader to install from PyPI — the engine is not published there. Use: pip install 'video-studio-engine[extras] @ git+https://github.com/scrollmark/social-skills.git'"
+  err "${hit%%:*} tells the reader to install from PyPI — the engine is not published there. Use the repo: either the tarball URL (needs no git) or git+https://github.com/scrollmark/social-skills.git"
 done < <(grep -rn --binary-files=without-match "pip install ['\"]*video-studio-engine" \
            --exclude-dir=.git --exclude-dir=__pycache__ "$REPO_DIR" 2>/dev/null \
-         | grep -v 'git+https' | grep -v 'verify-skills.sh' \
+         | grep -v 'git+https' | grep -v 'archive/refs/heads' \
+         | grep -v 'verify-skills.sh' \
          | grep -v 'not published there' \
          | grep -v 'install-command-ok')
 #    Two exclusions, both deliberate. A line saying "not published there" is
@@ -193,6 +194,12 @@ done < <(grep -rn --binary-files=without-match "pip install ['\"]*video-studio-e
 #    cannot see a URL that lives in a name, so without a marker the only way to
 #    satisfy it is to inline the literal at every construction site, which is
 #    the duplication this check exists to make unnecessary.
+#    TWO URL forms are accepted, and the difference matters. git+https makes pip
+#    or uv shell out to `git`, which on a stock Mac is an xcrun shim that pops a
+#    2GB install dialog — and when it is absent pip reports "No matching
+#    distribution found", so the reader concludes the package does not exist.
+#    The archive/refs/heads tarball needs no git at all. Both are correct; only
+#    PyPI is wrong, because nothing is published there.
 #    The last exclusion is deliberate: README and the website both quote the
 #    bare command in order to say it does NOT work. Naming the wrong form is
 #    how a reader learns not to retype it, so a line that also says "not

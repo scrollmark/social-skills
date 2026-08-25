@@ -11,7 +11,7 @@ Two questions, two scripts. *What can I use right now* is the bundled `scripts/d
 
 `scripts/doctor.py` **ships with this skill** — stdlib-only, so the status report works the moment the skill is installed. It reads keys from `.env` in the current project, then `~/.config/video-studio/.env`, then the shell.
 
-`setup.py` does not ship here: it installs into the engine's own composer directory, so it is not a lone file. It needs `pip install 'video-studio-engine @ git+https://github.com/scrollmark/social-skills.git'` and runs as `video-studio setup`. **Without that install there is no install plan and no auto/system/manual classification** — you keep doctor's report of what is reachable, but you lose the one thing that stops an agent from running a package-manager install nobody asked for, and you are back to fixing gaps by hand. `references/tooling-inventory.md` in this skill is the map; only doctor knows the state.
+`setup.py` does not ship here: it installs into the engine's own composer directory, so it is not a lone file. It needs `pip install 'video-studio-engine @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'` and runs as `video-studio setup`. **Without that install there is no install plan and no auto/system/manual classification** — you keep doctor's report of what is reachable, but you lose the one thing that stops an agent from running a package-manager install nobody asked for, and you are back to fixing gaps by hand. `references/tooling-inventory.md` in this skill is the map; only doctor knows the state.
 
 ## Checking an Environment
 

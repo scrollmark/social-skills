@@ -19,7 +19,7 @@ extras, captions, objects and speech.
 
 Install what you need, not everything:
 
-  pip install 'video-studio-engine[qc] @ git+https://github.com/scrollmark/social-skills.git'
+  pip install 'video-studio-engine[qc] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'
 
 then optionally `[qc-ocr]` (captions, text layout), `[qc-yolo]` (planned
 subjects, entity tracking), `[qc-face]` (lip sync), `[qc-clip]` (prompt fit).
@@ -108,7 +108,7 @@ def main() -> None:
                 # source line — verify-skills.sh greps line by line for an
                 # install that names no git URL, and a command split across two
                 # lines reads to it exactly like the PyPI mistake it guards.
-                url = "git+https://github.com/scrollmark/social-skills.git"
+                url = "https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz"
                 command = f"pip install 'video-studio-engine[{brackets}] @ {url}'"  # install-command-ok
                 print(f"  {command}")
             other = [s for s in skipped if s.get("code") != "missing_extra"]
