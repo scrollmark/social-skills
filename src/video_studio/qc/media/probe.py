@@ -65,7 +65,8 @@ def probe(video_path: str) -> VideoInfo:
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
     except FileNotFoundError as e:
         raise ProbeError(
-            "ffprobe not found on PATH — install ffmpeg (e.g. `brew install ffmpeg`)"
+            "ffprobe not found on PATH — install ffmpeg (`brew install ffmpeg-full`, "
+            "then add /opt/homebrew/opt/ffmpeg-full/bin to PATH; it is keg-only)"
         ) from e
     except subprocess.CalledProcessError as e:
         raise ProbeError(f"ffprobe failed for {video_path}: {e.stderr.strip()}") from e

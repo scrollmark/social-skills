@@ -81,9 +81,73 @@ PROVIDERS = [
 
 TOOLS = [("ffmpeg", "measurement, keying, loudness"), ("ffprobe", "duration probing"), ("node", "rendering")]
 
-# The quality gate is a separate CLI. When it is absent, step 8 of the workflow
-# cannot run — which is worth knowing BEFORE the render, not after.
-OPTIONAL_TOOLS = [("showwatcher", "quality gate (step 8); without it, verify frames by hand")]
+
+def check_caption_burn() -> tuple[str, bool, str]:
+    """Whether the ffmpeg on PATH can burn captions, not merely whether it exists.
+
+    Homebrew's mainline `ffmpeg` is a slim build: no libass, so no `subtitles`
+    filter. It measures, trims, keys and renders perfectly, reports a healthy
+    version, and then `burn_captions` fails — the one failure a presence check
+    cannot see. On macOS the build that works is `ffmpeg-full`, which is
+    keg-only and has to be put on PATH by hand.
+    """
+    import subprocess
+
+    if shutil.which("ffmpeg") is None:
+        ok = False
+    else:
+        try:
+            r = subprocess.run(["ffmpeg", "-hide_banner", "-filters"],
+                               capture_output=True, text=True, timeout=30)
+            ok = any(line.split()[1:2] == ["subtitles"]
+                     for line in r.stdout.splitlines() if line.strip())
+        except (OSError, subprocess.SubprocessError):
+            ok = False
+    return ("caption burn-in", ok, "ffmpeg needs libass for the `subtitles` filter — on a Mac, ffmpeg-full")
+
+# The step-8 quality gate, in the two sizes it actually ships in.
+#
+# This list used to name `showwatcher`, and that was worse than useless: it was
+# never published anywhere, so the doctor reported a gap that no reader could
+# close, no matter what they installed. Both replacements are real and both are
+# reachable, so a `--` here is now something you can act on.
+QUALITY_GATE = [
+    ("qc_render", "render gate (step 8), bundled — checks a render against its plan"),
+    ("qc_analyze", "frame gate (step 8) — `video-studio qc_analyze`; needs the [qc] extra"),
+]
+
+
+def check_quality_gate() -> list[tuple[str, bool, str]]:
+    """Resolve both gates the way each is actually reached.
+
+    `qc_render.py` is a bundled sibling of this script, so it is found on disk
+    rather than on PATH. It ships with `video-production`; this file is a
+    byte-identical copy in `studio-setup`, which does not bundle it, so look in
+    the sibling skill too. `.resolve()` first — these skills are installed as
+    symlinks into ~/.claude/skills, and the sibling only exists in the repo the
+    link points at.
+    """
+    here = Path(__file__).resolve().parent
+    candidates = [here / "qc_render.py",
+                  here.parent.parent / "video-production" / "scripts" / "qc_render.py"]
+    bundled = any(c.exists() for c in candidates)
+    # The frame gate is a subcommand of the engine CLI, not a binary of its own,
+    # and the CLI being on PATH does NOT mean it can run: the engine imports
+    # numpy at module scope, so without the [qc] extra it is present and
+    # useless. `which` reported OK in exactly that state. Ask it instead —
+    # `--list` is the cheapest call that exercises the same imports a real run
+    # needs, and it is the same reasoning as check_local_voice() above.
+    import subprocess
+
+    try:
+        deep = subprocess.run(
+            ["video-studio", "qc_analyze", "--list"],
+            capture_output=True, text=True, timeout=60,
+        ).returncode == 0
+    except (FileNotFoundError, subprocess.SubprocessError):
+        deep = False
+    available = {"qc_render": bundled, "qc_analyze": deep}
+    return [(tool, available[tool], why) for tool, why in QUALITY_GATE]
 
 
 def check_local_voice() -> tuple[bool, str]:
@@ -142,9 +206,11 @@ def status() -> dict:
         })
     for tool, why in TOOLS:
         out["tools"].append({"tool": tool, "available": shutil.which(tool) is not None, "why": why})
-    for tool, why in OPTIONAL_TOOLS:
+    tool, available, why = check_caption_burn()
+    out["tools"].append({"tool": tool, "available": available, "why": why, "optional": True})
+    for tool, available, why in check_quality_gate():
         out["tools"].append({
-            "tool": tool, "available": shutil.which(tool) is not None, "why": why, "optional": True,
+            "tool": tool, "available": available, "why": why, "optional": True,
         })
     return out
 

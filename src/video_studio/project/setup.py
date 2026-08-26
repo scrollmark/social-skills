@@ -35,6 +35,7 @@ import platform
 import shutil
 import subprocess
 import sys
+from importlib.util import find_spec
 from pathlib import Path
 
 from video_studio.paths import studio_root
@@ -102,9 +103,28 @@ def auq_configured() -> bool:
     return False
 
 
-def pkg_install(pkg: str) -> tuple[list[str] | None, str]:
-    """The right system package-manager invocation for this machine."""
+def ffmpeg_has_filter(name: str) -> bool:
+    """Ask ffmpeg for its filter list; absent or unrunnable both mean no."""
+    if not have("ffmpeg"):
+        return False
+    try:
+        r = subprocess.run(["ffmpeg", "-hide_banner", "-filters"],
+                           capture_output=True, text=True, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return any(line.split()[1:2] == [name] for line in r.stdout.splitlines() if line.strip())
+
+
+def pkg_install(pkg: str, mac_pkg: str | None = None) -> tuple[list[str] | None, str]:
+    """The right system package-manager invocation for this machine.
+
+    `mac_pkg` exists because Homebrew's formula name is not always the right
+    one. Mainline `ffmpeg` is a slim build with no libass, which measures and
+    renders perfectly and then cannot burn a caption; `ffmpeg-full` has it.
+    Linux distribution builds do ship libass, so only the mac name differs.
+    """
     if IS_MAC:
+        pkg = mac_pkg or pkg
         if have("brew"):
             return ["brew", "install", pkg], f"brew install {pkg}"
         return None, (
@@ -168,7 +188,7 @@ def keys_present() -> list[str]:
 
 
 def build_components() -> list[dict]:
-    ff_cmd, ff_note = pkg_install("ffmpeg")
+    ff_cmd, ff_note = pkg_install("ffmpeg", mac_pkg="ffmpeg-full")
     node_cmd, node_note = pkg_install("node")
 
     comps: list[dict] = [
@@ -191,6 +211,23 @@ def build_components() -> list[dict]:
             "kind": "system",
             "cmd": ff_cmd,
             "note": ff_note,
+        },
+        {
+            "id": "libass",
+            "label": "caption burn-in",
+            "why": "burn_captions needs ffmpeg's `subtitles` filter, which needs libass",
+            # Presence of ffmpeg was never the real question. A slim build is
+            # on PATH, reports a fine version, passes every other check, and
+            # fails only at the burn — so ask the binary what it can do.
+            "ok": ffmpeg_has_filter("subtitles"),
+            "required": False,
+            "kind": "system",
+            "cmd": None,
+            "note": (
+                "brew install ffmpeg-full  (keg-only — then add "
+                "/opt/homebrew/opt/ffmpeg-full/bin to PATH)"
+                if IS_MAC else "rebuild or reinstall ffmpeg with libass enabled"
+            ),
         },
         {
             "id": "node",
@@ -240,12 +277,21 @@ def build_components() -> list[dict]:
         {
             "id": "qc",
             "label": "quality check",
-            "why": "the automated pass in step 8; without it, frames are verified by hand",
-            "ok": have("showwatcher"),
+            "why": "the frame-level pass in step 8; without it, frames are verified by hand",
+            # This used to probe PATH for `showwatcher`, which was never
+            # published — so the row could only ever read "missing" and its
+            # note sent the reader to a repo that does not exist. The gate now
+            # lives in this package as `video-studio qc_analyze`, so what is
+            # actually optional is the [qc] extra it decodes frames with.
+            #
+            # `scenedetect` is the one to test: it is the heaviest of the five
+            # and pulls opencv transitively, so it is the piece most likely to
+            # be absent when the others are present.
+            "ok": find_spec("scenedetect") is not None,
             "required": False,
             "kind": "system",
             "cmd": None,
-            "note": "internal tool — install from its own repo; the workflow degrades gracefully without it",
+            "note": "pip install 'video-studio-engine[qc] @ git+https://github.com/scrollmark/social-skills.git'",
         },
     ]
 

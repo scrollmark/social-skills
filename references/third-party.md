@@ -16,7 +16,7 @@ aspirational.
 
 | Tool | Why | Activate |
 |---|---|---|
-| `ffmpeg` + `ffprobe` | Every duration measured, every clip trimmed, all loudness and keying. 19 call sites | `brew install ffmpeg` |
+| `ffmpeg` + `ffprobe` | Every duration measured, every clip trimmed, all loudness and keying. 19 call sites | `brew install ffmpeg-full` — mainline `ffmpeg` is a slim build with no libass, so caption burn-in fails. Keg-only: add `/opt/homebrew/opt/ffmpeg-full/bin` to PATH |
 | `node` 18+ | The composer renders and previews through it | `brew install node` |
 | `uv` | Runs every bundled script with its own pinned dependencies | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 
