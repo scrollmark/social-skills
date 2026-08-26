@@ -41,8 +41,10 @@ import sys
 
 
 def main() -> None:
-    from video_studio.qc.engine import KNOWN_DETECTORS, AnalyzeOptions, analyze
-
+    # Parse BEFORE importing the engine. The engine pulls numpy at module
+    # scope, so importing first made `--help` and `--list` die with a
+    # traceback in any environment without the [qc] extra — the two flags a
+    # reader uses precisely to find out what this needs.
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--video")
     ap.add_argument("--project", help="the project directory holding plan.json")
@@ -51,6 +53,22 @@ def main() -> None:
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--list", action="store_true", help="print detector names and exit")
     a = ap.parse_args()
+
+    try:
+        from video_studio.qc.engine import KNOWN_DETECTORS, AnalyzeOptions, analyze
+    except ModuleNotFoundError as exc:
+        # Say which module and how to get it. A bare ModuleNotFoundError here
+        # reads as a broken install rather than an absent optional extra.
+        # Keep the whole command on ONE source line. Split across two, the
+        # first half reads as a bare PyPI install — which verify-skills.sh
+        # rejects, correctly: the engine is not published there.
+        install = (
+            "pip install 'video-studio-engine[qc] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'"  # noqa: E501
+        )
+        raise SystemExit(
+            f"the [qc] extra is not installed in this environment "
+            f"(no module named {exc.name!r}).\n  {install}"
+        ) from exc
 
     if a.list:
         for spec in KNOWN_DETECTORS:

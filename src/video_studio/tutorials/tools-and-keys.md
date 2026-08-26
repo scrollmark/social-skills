@@ -67,12 +67,21 @@ CHECK: Do you know whether your last video's score can be published?
 
 ## Step 5 — What is missing, and what that costs you
 
-`showwatcher` is the automated quality gate and is usually not installed. When
-it is absent, verification happens by hand — frames pulled and actually looked
-at, duration and loudness confirmed.
+The automated quality gate comes in two sizes, and knowing which one you have
+changes what you still owe the video.
 
-That works, and it is the only step whose guarantee depends on someone
-remembering. If a video ever ships broken, this is the step that was skipped.
+`qc_render` is bundled with the `video-production` skill. It needs no install
+and always runs: it checks a finished render against the `plan.json` it was
+built from — duration, dimensions, frame rate, audio presence.
 
-TRY: Check whether `showwatcher` shows OK in doctor.
-CHECK: If it is missing, do you know what has to happen instead?
+`qc_analyze` decodes actual frames and needs the `[qc]` extra. It is the one
+that catches a black tail, a frozen scene, or a caption running past its
+audio. This is the one that is often missing.
+
+Neither judges whether the video is any GOOD. That part never automates: pull
+frames, look at them, and say that you did. It is the only step whose
+guarantee depends on someone remembering, so if a video ever ships broken,
+this is the step that was skipped.
+
+TRY: Run doctor and see which of `qc_render` and `qc_analyze` show OK.
+CHECK: If `qc_analyze` is missing, do you know what has to happen instead?

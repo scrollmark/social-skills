@@ -194,10 +194,25 @@ quiet. In dependency order:
 |---|---|---|
 | **Node 18+** (22.20+ for `npx skills add`) | the skills, and rendering | [nodejs.org](https://nodejs.org) `.pkg` — double-click, no terminal |
 | **`uv`** | the engine, without touching your system Python | `curl -LsSf https://astral.sh/uv/install.sh \| sh` — 2s, no admin |
-| **`ffmpeg`** and **`ffprobe`** | nearly every program | `brew install ffmpeg` |
+| **`ffmpeg`** and **`ffprobe`** | nearly every program | `brew install ffmpeg-full` — not `ffmpeg`, see below |
 | **Python 3.11+** | the engine | uv fetches its own — you do not need to install one |
 
 Two things that bite people, both verified rather than guessed:
+
+- **`brew install ffmpeg` is the wrong one.** Homebrew's mainline `ffmpeg` is now a slim
+  build: its configure line carries no `--enable-libass`, `--enable-libfreetype` or
+  `--enable-fontconfig`. Everything measures and renders fine, and then `burn_captions`
+  fails, because burning subtitles needs the `subtitles` filter and that filter needs
+  libass. `ffmpeg-full` has it. It is **keg-only**, so brew deliberately does not link it
+  and you must put it on PATH yourself:
+
+  ```
+  brew install ffmpeg-full
+  echo 'export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"' >> ~/.zshrc
+  ```
+
+  Check the build you ended up with, rather than the version number:
+  `ffmpeg -filters | grep -w subtitles`. No output means captions cannot be burned.
 
 - `/usr/bin/python3` on a Mac is **not** a Python. It is an `xcrun` shim sharing an inode
   with `/usr/bin/git`, and on a machine without Xcode Command Line Tools it pops a ~2GB
