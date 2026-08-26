@@ -60,11 +60,18 @@ def test_gate_reports_false_when_nothing_is_reachable(tmp_path: Path) -> None:
     scripts.mkdir(parents=True)
     shutil.copy(DOCTORS[0], scripts / "doctor.py")
 
+    # PATH must be an EMPTY directory, not "/usr/bin:/bin". On a Mac those hold
+    # no ffmpeg, so the first version of this test passed locally and failed on
+    # Ubuntu, where /usr/bin/ffmpeg exists and has libass — making the caption
+    # row correctly True and the assertion wrong. Isolation has to be real,
+    # not a guess about what a given platform keeps in /usr/bin.
+    empty = tmp_path / "empty-path"
+    empty.mkdir()
     payload = json.loads(
         subprocess.run(
             [sys.executable, str(scripts / "doctor.py"), "--json"],
             capture_output=True, text=True, check=True,
-            env={"PATH": "/usr/bin:/bin", "HOME": str(tmp_path)},
+            env={"PATH": str(empty), "HOME": str(tmp_path)},
         ).stdout
     )
     assert optional_rows(payload) == {
