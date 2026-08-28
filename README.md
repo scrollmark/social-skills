@@ -225,7 +225,8 @@ Two things that bite people, both verified rather than guessed:
 ### The skills
 
 ```bash
-npx skills add scrollmark/social-skills
+npx skills add scrollmark/social-skills                    # all sixteen
+npx skills add scrollmark/social-skills -s hook-anatomy    # just one
 ```
 
 Needs Node. If you would rather not install Node, the same thing without it — note the
@@ -235,8 +236,13 @@ Needs Node. If you would rather not install Node, the same thing without it — 
 mkdir -p ~/social-skills
 curl -Ls https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz \
   | tar xz --strip-components=1 -C ~/social-skills
-~/social-skills/install.sh
+~/social-skills/install.sh                                 # all sixteen
+~/social-skills/install.sh hook-anatomy                    # just one
 ```
+
+The two routes take a single skill differently, which is easy to trip over: `npx skills
+add` wants the `-s` flag, `install.sh` takes bare names. `install.sh --list` prints what
+is available, and an unknown name is refused rather than half-installed.
 
 `install.sh` **symlinks** into that directory, so it has to live somewhere permanent —
 extract to `/tmp` and every skill dies at the next purge, all at once and with no error.
