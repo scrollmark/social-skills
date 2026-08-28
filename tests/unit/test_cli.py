@@ -16,6 +16,8 @@ from pathlib import Path
 
 import pytest
 
+import video_studio.cli as cli
+
 SRC = Path(__file__).resolve().parents[2] / "src"
 
 
@@ -46,3 +48,31 @@ def test_string_systemexit_prints_its_message():
     assert r.returncode == 1, f"expected exit 1, got {r.returncode}"
     assert "Traceback" not in r.stderr, f"error path raised instead of reporting:\n{r.stderr[-400:]}"
     assert "provider" in r.stderr.lower()
+
+
+def test_main_defaults_virtual_env_to_sys_prefix(monkeypatch):
+    """`uv tool install` — the README's documented route for this package —
+    runs the installed `video-studio` console-script directly against its own
+    venv's python, and that entry path never sets VIRTUAL_ENV (unlike `uv
+    run`, which does). tts_kokoro's first-run spaCy model bootstrap shells out
+    to `uv pip install`, and that subprocess reads VIRTUAL_ENV to know which
+    environment to target; without it, uv refuses with "No virtual
+    environment found ... pass --system" even though we are demonstrably
+    running inside one. Reproduced by hand on a machine that had never
+    synthesized narration before: installing the audio extra via uv's tool
+    route, then running tts_kokoro, failed with exactly that error; unsetting
+    VIRTUAL_ENV before calling `main()` reproduces it here.
+    """
+    monkeypatch.delenv("VIRTUAL_ENV", raising=False)
+    assert cli.main(["help"]) == 0
+    assert os.environ["VIRTUAL_ENV"] == sys.prefix
+
+
+def test_main_does_not_override_an_existing_virtual_env(monkeypatch):
+    """`uv run` already sets VIRTUAL_ENV to its own ephemeral env; the
+    dispatcher must not clobber that with sys.prefix of whatever interpreter
+    happens to be running it.
+    """
+    monkeypatch.setenv("VIRTUAL_ENV", "/some/other/venv")
+    assert cli.main(["help"]) == 0
+    assert os.environ["VIRTUAL_ENV"] == "/some/other/venv"

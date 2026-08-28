@@ -15,10 +15,22 @@ Three ways in, all equivalent:
 
 The third is the one to reach for in a skill: it names the module explicitly and
 survives this dispatcher being renamed.
+
+VIRTUAL_ENV is set here, defensively, for every entry path. `uv tool install`
+(the README's documented route for this package) runs the installed
+`video-studio` console-script directly against its own venv's python, which
+never sets VIRTUAL_ENV -- unlike `uv run`, which does. tts_kokoro's first-run
+spaCy model bootstrap shells out to `uv pip install` and that subprocess reads
+VIRTUAL_ENV to know which environment to install into; without it, uv refuses
+with "No virtual environment found ... pass --system", even though we are
+demonstrably running inside one (sys.prefix names it). setdefault leaves an
+already-set VIRTUAL_ENV alone, so `uv run` and the manual `.venv-tts` recipe in
+tts_kokoro's own INSTALL_HINT are unaffected.
 """
 
 from __future__ import annotations
 
+import os
 import runpy
 import sys
 
@@ -94,6 +106,8 @@ def _usage() -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # See the VIRTUAL_ENV paragraph in this module's docstring.
+    os.environ.setdefault("VIRTUAL_ENV", sys.prefix)
     args = list(sys.argv[1:] if argv is None else argv)
     if not args or args[0] in ("-h", "--help", "help"):
         print(_usage())
