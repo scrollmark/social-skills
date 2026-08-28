@@ -612,12 +612,43 @@ const Captions: React.FC<{ words: CaptionWord[]; style?: VideoProps["captionStyl
             : style?.color ?? "#ffffff";
         const wig = style?.wiggle ?? 0;
         const pop = active ? style?.bounce ?? 1 : 1;
+        // Words are separated by margin alone — there is no whitespace text
+        // node between these spans — and neither of the two things that make a
+        // word bigger reserves any of it. `transform: scale()` is painted, not
+        // laid out, and -webkit-text-stroke paints outside the glyph's metrics.
+        // So a bouncing, stroked word grows into the gap and collides with its
+        // neighbour: "watching physics," renders as "watchingphysics,".
+        //
+        // The room is reserved here instead. Two terms, each covering one
+        // cause, and both are per word rather than a flat constant — a scaled
+        // word overflows by half its OWN width times (bounce - 1), so a long
+        // word overflows far more than a short one. A constant sized for
+        // "watching" still overlaps on "extraordinarily".
+        //
+        // CHAR_EM is the width of an average character, measured rather than
+        // guessed: sampled across this weight and family it runs 0.28em ("lll")
+        // to 0.83em ("MMM"), mean 0.50. The high end is what matters, because
+        // underestimating is what produces the bug, and uppercase is a
+        // supported caption option. 0.7 clears every case tried, including
+        // all-caps at bounce 1.4; 0.5 does not.
+        //
+        // Both terms vanish at bounce 1 with no stroke, so captions that use
+        // neither are spaced exactly as before.
+        const CHAR_EM = 0.7;
+        const fontSizePx = style?.fontSize ?? 56;
+        const strokePx = style?.stroke ? style?.strokeWidth ?? 6 : 0;
+        const bounceMax = style?.bounce ?? 1;
+        const halfBase = (style?.wordGap ?? 0.18) / 2;   // both sides sum to wordGap
+        const gapEm =
+          halfBase +
+          strokePx / fontSizePx +
+          (Math.max(0, bounceMax - 1) * (w.text.length * CHAR_EM)) / 2;
         return (
           <span
             key={`${gi}`}
             style={{
               color: colour,
-              margin: `0 ${style?.wordGap ?? 0.18}em`,
+              margin: `0 ${gapEm}em`,
               display: "inline-block",
               // rotate/scale need inline-block to apply to the word box
               transform: `rotate(${wig ? (gi % 2 ? wig : -wig) : 0}deg) scale(${pop})`,
