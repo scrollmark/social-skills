@@ -31,17 +31,32 @@ import os
 from pathlib import Path
 
 API = "https://freesound.org/apiv2"
-CC0 = ("Creative Commons 0",)
-BY = ("Attribution",)
+
+#: Freesound returns the licence as a URL, not a display name — e.g.
+#: "http://creativecommons.org/publicdomain/zero/1.0/". The first version of
+#: this filter matched display names ("Creative Commons 0", "Attribution"),
+#: which no response has ever contained, so every result was rejected and the
+#: script reported "no acceptably-licensed result" for every query ever run.
+#: Both forms are matched now: a display name costs nothing to keep and means
+#: the filter does not silently empty itself again if the field changes back.
+NONCOMMERCIAL = ("-nc", "noncommercial")
+PUBLIC_DOMAIN = ("publicdomain", "zero", "creative commons 0", "cc0")
+ATTRIBUTION = ("licenses/by/", "attribution")
 
 
 def acceptable(license_name: str, allow_attribution: bool) -> bool:
-    name = (license_name or "")
-    if "Noncommercial" in name or "NonCommercial" in name:
+    """Is this licence one we can hand downstream without an obligation?
+
+    Order matters. "licenses/by-nc/4.0/" contains "licenses/by", so the
+    non-commercial rejection has to run first — matching attribution first
+    would accept exactly the licences this script exists to refuse.
+    """
+    name = (license_name or "").lower()
+    if any(k in name for k in NONCOMMERCIAL):
         return False  # never — downstream use is commercial
-    if any(k in name for k in CC0):
+    if any(k in name for k in PUBLIC_DOMAIN):
         return True
-    return allow_attribution and any(k in name for k in BY)
+    return allow_attribution and any(k in name for k in ATTRIBUTION)
 
 
 def main() -> None:
