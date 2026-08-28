@@ -297,9 +297,25 @@ def render(shape, shapes, seconds, out, bg, fg, size, hold, stroke, pos, scale, 
     cx, cy = W * pos[0], H * pos[1]
     s = min(W, H) * scale
     enc = subprocess.Popen(
+        # The colour tags are not decoration. Frames arrive here as raw RGB with
+        # no signalling of their own, so without them the file carries
+        # colour_range/space/primaries/trc as "unknown" — where stock footage
+        # and camera files say tv/bt709. A player then has to guess, and
+        # different players guess differently: Remotion's OffthreadVideo reads
+        # an untagged clip as full-range and lifts it, so generated shots sit
+        # visibly brighter than the real footage they are cut against.
         ["ffmpeg", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
          "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "medium",
-         "-crf", "18", "-pix_fmt", "yuv420p", out],
+         "-crf", "18", "-pix_fmt", "yuv420p",
+         "-color_range", "tv", "-colorspace", "bt709",
+         "-color_primaries", "bt709", "-color_trc", "bt709",
+         # The generic flags alone are not enough: on ffmpeg 9 with libx264
+         # they set range and matrix, and primaries and transfer still probe as
+         # "unknown". x264 has to be told directly before it writes them into
+         # the bitstream. Both are kept — the container atom and the bitstream
+         # VUI are not read by the same players.
+         "-x264-params", "colorprim=bt709:transfer=bt709:colormatrix=bt709",
+         out],
         stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     frame = None
     for i in range(n):
