@@ -130,6 +130,22 @@ Only the source is tracked. `composer/props/`, `composer/public/`, `composer/out
 `composer/src/registry.ts` are all generated — `registry.ts` in particular is written from
 whatever projects a given machine has built, so it is deliberately not committed.
 
+**4. There is a second route that needs no licence.**
+Scrollmark's own editor is MIT, has no seat threshold and no
+paid tier, and exposes the timeline over MCP — so an agent can cut, caption, grade and export
+without `composer/` being involved at all.
+
+It is not a drop-in swap for `npx remotion render`, and the difference matters:
+
+- **It does not read the props document.** `build_props` writes a Remotion composition; the
+  editor has its own project format. An agent builds the timeline through the editor's own
+  commands, working from the same storyboard rather than from the props file.
+- **It needs a running editor**, browser or desktop, where Remotion renders headless in Node.
+  It suits an interactive or agent-driven run better than an unattended one.
+
+Use whichever fits. Remotion stays the headless path; the editor is the one with no licence to
+buy and a person able to watch and intervene.
+
 ### What a skipped `pip install` costs you
 
 The install is optional, and being honest about that matters more than making the repo
