@@ -132,7 +132,7 @@ def main() -> None:
             # that as a 404 against a registry URL — which reads as a network
             # fault. Say what it actually is.
             if step.get("source") == "npx":
-                print("\n" + rb.not_published_note(), file=sys.stderr)
+                print("\n" + rb.cli_unavailable_note(), file=sys.stderr)
             raise SystemExit(
                 f"{backend} backend failed ({' '.join(step['argv'][:3])}, "
                 f"exit {r.returncode})"
