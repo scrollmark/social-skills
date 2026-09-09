@@ -139,15 +139,12 @@ headless Chrome over it, because that export pipeline is WebGPU + OffscreenCanva
 WebCodecs. It writes the same `plan.json` step 8 already reads, so the quality gate is
 unchanged.
 
-Two things to know before choosing it:
+`npx @scrollmark/cli` installs it — the package carries a built copy of the editor, so there
+is nothing to clone and no editor to start first. **This is the default.**
 
-- **`@scrollmark/cli` is not published to npm yet**, so it only runs from a checkout of
-  `scrollmark/editor` with `SCROLLMARK_CLI` pointed at it.
-- **`scrollmark render` needs a running Studio** and will not start one, where Remotion
-  renders headless in Node.
-
-Remotion stays the default until that changes. Neither the composer nor Remotion is going
-away in this change.
+The composer is still there and still reachable as `--backend remotion`. It renders three of
+its six effects that the editor does not, and the per-word caption emphasis behind
+`highlight`, so it is a choice rather than a leftover.
 
 ### What a skipped `pip install` costs you
 

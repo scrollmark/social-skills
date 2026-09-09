@@ -22,12 +22,12 @@ from conftest import run_cli
 
 # --- selection ---------------------------------------------------------
 
-def test_remotion_is_the_default():
-    """It stays the default until @scrollmark/cli is published. A default that
-    points at an unpublished package turns every fresh machine into a support
-    ticket."""
-    assert rb.resolve_backend(None, env={}, config={}) == "remotion"
-    assert rb.DEFAULT_BACKEND == "remotion"
+def test_the_editor_is_the_default():
+    """It became the default when @scrollmark/cli published. Before that it
+    could only run from a checkout of a private repository, which is not a
+    default anyone outside the org could use."""
+    assert rb.resolve_backend(None, env={}, config={}) == "editor"
+    assert rb.DEFAULT_BACKEND == "editor"
 
 
 def test_env_var_selects_a_backend():
@@ -89,11 +89,15 @@ def test_it_falls_through_to_npx(monkeypatch):
     assert source == "npx"
 
 
-def test_the_failure_note_says_the_package_is_not_published(monkeypatch):
-    note = rb.not_published_note()
-    assert "NOT PUBLISHED" in note
-    assert "scrollmark/editor" in note, "the note must say where to get it instead"
+def test_the_failure_note_does_not_blame_the_registry(monkeypatch):
+    # npm's own failure is a URL and a status code, which reads as "the package
+    # is missing" whatever actually went wrong. It is published, so the note
+    # must not send anyone looking for a package that is right there.
+    note = rb.cli_unavailable_note()
+    assert "NOT PUBLISHED" not in note
+    assert "scrollmark/editor" in note, "the note must say where a checkout would be"
     assert rb.ENV_CLI in note, "the note must name the override that fixes it"
+    assert "remotion" in note, "the note must name the backend that still works"
 
 
 # --- the command lines -------------------------------------------------
@@ -141,8 +145,24 @@ def test_dry_run_editor_prints_both_commands(project: Path, monkeypatch):
     assert "composer" not in json.dumps(out)
 
 
-def test_dry_run_defaults_to_remotion(project: Path, monkeypatch):
+def test_dry_run_defaults_to_the_editor(project: Path, monkeypatch):
     monkeypatch.delenv(rb.ENV_BACKEND, raising=False)
+    monkeypatch.delenv(rb.ENV_CLI, raising=False)
+    r = run_cli("render", "--project", str(project), "--dry-run")
+    assert r.returncode == 0, r.stderr
+    out = json.loads(r.stdout)
+    assert out["backend"] == "editor"
+    # Two steps, and in this order: a storyboard becomes a project document
+    # before anything renders it.
+    assert [step["argv"][-len(step["argv"]) + 0] for step in out["steps"]][:1]
+    assert "build" in out["steps"][0]["argv"]
+    assert "render" in out["steps"][1]["argv"]
+
+
+def test_remotion_is_still_reachable_by_name(project: Path, monkeypatch):
+    # It renders three effects and the per-word caption emphasis the editor
+    # does not, so it is a choice rather than a leftover.
+    monkeypatch.setenv(rb.ENV_BACKEND, "remotion")
     r = run_cli("render", "--project", str(project), "--dry-run")
     assert r.returncode == 0, r.stderr
     out = json.loads(r.stdout)
@@ -163,7 +183,10 @@ def test_remotion_refuses_when_props_were_never_built(project: Path, tmp_path: P
     """`render` does not run build_props for you — the sequencing rule is that
     you run it yourself, immediately before, and read what it says. Refusing is
     the only other honest option; rendering last week's props is not."""
-    monkeypatch.delenv(rb.ENV_BACKEND, raising=False)
+    # Named rather than defaulted: the editor backend is the default now, and
+    # it reads the storyboard rather than a props file, so it has no props to
+    # be missing.
+    monkeypatch.setenv(rb.ENV_BACKEND, "remotion")
     r = run_cli("render", "--project", str(project),
                 "--composer", str(tmp_path / "empty-composer"))
     assert r.returncode == 1

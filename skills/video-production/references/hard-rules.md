@@ -83,9 +83,9 @@ itself. Hand-placing files into `composer/public/clips/` does **not** work;
 
 ## The two backends are not equivalent
 
-`video-studio render` draws through the composer (`remotion`, the default) or
-through the Scrollmark editor's CLI (`editor`). They read the same storyboard
-and write the same `plan.json`, so step 8 does not change — but they do not draw
+`video-studio render` draws through the Scrollmark editor's CLI (`editor`, the
+default) or through the composer (`remotion`). They read the same storyboard and
+write the same `plan.json`, so step 8 does not change — but they do not draw
 the same picture, and the differences are silent. Do not switch backends
 mid-project and compare the result to a memory of the last render.
 
@@ -96,17 +96,25 @@ What the editor backend does not do today:
   `music` is a bare path — so the bed plays at one flat level. A narrated video
   scored on Remotion and re-rendered on the editor loses the ducking and nothing
   says so.
-- **One effect of six.** `vignette` arrives; `grain`, `breath`, `lightLeak`,
-  `glow` and `clock` are reported unsupported and dropped.
+- **Three effects of six.** `vignette`, `glow` and `clock` arrive; `grain`,
+  `breath` and `lightLeak` are reported unsupported and dropped. The three that
+  are missing all need a paint at the frame's own resolution — a graphic
+  rasterises into a fixed 512x512 square first, which is what stops them.
 - **Captions are pages of words, not per-word emphasis.** `wordsPerPage`,
-  `uppercase`, `bottom`, `fontSize` and `color` are honoured; `highlight`,
-  `palette`, `bounce`, `wiggle`, `stroke`, `fontFamily` and `wordGap` are
-  warned about and ignored. Track-level caption style is taken from the FIRST
-  captioned scene, so a later scene that disagrees is a warning, not an override.
+  `uppercase`, `bottom`, `fontSize`, `color`, `stroke`, `strokeWidth` and
+  `fontFamily` are honoured. `highlight`, `palette`, `bounce` and `wiggle` are
+  warned about and ignored — they all decorate the highlighted word, and there
+  is no per-word emphasis inside a page. `wordGap` is ignored too, and for a
+  subtler reason: it is the margin *between words*, and the nearest thing here
+  spaces every letter, so honouring it would look plausible and be wrong.
+  Track-level caption style is taken from the FIRST captioned scene, so a later
+  scene that disagrees is a warning, not an override.
 - **No preflight, and no silent-narration check.** `scrollmark build` refuses a
   storyboard whose sources do not resolve, which covers the placeholder trap,
-  but a scene with written narration and no WAV falls back to `plannedSeconds`
-  and renders mute exactly as `preflight` was written to stop.
+  but a scene whose narration file is missing entirely falls back to
+  `plannedSeconds` and renders mute exactly as `preflight` was written to stop.
+  (The file may be `.wav`, `.mp3`, `.m4a` or `.ogg`; it must be named for the
+  scene id.)
 
 And in the other direction: **card `align` and `size` are drawn by neither.**
 Both accept the keys, both list them as known, and neither warns. Type that

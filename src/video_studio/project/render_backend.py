@@ -2,29 +2,31 @@
 
 There are two, and they are not interchangeable yet:
 
-  remotion  the composer in `composer/`. `build_props` writes
-            `composer/props/<slug>.json`, `preflight` checks it, and
-            `npx remotion render` draws it. This is the DEFAULT and the only
-            backend that installs today.
   editor    the Scrollmark editor's own CLI, `@scrollmark/cli`. It takes the
             storyboard directly: `scrollmark build` translates it into a
             Scrollmark project document (by running the editor's real Command
             objects headlessly — there is no second timeline implementation)
             and `scrollmark render` drives a headless Chrome over it, because
             that export pipeline is WebGPU + OffscreenCanvas + WebCodecs.
+            This is the DEFAULT. It needs no licence, and `npx @scrollmark/cli`
+            installs it — including a built copy of the editor, so there is
+            nothing to clone and no Studio to start first.
+  remotion  the composer in `composer/`. `build_props` writes
+            `composer/props/<slug>.json`, `preflight` checks it, and
+            `npx remotion render` draws it. Kept because it still renders
+            things the editor does not: three of the composer's six effects,
+            and the per-word caption emphasis behind `highlight`.
 
-The editor path is proven — four videos were rendered from raw footage through
-it — and it is **not published to npm yet**. That is the whole reason remotion
-stays the default and this module goes out of its way to say so when the
-command cannot be found. A backend that silently is not there is worse than no
-backend, and `npx` failing on a missing package prints npm's error, not ours.
+The default flipped when `@scrollmark/cli` published. Before that the editor
+path could only run from a checkout of a private repository, which is not a
+default anyone outside the org could use.
 
 Selection order, most specific first:
 
   1. an explicit `--backend`
   2. $VIDEO_STUDIO_RENDER_BACKEND
   3. `renderBackend` in <studio root>/.video-studio.json
-  4. "remotion"
+  4. "editor"
 
 Finding the editor CLI, same shape:
 
@@ -32,8 +34,8 @@ Finding the editor CLI, same shape:
      SCROLLMARK_CLI='node /path/to/editor/packages/cli/dist/index.js'
   2. `scrollmarkCli` in <studio root>/.video-studio.json
   3. `scrollmark` on PATH
-  4. `npx --yes @scrollmark/cli` — the eventual install, and today the one
-     that fails. `not_published_note()` is what to print when it does.
+  4. `npx --yes @scrollmark/cli` — the ordinary install, and the one a fresh
+     machine takes.
 """
 
 from __future__ import annotations
@@ -47,7 +49,7 @@ from pathlib import Path
 from video_studio.paths import studio_root
 
 #: Every backend `--backend` accepts. The first is the default.
-BACKENDS = ("remotion", "editor")
+BACKENDS = ("editor", "remotion")
 DEFAULT_BACKEND = BACKENDS[0]
 
 ENV_BACKEND = "VIDEO_STUDIO_RENDER_BACKEND"
@@ -103,7 +105,7 @@ def scrollmark_command(env: dict | None = None,
 
     The source is returned rather than logged here because the caller is the
     only thing that knows whether the run failed, and "npx" plus a failure is
-    the one combination that needs `not_published_note()`.
+    the one combination that needs `cli_unavailable_note()`.
     """
     env = os.environ if env is None else env
     override = (env.get(ENV_CLI) or "").strip()
@@ -118,31 +120,28 @@ def scrollmark_command(env: dict | None = None,
     return ["npx", "--yes", PACKAGE], "npx"
 
 
-def not_published_note() -> str:
-    """Why `npx @scrollmark/cli` just failed, in the reader's terms.
+def cli_unavailable_note() -> str:
+    """Why the editor CLI could not be run, in the reader's terms.
 
-    npm's own error for a package that does not exist is a 404 against a
-    registry URL, which reads as a network problem. It is not one: the package
-    has never been published. Say that, and say the two ways to get the command
-    anyway, because both exist today.
+    npm's own failure is a registry URL and a status code, which reads as a
+    network fault whatever actually went wrong. It is usually one of two much
+    duller things: no network, or a machine with no node. Say so, and say the
+    two ways to point at a copy that already exists, because someone with a
+    checkout has one.
     """
     return (
-        f"{PACKAGE} is NOT PUBLISHED to npm yet — that 404 is not a network\n"
-        "fault, there is nothing at that name to install. The editor render\n"
-        "backend works, but only from a checkout of scrollmark/editor:\n"
+        f"Could not run {PACKAGE}.\n"
         "\n"
-        "    git clone https://github.com/scrollmark/editor\n"
-        "    cd editor && bun install\n"
+        "It is published, so this is normally a missing node or no network\n"
+        "rather than a missing package. If you have a checkout of\n"
+        "scrollmark/editor, point at it instead:\n"
+        "\n"
         f"    export {ENV_CLI}='node /abs/path/to/editor/packages/control/src/index.mjs'\n"
         "\n"
-        f"Or put it in <studio root>/{CONFIG_NAME} as\n"
+        f"or put it in <studio root>/{CONFIG_NAME} as\n"
         '    {"scrollmarkCli": "node /abs/path/to/editor/packages/control/src/index.mjs"}\n'
         "\n"
-        "There is no build step — the CLI is plain .mjs — but `scrollmark build`\n"
-        "imports @scrollmark/editor, which is what the install provides.\n"
-        "\n"
-        f"Until then the default backend is {DEFAULT_BACKEND!r}: drop --backend, or\n"
-        f"unset {ENV_BACKEND}."
+        "The composer still renders, if it is installed: --backend remotion."
     )
 
 

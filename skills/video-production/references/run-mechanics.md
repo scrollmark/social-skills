@@ -114,25 +114,38 @@ path: the document is the check, and `build` refuses a storyboard whose sources
 do not resolve unless you pass `--placeholders`. It writes `plan.json` in the
 same place `build_props` does, so step 8 is unchanged either way.
 
-**`@scrollmark/cli` is not published to npm yet.** `video-studio render` looks
-for it in `$SCROLLMARK_CLI`, then `scrollmarkCli` in `.video-studio.json`, then
-`scrollmark` on PATH, then `npx --yes @scrollmark/cli` — and that last one 404s
-today. When it does, the command says so rather than leaving you with npm's
-registry error. From a checkout:
+**Getting the command.** `video-studio render` looks for it in
+`$SCROLLMARK_CLI`, then `scrollmarkCli` in `.video-studio.json`, then
+`scrollmark` on PATH, then `npx --yes @scrollmark/cli`. The last is the ordinary
+case and needs nothing set up. Point at a checkout only if you are working on
+the editor itself:
 
     export SCROLLMARK_CLI='node /abs/path/to/editor/packages/control/src/index.mjs'
 
-Two further prerequisites this backend has and the composer does not: a running
-`scrollmark studio` for it to attach to (`--url`/`--token`, or `MCP_URL` and
-`MCP_TOKEN`), and a Chrome it can drive (`CHROME_PATH`). `--dry-run` prints the
-exact commands and runs nothing, which is the way to check the wiring on a
-machine that cannot yet render.
+**One prerequisite the composer does not have:** a Chrome it can drive
+(`CHROME_PATH` if it is somewhere unusual). The export pipeline is WebGPU to
+composite, OffscreenCanvas to draw and WebCodecs to encode, so it runs a real
+browser rather than reimplementing any of it.
+
+It does **not** need a Studio running. `scrollmark render --project-file` starts
+one for itself and stops it after. Pass `--url`/`--token` (or `MCP_URL` and
+`MCP_TOKEN`) only to attach to an editor you already have open — which is also
+the only way to render `scrollmark render <projectId>`, since a project id names
+something in that browser profile's IndexedDB.
+
+Set `SCROLLMARK_APPROVAL_MODE=session_auto` for an unattended run. In `ask` the
+editor parks an approval card for every write, and in a headless render nobody
+can see it.
+
+`--dry-run` prints the exact commands and runs nothing.
 
 **What the editor backend does not do yet.** `duck_music` writes its per-frame
 envelope into the composer's props file, which this path never produces, so a
 ducked music bed is Remotion-only — the editor plays the bed at one flat level.
-Of the six `effect` layers the composer draws, only `vignette` arrives. Card
-`align` and `size` are accepted and drawn by neither. See `hard-rules.md`.
+Of the six `effect` layers the composer draws, `vignette`, `glow` and `clock`
+arrive; `grain`, `breath` and `lightLeak` are reported rather than drawn. The
+per-word caption `highlight` has no equivalent — captions are pages of words.
+Card `align` and `size` are accepted and drawn by neither. See `hard-rules.md`.
 
 ## 8 — Quality gate
 
