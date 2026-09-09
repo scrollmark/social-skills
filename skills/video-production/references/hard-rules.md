@@ -81,6 +81,37 @@ itself. Hand-placing files into `composer/public/clips/` does **not** work;
   override it; `Config.setVideoImageFormat("png")` does. PNG frames render a
   little slower and produce a smaller file here.
 
+## The two backends are not equivalent
+
+`video-studio render` draws through the composer (`remotion`, the default) or
+through the Scrollmark editor's CLI (`editor`). They read the same storyboard
+and write the same `plan.json`, so step 8 does not change — but they do not draw
+the same picture, and the differences are silent. Do not switch backends
+mid-project and compare the result to a memory of the last render.
+
+What the editor backend does not do today:
+
+- **No ducking.** `duck_music` writes its per-frame envelope into the composer's
+  props file. The editor path has no props file — it reads the storyboard, where
+  `music` is a bare path — so the bed plays at one flat level. A narrated video
+  scored on Remotion and re-rendered on the editor loses the ducking and nothing
+  says so.
+- **One effect of six.** `vignette` arrives; `grain`, `breath`, `lightLeak`,
+  `glow` and `clock` are reported unsupported and dropped.
+- **Captions are pages of words, not per-word emphasis.** `wordsPerPage`,
+  `uppercase`, `bottom`, `fontSize` and `color` are honoured; `highlight`,
+  `palette`, `bounce`, `wiggle`, `stroke`, `fontFamily` and `wordGap` are
+  warned about and ignored. Track-level caption style is taken from the FIRST
+  captioned scene, so a later scene that disagrees is a warning, not an override.
+- **No preflight, and no silent-narration check.** `scrollmark build` refuses a
+  storyboard whose sources do not resolve, which covers the placeholder trap,
+  but a scene with written narration and no WAV falls back to `plannedSeconds`
+  and renders mute exactly as `preflight` was written to stop.
+
+And in the other direction: **card `align` and `size` are drawn by neither.**
+Both accept the keys, both list them as known, and neither warns. Type that
+needs to sit anywhere but centred is a `rect`.
+
 ## Verification
 
 Never declare a render done without viewing frames from it. Pull 4–6 frames

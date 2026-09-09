@@ -79,12 +79,60 @@ Quote the running total cost before the first paid call and again after the last
 
 ## 7 — Final props, gate, render, normalise
 
-    video-studio build_props   # no --placeholders; measured narration becomes the clock
-    video-studio preflight     # nonzero = do not render
-    npx remotion render       # in the composer directory
+Two backends draw the picture, and `remotion` is the default. Pick one with
+`--backend`, `$VIDEO_STUDIO_RENDER_BACKEND`, or `renderBackend` in the studio
+root's `.video-studio.json`, in that order.
+
+**Remotion — the composer, and the only one that installs today.**
+
+    video-studio build_props            # no --placeholders; measured narration becomes the clock
+    video-studio preflight              # nonzero = do not render
+    video-studio render --project <dir> # npx remotion render, with the composition id
     python3 scripts/normalize_audio.py --in <mp4>
 
 Rebuild props immediately before **each** render. See `hard-rules.md` for why.
+`render` will not do it for you and refuses when the props file is absent —
+rendering whatever was built last is the failure this whole step guards against.
+The composition id is the project directory name and it is positional; that is
+why the render goes through this command rather than a bare `npx remotion
+render`, which renders whichever composition the registry lists first.
+
+**Editor — proven, and not packaged.**
+
+    video-studio render --project <dir> --backend editor
+    python3 scripts/normalize_audio.py --in <mp4>
+
+That runs two commands from the Scrollmark editor's CLI:
+
+    scrollmark build  --storyboard <dir>/storyboard.json --project <dir> --out <dir>/cut.project.json
+    scrollmark render --project-file <dir>/cut.project.json --out <dir>/cut.mp4
+
+`build` reads the storyboard directly and writes a Scrollmark project document,
+running the editor's real `Command` objects headlessly — there is no second
+timeline implementation. There is **no props file and no preflight** on this
+path: the document is the check, and `build` refuses a storyboard whose sources
+do not resolve unless you pass `--placeholders`. It writes `plan.json` in the
+same place `build_props` does, so step 8 is unchanged either way.
+
+**`@scrollmark/cli` is not published to npm yet.** `video-studio render` looks
+for it in `$SCROLLMARK_CLI`, then `scrollmarkCli` in `.video-studio.json`, then
+`scrollmark` on PATH, then `npx --yes @scrollmark/cli` — and that last one 404s
+today. When it does, the command says so rather than leaving you with npm's
+registry error. From a checkout:
+
+    export SCROLLMARK_CLI='node /abs/path/to/editor/packages/control/src/index.mjs'
+
+Two further prerequisites this backend has and the composer does not: a running
+`scrollmark studio` for it to attach to (`--url`/`--token`, or `MCP_URL` and
+`MCP_TOKEN`), and a Chrome it can drive (`CHROME_PATH`). `--dry-run` prints the
+exact commands and runs nothing, which is the way to check the wiring on a
+machine that cannot yet render.
+
+**What the editor backend does not do yet.** `duck_music` writes its per-frame
+envelope into the composer's props file, which this path never produces, so a
+ducked music bed is Remotion-only — the editor plays the bed at one flat level.
+Of the six `effect` layers the composer draws, only `vignette` arrives. Card
+`align` and `size` are accepted and drawn by neither. See `hard-rules.md`.
 
 ## 8 — Quality gate
 
