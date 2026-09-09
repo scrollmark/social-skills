@@ -6,7 +6,8 @@ file the single place these names live outside of executable code.
 
 | Role | What we actually use | Notes |
 |---|---|---|
-| Composer / editor | Remotion 4.0.x | Original compositions, no vendored third-party code. `npx remotion studio` = "the editor"; `npx remotion render` = rendering. **Not in this repo** — the composer is a separate, externally licensed tree, so nothing here can render on its own. |
+| Composer / editor | Remotion 4.0.x | Original compositions, no vendored third-party code. `npx remotion studio` = "the editor"; `npx remotion render` = rendering. Lives in `composer/`, but externally licensed — a paid Company Licence above three people, and for hosted or automated rendering. |
+| Second render backend | `@scrollmark/cli` (`scrollmark build` + `scrollmark render`) | The Scrollmark editor, from `scrollmark/editor`. Reads the storyboard directly, builds a project document by running the editor's real `Command` objects, renders it in a headless Chrome (WebGPU + OffscreenCanvas + WebCodecs). Proven; **not published to npm**, so it runs only from a checkout via `SCROLLMARK_CLI`. Selected with `video-studio render --backend editor`; Remotion stays the default until it publishes. |
 | Quality gate | `qc_render.py` (bundled) + `video-studio qc_analyze` | Two sizes. The bundled one needs no install and checks a render against its plan; `qc_analyze` decodes frames and needs `[qc]`. Both = "the quality check". Superseded showwatcher, which was never published. |
 | Clip generation | MiniMax (Hailuo), Google Veo | `video-studio gen_minimax`, `video-studio gen_veo`. Quirks in `api-landmines.md`. |
 | Voice | Kokoro (local, free) | `video-studio tts_kokoro` = "the built-in voice". |

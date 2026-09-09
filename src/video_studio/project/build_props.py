@@ -40,7 +40,14 @@ from video_studio.paths import studio_root
 #: Card keys the composer actually renders. Anything else is dropped silently.
 CARD_KEYS = {"heading", "subtext", "lines", "bg", "fg", "size", "tracking",
              "footnote", "align", "fontSize", "flat"}
-LAYER_KEYS = ("rect", "enter", "exit", "fit", "atMs", "untilMs", "pop", "ken", "fade")
+#: Layer keys copied through to the props verbatim. `muted`, `loop` and `label`
+#: were absent here while the composer's Layer type honoured all three, so a
+#: storyboard saying `"muted": false` (keep this clip's own audio) produced a
+#: silent clip and no error anywhere — the key was dropped one step before the
+#: thing that reads it. The editor render backend honours the same three, so
+#: the omission also made the two backends disagree about the same document.
+LAYER_KEYS = ("rect", "enter", "exit", "fit", "atMs", "untilMs", "pop", "ken",
+              "fade", "muted", "loop", "label")
 EFFECT_KEYS = ("effect", "intensity", "palette")
 
 PLACEHOLDER_COLORS = ["#3b5b7a", "#7a3b5b", "#3b7a5b", "#7a6a3b", "#5b3b7a"]
@@ -217,7 +224,11 @@ def build(storyboard_path: Path, project: Path, composer: Path, placeholders: bo
                 if not resolved.is_absolute():
                     resolved = project / value
             elif kind in ("prompt", "url", "find"):
-                for ext in (".mp4", ".webm", ".png", ".jpg", ".jpeg"):
+                # Same list, in the same order, as the editor backend's
+                # MEDIA_EXTENSIONS. A clip the two builds disagree about
+                # resolving is a clip that renders on one backend and
+                # placeholders on the other from one storyboard.
+                for ext in (".mp4", ".webm", ".mov", ".png", ".jpg", ".jpeg", ".webp"):
                     candidate = project / "clips" / f"{sid}-{layer['id']}{ext}"
                     if candidate.exists():
                         resolved = candidate
@@ -267,6 +278,11 @@ def build(storyboard_path: Path, project: Path, composer: Path, placeholders: bo
                     # (generated footage caps at 6s while narration-driven
                     # scenes often run longer). <Loop> needs the source length
                     # in frames — OffthreadVideo has no `loop` prop.
+                    # A default, not a decision: `loop` is in LAYER_KEYS now, so
+                    # a storyboard that says `"loop": false` overwrites this
+                    # below. That is also the editor backend's rule (absent
+                    # means loop, false disables), so one storyboard means the
+                    # same thing on both.
                     entry["loop"] = True
                     entry["srcDurationInFrames"] = max(1, round(media_seconds(dest) * fps))
             for key in LAYER_KEYS:

@@ -74,6 +74,7 @@ COMMANDS: dict[str, str] = {
     "build_props": "video_studio.project.build_props",
     "daily_digest": "video_studio.project.daily_digest",
     "preflight": "video_studio.project.preflight",
+    "render": "video_studio.project.render",
     "setup": "video_studio.project.setup",
     "studio": "video_studio.project.studio",
     "styles": "video_studio.project.styles",
@@ -87,7 +88,7 @@ GROUPS = [
     ("vision", "segmentation, compositing, hand tracking"),
     ("qc", "checking a render against the plan it was built from"),
     ("export", "burnt-in captions, CapCut / Final Cut / OTIO handoff"),
-    ("project", "props, preflight, editor, looks, tutorials, digest"),
+    ("project", "props, preflight, render, editor, looks, tutorials, digest"),
 ]
 
 

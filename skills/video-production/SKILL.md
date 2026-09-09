@@ -11,7 +11,7 @@ description: Use when actually producing a short-form video end to end — runni
 
 Four scripts **ship with this skill**: `scripts/doctor.py` (step 0's status report), `scripts/normalize_audio.py` (step 7's loudness fix), `scripts/qc_render.py` (step 8's gate) and `scripts/poster.py` (step 9's thumbnail shortlist). All stdlib-only; all want `ffmpeg`/`ffprobe`.
 
-The rest of the sequence needs `pip install 'video-studio-engine @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'` — `video-studio setup` (step 0's install plan), `build_props` (steps 5 and 7), `studio` (the preview editor) and `preflight` (the render gate) — plus a renderer. Two exist: the composer's `npx remotion render`, which is Node, headless, neither bundled nor pip-installable from here, and separately licensed; or Scrollmark's own editor over MCP, which needs no licence but does need a running editor and does not read the props document — an agent builds the timeline from the storyboard through the editor's own commands. Sourcing, voice and export belong to the step skills named below and carry their own install lines.
+The rest of the sequence needs `pip install 'video-studio-engine @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'` — `video-studio setup` (step 0's install plan), `build_props` (steps 5 and 7), `studio` (the preview editor) and `preflight` (the render gate) — plus `render`, which drives one of two backends: the composer's `npx remotion render` (the default; Node, so neither bundled nor pip-installable from here, and separately licensed) or the Scrollmark editor's `scrollmark build` + `scrollmark render`, which needs no licence, is proven end to end, and is **not published to npm yet**. Sourcing, voice and export belong to the step skills named below and carry their own install lines.
 
 **Skip the pip install and this skill still is not standalone — it drives the whole engine.** There is no props document, no preview and no preflight, so the sequence has nothing to sequence. What survives is the shape: which decision must precede which, and where money and silence enter a run.
 
@@ -26,7 +26,7 @@ The rest of the sequence needs `pip install 'video-studio-engine @ https://githu
 | 4 | Build the storyboard from the format's grammar | `video-formats` |
 | 5 | `video-studio build_props --placeholders`, open the editor, re-read `props.json` | here |
 | 6 | Resolve sources — TTS first, then footage; then `video-studio verify_clips` | `audio-acquisition`, `media-acquisition` |
-| 7 | `video-studio build_props` (no flag) → `video-studio preflight` → render → `scripts/normalize_audio.py` | here |
+| 7 | `video-studio build_props` (no flag) → `video-studio preflight` → `video-studio render` → `scripts/normalize_audio.py` | here |
 | 8 | `scripts/qc_render.py` — the render against its plan — then **pull frames and look at them** | here |
 | 9 | `scripts/poster.py` — pick the thumbnail, and **open the candidate sheet** | here |
 
@@ -37,7 +37,7 @@ A brand kit (`brand-kit`) is applied at step 4. An export to a human editor (`ed
 - **`scripts/doctor.py` runs before sourcing is offered, at step 3.** Offering a source with no key wastes the user's turn *and* makes the cost estimate wrong.
 - **Placeholder preview is the default before any spend.** Step 5 is free and catches layout mistakes while they still are. `--placeholders` appears there and nowhere else in the run. The user's edits to `props.json` are authoritative — re-read it after they finish.
 - **Quote total cost before the first paid call and again after the last.**
-- **Rebuild props immediately before every render**, and never skip preflight.
+- **Rebuild props immediately before every render**, and never skip preflight. Both belong to the Remotion backend; the editor backend has no props file and no preflight, and its gate is `scrollmark build` refusing a storyboard whose sources do not resolve.
 - **Never declare a render done without viewing frames from it.** "It rendered" and "it is correct" are different claims; only one of them is in the log.
 
 ## The Two Contracts

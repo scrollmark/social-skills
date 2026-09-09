@@ -32,3 +32,9 @@ composer/props/
 composer/public/
 composer/out/
 composer/src/registry.ts
+
+# The editor render backend's artefacts. `scrollmark build` writes the project
+# document beside the storyboard and `scrollmark render` writes the mp4 next to
+# it; both are generated from tracked inputs, exactly like composer/props/.
+projects/*/cut.project.json
+projects/*/cut.mp4

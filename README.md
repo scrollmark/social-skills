@@ -68,7 +68,7 @@ skill is missing from it.
 
 The engine used to live in a separate private repo, `scrollmark/video-studio`, and no
 skill here could touch it. That split is gone: the engine is in this repo now, and the
-40 programs behind these skills land in one of three places.
+41 programs behind these skills land in one of three places.
 
 **1. Bundled inside a skill — nothing to install.** Six programs are pure standard
 library and take their input on the command line, so they ship in the skill folder that
@@ -88,7 +88,7 @@ programs are bundled in two skills each; each skill carries its own copy, becaus
 may never reach outside its own folder. `./scripts/verify-skills.sh` fails if those copies
 drift apart, or if a `SKILL.md` names a bundled script that is not there.
 
-**2. The `video-studio-engine` package — one `pip install`.** The other 34 programs
+**2. The `video-studio-engine` package — one `pip install`.** The other 35 programs
 either carry third-party dependencies or read a project's state (a props document, a
 composer directory, a styles tree), which makes them unfit to sit in a skill folder as a
 lone file. They are built from `src/video_studio/` in this repo and run as
@@ -131,20 +131,23 @@ Only the source is tracked. `composer/props/`, `composer/public/`, `composer/out
 whatever projects a given machine has built, so it is deliberately not committed.
 
 **4. There is a second route that needs no licence.**
-Scrollmark's own editor is MIT, has no seat threshold and no
-paid tier, and exposes the timeline over MCP — so an agent can cut, caption, grade and export
-without `composer/` being involved at all.
+Scrollmark's own editor is MIT, with no seat threshold and no paid tier.
+`video-studio render --backend editor` uses it: `scrollmark build` turns the storyboard
+straight into a Scrollmark project document — running the editor's real `Command` objects
+headlessly, so there is no second timeline implementation — and `scrollmark render` drives a
+headless Chrome over it, because that export pipeline is WebGPU + OffscreenCanvas +
+WebCodecs. It writes the same `plan.json` step 8 already reads, so the quality gate is
+unchanged.
 
-It is not a drop-in swap for `npx remotion render`, and the difference matters:
+Two things to know before choosing it:
 
-- **It does not read the props document.** `build_props` writes a Remotion composition; the
-  editor has its own project format. An agent builds the timeline through the editor's own
-  commands, working from the same storyboard rather than from the props file.
-- **It needs a running editor**, browser or desktop, where Remotion renders headless in Node.
-  It suits an interactive or agent-driven run better than an unattended one.
+- **`@scrollmark/cli` is not published to npm yet**, so it only runs from a checkout of
+  `scrollmark/editor` with `SCROLLMARK_CLI` pointed at it.
+- **`scrollmark render` needs a running Studio** and will not start one, where Remotion
+  renders headless in Node.
 
-Use whichever fits. Remotion stays the headless path; the editor is the one with no licence to
-buy and a person able to watch and intervene.
+Remotion stays the default until that changes. Neither the composer nor Remotion is going
+away in this change.
 
 ### What a skipped `pip install` costs you
 
