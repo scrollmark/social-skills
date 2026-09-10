@@ -1,11 +1,11 @@
 ---
 name: video-formats
-description: Use when planning, structuring, or critiquing a short-form video — choosing a format, laying out its scenes, or defining a new format. Covers ten scene grammars from talking-head to hand-drawn motion graphics.
+description: Use when planning, structuring, or critiquing a short-form video — choosing a format, laying out its scenes, or defining a new format. Covers eleven scene grammars from talking-head to hand-drawn motion graphics.
 ---
 
 # Video Formats
 
-This skill is a router. The ten format grammars live in `references/formats/` — this skill tells you what a format is, which one to reach for, and how to write an eleventh.
+This skill is a router. The eleven format grammars live in `references/formats/` — this skill tells you what a format is, which one to reach for, and how to write an eleventh.
 
 ## What a Format Is
 
@@ -29,6 +29,7 @@ One distinguishing question each. Ask them in roughly this order and stop at the
 | **TitledVideo** | Do you have a finished clip that just needs titles to be postable? |
 | **TalkingHead** | Is one person talking to camera the whole way through? |
 | **PipStory** | Is there a host, but the story keeps citing things worth showing? |
+| **DailyRecap** | Is it a pile of clips from one day or trip, with no script and no arc? |
 | **Cinematic** | Is the point a feeling rather than an argument — cut to music, few words? |
 | **Explainer** | Is there a concept to explain, and no one on camera to explain it? |
 | **ProductLaunch** | Is there a product, three capabilities, and a name to land? |
@@ -36,16 +37,17 @@ One distinguishing question each. Ask them in roughly this order and stop at the
 | **TimelineExplainer** | Is the *list* the point — numbered beats the viewer counts along with? |
 | **Boil** | Can the subject not be photographed at all? |
 
-Two pairs are easy to confuse:
+Three pairs are easy to confuse:
 
 - **BrandOrigin vs. TimelineExplainer** — BrandOrigin is one transformation carried by a recurring motif, ~30s. TimelineExplainer is a countable sequence, 6-10 numbered beats, and runs longer. If the viewer would be counting, it's the timeline.
+- **DailyRecap vs. Cinematic** — both cut to music and neither needs a script. Cinematic builds to a peak and holds the longest shot after it; DailyRecap is an even run where any two beats could swap. If reordering the middle would break it, it's Cinematic.
 - **TalkingHead vs. PipStory** — the same host, but PipStory shrinks them into a corner whenever the narration names something concrete. If 25-50% of the beats cite a number, an object, or a place, it's PipStory.
 
 **Boil is the outlier.** It's the only format with no photography, no footage, and nothing licensed on screen. Reach for it when the subject is unreleased, abstract, or a service — or when stock would look borrowed.
 
 ## Reading a Format File
 
-Load `references/formats/{name}.md` from this skill's own directory. File names are kebab-case: `pip-story.md`, `brand-origin.md`, `pointer-popups.md`, `timeline-explainer.md`, `product-launch.md`, `talking-head.md`, `titled-video.md`, plus `boil.md`, `cinematic.md`, `explainer.md`.
+Load `references/formats/{name}.md` from this skill's own directory. File names are the kebab-case of the names in the table above: `pip-story.md`, `daily-recap.md`, `boil.md`, and so on.
 
 Every format file carries frontmatter above its prose — the same facts the document states, wherever it states them: `aspect`, `alsoWorks`, `scenes`, `sceneSeconds`, `captions`, `narration`, `music`, and `needs` (a comma-separated list, since a format can need two programs). A key a format does not state is absent rather than guessed, and the prose stays authoritative. `video-studio formats --list --aspect 9:16` narrows to the ones that fit; `video-studio formats --show explainer --style bold-neon` composes a format (the shape) with a style preset (the look) into a template, and reports an unknown or repeated key, a line that lost its colon, an aspect that is not a real frame, a `needs:` naming a program that does not exist, and anything the style preset itself would be reported for. Resolving a look into a storyboard is still `video-studio styles --apply`.
 
@@ -53,8 +55,7 @@ The files share a vocabulary that comes from the storyboard structure they compi
 
 - **`card`** — real typography rendered at composition time. Every exact word, number, name, year, and URL is a card. Never ask a generator for text; it invents letterforms.
 - **`ken`** — a slow Ken Burns drift over a still, so it reads as footage rather than a frozen frame. Alternate zoom direction and pan between consecutive scenes or the cuts all move identically.
-- **`rect`** — a layer's position as `[x, y, w, h]` in fractions of the frame. A corner inset is roughly `[0.58, 0.58, 0.42, 0.42]`.
-- **`atMs` / `untilMs` / `pop`** — a layer's visibility window inside its scene, with an optional pop-in.
+- **`rect`** — a layer's position as `[x, y, w, h]` in fractions of the frame; a corner inset is roughly `[0.58, 0.58, 0.42, 0.42]`. **`atMs` / `untilMs` / `pop`** — its visibility window inside the scene, with an optional pop-in.
 - **`broll` / `host` / `insert` / `main`** — conventional layer ids, not special types. The names carry intent between the format and whoever builds it.
 - **`plannedSeconds`** — an estimate. Measured narration length is the real clock.
 

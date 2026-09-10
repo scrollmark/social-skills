@@ -43,7 +43,7 @@ execution ships inside the skill; the rest is one `pip install` away.
 
 | Skill | Use when | Standalone? |
 |-------|----------|-------------|
-| `video-formats` | Planning, structuring, or critiquing a short-form video — choosing a format, laying out its scenes, or defining a new format. Covers ten scene grammars from talking-head to hand-drawn motion graphics. | Mostly — 8 of the 10 formats are pure structure. **Boil** and **PointerPopups** need the engine's generator and hand tracker (see below). |
+| `video-formats` | Planning, structuring, or critiquing a short-form video — choosing a format, laying out its scenes, or defining a new format. Covers eleven scene grammars from talking-head to hand-drawn motion graphics. | Mostly — 9 of the 11 formats are pure structure. **Boil** and **PointerPopups** need the engine's generator and hand tracker (see below). |
 | `brand-kit` | A user wants their videos to stay visually consistent — saving caption styling, card colours and geometry, title treatment, logos, fonts, voice and CTA copy once instead of redeciding them per video. | Deciding and recording a brand, yes. Applying a preset is `video-studio styles`, from the pip package. |
 | `media-acquisition` | Deciding where a shot's footage or stills should come from — public-domain archive, free stock, a paid generator, or a URL the user supplied — and when checking that what came back is actually usable before anything is built on it. | Partly. Ships `scripts/prekey.py`. The ten searching, generating and checking programs need `pip install 'video-studio-engine[sourcing,generate] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`; without it the ladder is a briefing, not a workflow. |
 | `audio-acquisition` | A video needs narration, a music bed or sound effects — choosing a voice, deciding which music source is safe to publish with, timing a cut to a track, or fixing a render that came out quiet. | Partly. Ships `scripts/measure.py` and `scripts/normalize_audio.py`, so measuring and loudness work out of the box. Voice, music and licence-filtered effects need `pip install 'video-studio-engine[audio] @ https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz'`. |
@@ -153,7 +153,7 @@ look complete. **A skill whose work needs the package is not self-contained for 
 who skips it.**
 
 - The **seven social-media skills** are entirely unaffected. So is `agent-interview`.
-- `video-formats` still works for eight of its ten formats. Composition, Interview, Slots
+- `video-formats` still works for nine of its eleven formats. Composition, Interview, Slots
   and Grammar are structural; you can follow them with any editor.
 - **`boil` is roughly 40% inoperative** without `[generate]`. Its mark vocabulary, shape
   files and palette workflow are `gen_boil`; without it, the interview questions have no
