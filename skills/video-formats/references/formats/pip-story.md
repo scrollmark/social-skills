@@ -1,3 +1,12 @@
+---
+name: pip-story
+title: PipStory
+description: Shrinking-host narrative, script-driven
+aspect: 9:16
+captions: on
+narration: two voices
+---
+
 # PipStory — shrinking-host narrative (script-driven)
 
 One continuous host presence: full-frame for direct-address beats, easing into

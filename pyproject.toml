@@ -161,5 +161,13 @@ Source = "https://github.com/scrollmark/social-skills"
 [tool.hatch.build.targets.wheel]
 packages = ["src/video_studio"]
 
+# The format documents live in the skill, because that is what they are: prose
+# a person reads. They are also data now — `video-studio formats` reads their
+# frontmatter — and an installed copy has no skills/ tree to read them from.
+# Force-including them keeps one copy on disk and still ships them.
+[tool.hatch.build.targets.wheel.force-include]
+"skills/video-formats/references/formats" = "video_studio/formats"
+
 [tool.hatch.build.targets.sdist]
-include = ["src/video_studio", "pyproject.toml", "README.md", "LICENSE"]
+include = ["src/video_studio", "skills/video-formats/references/formats",
+           "pyproject.toml", "README.md", "LICENSE"]

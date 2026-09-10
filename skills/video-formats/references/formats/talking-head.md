@@ -1,3 +1,12 @@
+---
+name: talking-head
+title: TalkingHead
+description: Direct-to-camera monologue
+aspect: 9:16
+captions: on
+narration: on camera
+---
+
 # TalkingHead — direct-to-camera monologue
 
 One person talks to camera throughout; optional lower-third labels and

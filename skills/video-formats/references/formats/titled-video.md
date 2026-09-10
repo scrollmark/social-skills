@@ -1,3 +1,12 @@
+---
+name: titled-video
+title: TitledVideo
+description: Clip plus a typography package
+aspect: source
+captions: optional
+needs: measure
+---
+
 # TitledVideo — clip + typography package
 
 An existing (or generated) clip dressed with title/end cards and section

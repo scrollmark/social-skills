@@ -1,3 +1,16 @@
+---
+name: cinematic
+title: Cinematic
+description: Mood-driven montage
+aspect: 9:16
+scenes: 4-8
+sceneSeconds: 2-6
+captions: off
+narration: optional
+music: required
+needs: measure
+---
+
 # Cinematic — mood-driven montage
 
 Atmospheric sequence cut to music: establishing shots, detail close-ups,
