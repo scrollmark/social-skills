@@ -3,9 +3,8 @@ name: pointer-popups
 title: PointerPopups
 description: Analyzed footage with images pinned to pointing gestures
 aspect: source
-captions: optional
 narration: optional
-needs: track_pointing
+needs: track_pointing, measure
 ---
 
 # PointerPopups — analyzed footage with images pinned to pointing gestures

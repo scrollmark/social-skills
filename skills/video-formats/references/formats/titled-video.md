@@ -5,6 +5,7 @@ description: Clip plus a typography package
 aspect: source
 captions: optional
 narration: optional
+needs: measure
 ---
 
 # TitledVideo — clip + typography package

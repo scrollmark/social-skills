@@ -3,6 +3,8 @@ name: cinematic
 title: Cinematic
 description: Mood-driven montage
 aspect: 9:16
+scenes: 4-8
+sceneSeconds: 2-6
 captions: off
 narration: optional
 music: required

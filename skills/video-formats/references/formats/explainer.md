@@ -4,6 +4,7 @@ title: Explainer
 description: Narrated concept walkthrough
 aspect: 9:16
 alsoWorks: 16:9
+sceneSeconds: 4-8
 captions: on
 narration: one voice
 ---

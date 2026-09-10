@@ -5,6 +5,7 @@ description: 30-40 second launch spot
 aspect: 16:9
 alsoWorks: 9:16
 scenes: 5-7
+sceneSeconds: 4-6
 captions: on
 narration: one voice
 ---

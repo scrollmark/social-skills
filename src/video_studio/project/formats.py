@@ -1,3 +1,6 @@
+# /// script
+# requires-python = ">=3.11"
+# ///
 """The formats, as data.
 
 A format answers "what shape is this video" -- how many scenes, what aspect,
@@ -58,6 +61,13 @@ FORMAT_KEYS = {
     "needs",         # a program that must run before this format can build
 }
 
+#: Programs that ship inside a skill folder rather than in the package, so
+#: they are not in ``COMMANDS`` and a ``needs:`` naming one would otherwise be
+#: reported as nonexistent. Recorded here rather than globbed, because an
+#: installed copy has no ``skills/`` tree to glob; ``test_formats.py`` checks
+#: this list against the repo.
+BUNDLED = {"doctor", "measure", "normalize_audio", "poster", "prekey", "qc_render"}
+
 #: ``aspect`` values that mean something downstream. ``source`` is a real
 #: answer: a format built on the user's own footage keeps its frame.
 ASPECTS = {"9:16", "16:9", "1:1", "4:5", "source"}
@@ -77,18 +87,32 @@ def format_roots(project: Path | None) -> list[Path]:
 
 
 def parse_format(path: Path) -> dict:
-    """Frontmatter, and the document beneath it left alone."""
+    """Frontmatter, and the document beneath it left alone.
+
+    Reports the two typo classes a key-name check cannot see: a repeated key,
+    where the last one silently wins, and a line with no colon, which vanishes
+    entirely. A dropped `captions` line is exactly the invisible mistake this
+    module exists to catch, and it would otherwise parse clean.
+    """
     text = path.read_text()
     fm = re.match(r"^---\n(.*?)\n---\n", text, re.S)
     meta: dict[str, str] = {}
+    parse_problems: list[str] = []
     if fm:
         for line in fm.group(1).splitlines():
-            if ":" in line:
-                k, v = line.split(":", 1)
-                meta[k.strip()] = v.strip()
+            if not line.strip():
+                continue
+            if ":" not in line:
+                parse_problems.append(f"{line.strip()!r} is not a `key: value` line")
+                continue
+            k, v = line.split(":", 1)
+            k = k.strip()
+            if k in meta:
+                parse_problems.append(f"{k} is declared twice — the last one wins silently")
+            meta[k] = v.strip()
     meta.setdefault("name", path.stem)
     return {"name": meta["name"], "path": str(path), "values": meta,
-            "documented": fm is not None}
+            "documented": fm is not None, "parseProblems": parse_problems}
 
 
 def find_formats(project: Path | None) -> dict[str, dict]:
@@ -109,6 +133,7 @@ def validate(fmt: dict) -> list[str]:
     if not fmt["documented"]:
         problems.append("no frontmatter — this format is prose only")
         return problems
+    problems.extend(fmt.get("parseProblems", []))
     values = fmt["values"]
     for k in values:
         if k not in FORMAT_KEYS:
@@ -116,14 +141,20 @@ def validate(fmt: dict) -> list[str]:
     for k in ("aspect", "alsoWorks"):
         if k in values and values[k] not in ASPECTS:
             problems.append(f"{k}: {values[k]!r} is not one of {sorted(ASPECTS)}")
-    needs = values.get("needs")
-    if needs:
-        # A format naming a program that does not exist is the expensive kind of
-        # wrong: it reads as a working instruction right up until someone runs it.
-        from video_studio.cli import COMMANDS
-        if needs not in COMMANDS:
-            problems.append(f"needs: no program named {needs!r} — `video-studio` lists them")
+    # A format naming a program that does not exist is the expensive kind of
+    # wrong: it reads as a working instruction right up until someone runs it.
+    # Comma-separated, because a format can need two: `pointer-popups` wants
+    # the tracker AND `measure`, and one slot could only say half of that.
+    from video_studio.cli import COMMANDS
+    for need in needed(values):
+        if need not in COMMANDS and need not in BUNDLED:
+            problems.append(f"needs: no program named {need!r} — `video-studio` lists them")
     return problems
+
+
+def needed(values: dict) -> list[str]:
+    """The programs a format names, in order."""
+    return [n.strip() for n in values.get("needs", "").split(",") if n.strip()]
 
 
 def compose(fmt: dict, style: dict | None) -> dict:
@@ -154,6 +185,9 @@ def main() -> None:
     formats = find_formats(args.project)
 
     if args.list:
+        if args.aspect and args.aspect not in ASPECTS:
+            raise SystemExit(f"{args.aspect!r} is not a frame any format is composed "
+                             f"for. One of {sorted(ASPECTS)}.")
         rows = []
         for f in formats.values():
             v = f["values"]
@@ -167,7 +201,12 @@ def main() -> None:
         if args.json:
             print(json.dumps(rows, indent=2))
         else:
-            if not rows:
+            if not rows and args.aspect:
+                # Not "no formats found": ten were, and the filter excluded
+                # them. The other message sends a reader to check their install.
+                print(f"none of the {len(formats)} formats found are composed for "
+                      f"{args.aspect}.")
+            elif not rows:
                 print("no formats found. the video-formats skill ships them; "
                       "~/.config/video-studio/formats/ is yours.")
             for r in rows:
@@ -187,6 +226,12 @@ def main() -> None:
             style = presets.get(args.style)
             if not style:
                 raise SystemExit(f"no style {args.style!r}. `video-studio styles --list`.")
+            # The style's own check, run here too. A composed template embeds
+            # the preset's values verbatim, and an unknown caption key renders
+            # as nothing -- so reporting clean on a style that `styles --show`
+            # reports on would make the two programs disagree about one file.
+            from video_studio.project.styles import validate as validate_style
+            problems += [f"style {style['name']}: {p}" for p in validate_style(style["values"])]
         print(json.dumps({"name": f["name"], **compose(f, style),
                           "problems": problems}, indent=2))
         return
