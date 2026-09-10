@@ -228,7 +228,7 @@ Three reasons, in order of how much they hurt.
 
 | Skill | What it is | Came from |
 |---|---|---|
-| `video-formats` | The ten scene grammars and the contract for writing an eleventh | `formats/*.md` |
+| `video-formats` | The eleven scene grammars and the contract for writing a twelfth | `formats/*.md` |
 | `agent-interview` | The choice-question protocol: ask decisions, not essays | the interview rounds threaded through the pipeline |
 | `brand-kit` | Deciding and recording a brand: palette, type, card roles, logo, voice, CTA | the Title system prose + `styles/*.md` |
 | `studio-setup` | What to install, what each key unlocks, and how to triage a dead pipeline | `third-party.md` + the doctor/setup prose |
