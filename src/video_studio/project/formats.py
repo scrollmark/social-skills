@@ -201,14 +201,17 @@ def main() -> None:
         if args.json:
             print(json.dumps(rows, indent=2))
         else:
-            if not rows and args.aspect:
-                # Not "no formats found": ten were, and the filter excluded
-                # them. The other message sends a reader to check their install.
-                print(f"none of the {len(formats)} formats found are composed for "
-                      f"{args.aspect}.")
-            elif not rows:
+            if not formats:
+                # Nothing found at all, whether or not a filter was asked for.
+                # Checked first: an install with no formats in it, asked with a
+                # filter, was being told its filter missed -- the exact wrong
+                # diagnosis, and with the install hint suppressed.
                 print("no formats found. the video-formats skill ships them; "
                       "~/.config/video-studio/formats/ is yours.")
+            elif not rows:
+                # Formats were found and the filter excluded all of them.
+                print(f"none of the {len(formats)} formats found are composed for "
+                      f"{args.aspect}.")
             for r in rows:
                 frame = r["aspect"] + (f" (+{r['alsoWorks']})" if r["alsoWorks"] else "")
                 print(f"{r['name']:<20} {frame:<16} {r['description']}")

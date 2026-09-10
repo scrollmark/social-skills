@@ -50,9 +50,26 @@ def test_bundled_scripts_are_the_ones_the_repo_ships():
 
 def test_every_named_program_exists(shipped):
     """`needs: measure` names a bundled script; `needs: gen_boil` names a
-    package command. Both are real, and a format may name more than one."""
+    package command. Both are real, and a format may name more than one.
+
+    The mapping is asserted exactly, not as a subset. A subset test passes when
+    a format's `needs:` line is deleted outright -- which is the one typo class
+    the parser cannot see, since a deleted line leaves nothing behind. So the
+    record of who needs what lives here, where deleting a line fails.
+    """
+    assert {n: F.needed(f["values"]) for n, f in shipped.items()} == {
+        "boil": ["gen_boil"],
+        "brand-origin": [],
+        "cinematic": ["measure"],
+        "explainer": [],
+        "pip-story": [],
+        "pointer-popups": ["track_pointing", "measure"],
+        "product-launch": [],
+        "talking-head": [],
+        "timeline-explainer": [],
+        "titled-video": ["measure"],
+    }
     named = {n for f in shipped.values() for n in F.needed(f["values"])}
-    assert named, "no format names a program at all — the key stopped being read"
     assert named <= set(COMMANDS) | F.BUNDLED
     assert F.needed({"needs": "track_pointing, measure"}) == ["track_pointing", "measure"]
     assert F.needed({}) == []

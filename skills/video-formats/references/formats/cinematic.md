@@ -8,6 +8,7 @@ sceneSeconds: 2-6
 captions: off
 narration: optional
 music: required
+needs: measure
 ---
 
 # Cinematic — mood-driven montage
