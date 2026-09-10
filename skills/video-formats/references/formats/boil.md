@@ -1,3 +1,16 @@
+---
+name: boil
+title: Boil
+description: Hand-drawn outlined motion graphics
+aspect: 16:9
+alsoWorks: 9:16
+scenes: 5-7
+sceneSeconds: 5-6
+captions: off
+narration: optional
+needs: gen_boil
+---
+
 # Boil — hand-drawn outlined motion graphics
 
 Wiggly single-weight vector line art over flat colour, with typography set

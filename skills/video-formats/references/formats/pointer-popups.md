@@ -1,3 +1,13 @@
+---
+name: pointer-popups
+title: PointerPopups
+description: Analyzed footage with images pinned to pointing gestures
+aspect: source
+captions: optional
+narration: optional
+needs: track_pointing
+---
+
 # PointerPopups — analyzed footage with images pinned to pointing gestures
 
 The user's own footage (or generated footage) of a presenter pointing at

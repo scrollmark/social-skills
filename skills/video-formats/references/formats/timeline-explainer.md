@@ -1,3 +1,15 @@
+---
+name: timeline-explainer
+title: TimelineExplainer
+description: Numbered walk through a history
+aspect: 16:9
+alsoWorks: 9:16
+scenes: 6-10
+sceneSeconds: 5-7
+captions: on
+narration: one voice
+---
+
 # TimelineExplainer — numbered walk through a history
 
 A sequence of numbered beats moving through time: a discography, a

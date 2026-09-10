@@ -1,3 +1,13 @@
+---
+name: explainer
+title: Explainer
+description: Narrated concept walkthrough
+aspect: 9:16
+alsoWorks: 16:9
+captions: on
+narration: one voice
+---
+
 # Explainer — narrated concept walkthrough
 
 Voiceover explains a concept over a sequence of illustrative visuals: b-roll

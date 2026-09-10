@@ -73,6 +73,7 @@ COMMANDS: dict[str, str] = {
     # project
     "build_props": "video_studio.project.build_props",
     "daily_digest": "video_studio.project.daily_digest",
+    "formats": "video_studio.project.formats",
     "preflight": "video_studio.project.preflight",
     "render": "video_studio.project.render",
     "setup": "video_studio.project.setup",

@@ -86,9 +86,14 @@ def test_all_extra_is_absent_and_standard_exists():
     assert "all" not in d, "[all] was removed because it never meant all; it is back"
 
 
-@pytest.mark.parametrize("subdir,minimum", [("styles", 14), ("tutorials", 3), ("qc/data", 2)])
+@pytest.mark.parametrize("subdir,minimum", [("styles", 14), ("tutorials", 3), ("qc/data", 2),
+                                            ("formats", 10)])
 def test_wheel_ships_package_data(tmp_path, subdir, minimum):
-    """Data files ride along only because the build sweeps the package tree."""
+    """Data files ride along only because the build sweeps the package tree.
+
+    Except the formats, which live in the skill and reach the wheel through a
+    force-include — one copy on disk, and a tier `pip install` can still read.
+    """
     r = subprocess.run([sys.executable, "-m", "build", "--wheel", "--outdir", str(tmp_path)],
                        capture_output=True, text=True, cwd=REPO)
     if r.returncode != 0:

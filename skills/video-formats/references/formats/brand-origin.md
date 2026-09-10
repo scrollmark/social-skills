@@ -1,3 +1,14 @@
+---
+name: brand-origin
+title: BrandOrigin
+description: 30-second origin short
+aspect: 9:16
+scenes: 5-6
+sceneSeconds: 4-6
+captions: on
+narration: one voice
+---
+
 # BrandOrigin — 30-second origin short
 
 How a brand or company got from what it was to what it is, in about 30
