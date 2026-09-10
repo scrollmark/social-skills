@@ -61,6 +61,7 @@ def test_every_named_program_exists(shipped):
         "boil": ["gen_boil"],
         "brand-origin": [],
         "cinematic": ["measure"],
+        "daily-recap": ["measure"],
         "explainer": [],
         "pip-story": [],
         "pointer-popups": ["track_pointing", "measure"],
@@ -182,9 +183,9 @@ def test_the_cli_runs_it(tmp_path):
     assert r.returncode == 0, r.stderr
     rows = json.loads(r.stdout)
     names = {row["name"] for row in rows}
-    # Eight of the ten: five are 9:16 outright and three carry it as alsoWorks.
-    # The count is asserted, not just membership — a filter that returned
-    # everything would pass a membership check.
-    assert names == {"boil", "brand-origin", "cinematic", "explainer", "pip-story",
-                     "product-launch", "talking-head", "timeline-explainer"}
+    # Nine of the eleven: six are 9:16 outright and three carry it as
+    # alsoWorks. The set is asserted, not just membership — a filter that
+    # returned everything would pass a membership check.
+    assert names == {"boil", "brand-origin", "cinematic", "daily-recap", "explainer",
+                     "pip-story", "product-launch", "talking-head", "timeline-explainer"}
     assert "pointer-popups" not in names  # source frame, fits nothing named
