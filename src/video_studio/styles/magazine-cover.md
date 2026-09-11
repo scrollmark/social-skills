@@ -43,8 +43,17 @@ spacing, four pages of them is work.
       "fontSize": 120,
       "align": "center",
       "tracking": -0.04,
-      "rect": [0.06, 0.3, 0.88, 0.3],
-      "fade": { "in": 0.6, "out": 0.4 }
+      "rect": [
+        0.06,
+        0.3,
+        0.88,
+        0.3
+      ],
+      "fade": {
+        "in": 0.6,
+        "out": 0.4
+      },
+      "fontFamily": "Bodoni Moda, Didot, Georgia, serif"
     },
     "label": {
       "bg": "#111111",
@@ -52,8 +61,17 @@ spacing, four pages of them is work.
       "fontSize": 22,
       "align": "center",
       "tracking": 0.24,
-      "rect": [0.2, 0.64, 0.6, 0.05],
-      "fade": { "in": 0.4, "out": 0.3 }
+      "rect": [
+        0.2,
+        0.64,
+        0.6,
+        0.05
+      ],
+      "fade": {
+        "in": 0.4,
+        "out": 0.3
+      },
+      "fontFamily": "Inter, Helvetica, sans-serif"
     },
     "stat": {
       "bg": "#e11d48",
@@ -61,8 +79,17 @@ spacing, four pages of them is work.
       "fontSize": 44,
       "align": "center",
       "tracking": 0.02,
-      "rect": [0.24, 0.72, 0.52, 0.1],
-      "fade": { "in": 0.4, "out": 0.3 }
+      "rect": [
+        0.24,
+        0.72,
+        0.52,
+        0.1
+      ],
+      "fade": {
+        "in": 0.4,
+        "out": 0.3
+      },
+      "fontFamily": "Bodoni Moda, Didot, Georgia, serif"
     }
   }
 }

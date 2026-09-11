@@ -43,8 +43,17 @@ perfectly still.
       "fontSize": 84,
       "align": "left",
       "tracking": 0.18,
-      "rect": [0.06, 0.38, 0.88, 0.22],
-      "fade": { "in": 0.3, "out": 0.2 }
+      "rect": [
+        0.06,
+        0.38,
+        0.88,
+        0.22
+      ],
+      "fade": {
+        "in": 0.3,
+        "out": 0.2
+      },
+      "fontFamily": "Courier New, ui-monospace, Menlo, monospace"
     },
     "label": {
       "bg": "#22d3ee",
@@ -52,8 +61,17 @@ perfectly still.
       "fontSize": 26,
       "align": "left",
       "tracking": 0.1,
-      "rect": [0.06, 0.06, 0.44, 0.06],
-      "fade": { "in": 0.2, "out": 0.2 }
+      "rect": [
+        0.06,
+        0.06,
+        0.44,
+        0.06
+      ],
+      "fade": {
+        "in": 0.2,
+        "out": 0.2
+      },
+      "fontFamily": "Courier New, ui-monospace, Menlo, monospace"
     }
   }
 }
