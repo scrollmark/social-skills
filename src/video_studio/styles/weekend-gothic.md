@@ -37,9 +37,9 @@ and never for anything a viewer actually has to read to follow the video.
     "title": {
       "bg": "transparent",
       "fg": "#e5342a",
-      "fontFamily": "Pirata One, UnifrakturMaguntia, Georgia, serif",
+      "fontFamily": "UnifrakturMaguntia, Pirata One, Georgia, serif",
       "weight": 400,
-      "fontSize": 150,
+      "fontSize": 104,
       "align": "center",
       "tracking": 0.01,
       "rect": [

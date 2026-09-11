@@ -36,9 +36,9 @@ in every scene is a slide deck.
     "title": {
       "bg": "transparent",
       "fg": "#efe4cd",
-      "fontFamily": "Playfair Display, Didot, Georgia, serif",
-      "italic": true,
-      "weight": 500,
+      "fontFamily": "Bodoni Moda, Didot, Georgia, serif",
+      "italic": false,
+      "weight": 400,
       "fontSize": 116,
       "align": "center",
       "tracking": -0.01,
@@ -75,7 +75,7 @@ in every scene is a slide deck.
     "stat": {
       "bg": "#5f8b7c",
       "fg": "#efe4cd",
-      "fontFamily": "Cormorant Garamond, Georgia, serif",
+      "fontFamily": "Playfair Display, Georgia, serif",
       "weight": 600,
       "fontSize": 48,
       "align": "center",
@@ -89,7 +89,8 @@ in every scene is a slide deck.
       "fade": {
         "in": 0.5,
         "out": 0.35
-      }
+      },
+      "italic": true
     }
   }
 }

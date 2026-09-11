@@ -37,10 +37,10 @@ competes for the same brightness.
     "title": {
       "bg": "transparent",
       "fg": "#f7ecd8",
-      "fontFamily": "Playfair Display, Didot, Georgia, serif",
+      "fontFamily": "Gwendolyn, Playfair Display, Georgia, serif",
       "italic": true,
       "weight": 700,
-      "fontSize": 128,
+      "fontSize": 170,
       "align": "center",
       "tracking": -0.02,
       "rect": [
