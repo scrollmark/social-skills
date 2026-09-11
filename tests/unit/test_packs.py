@@ -181,3 +181,55 @@ class TestTitleScenes:
         # hands an agent.
         for scene in self.scenes(pack):
             assert len(scene["guidance"]) > 200, scene["id"]
+
+
+class TestTemplates:
+    """The curated pairing, which is the thing a person actually browses for."""
+
+    def templates(self, pack: dict) -> list[dict]:
+        return [a for a in pack["assets"] if a["kind"] == "template"]
+
+    def test_every_pairing_the_gallery_curated_is_here(self, pack: dict) -> None:
+        # 21, the count that lived as a Python literal in the gallery site.
+        # Losing one in the migration is silent: the site would simply render
+        # a shorter page.
+        assert len(self.templates(pack)) == 21
+
+    def test_every_ref_resolves_inside_the_pack(self, pack: dict) -> None:
+        # Checked at build time too. Here as well because the consequence is
+        # invisible: a template whose style was renamed compiles, ships, and
+        # then applies nothing, which reads as the template being broken.
+        ids = {a["id"] for a in pack["assets"]}
+        for template in self.templates(pack):
+            assert template["values"]["formatRef"] in ids, template["id"]
+            assert template["values"]["styleRef"] in ids, template["id"]
+
+    def test_every_one_says_why(self, pack: dict) -> None:
+        # The one sentence on a gallery card that is written rather than read
+        # from a preset. It is the whole reason `template` is a kind.
+        for template in self.templates(pack):
+            assert len(template["values"]["why"]) > 20, template["id"]
+
+    def test_preview_copy_is_curation_and_never_reaches_a_video(
+        self, pack: dict
+    ) -> None:
+        # Two keys, both about what a TILE says. Anything else here would be
+        # the pack writing the video's words.
+        for template in self.templates(pack):
+            copy = template["values"].get("previewCopy")
+            if copy is not None:
+                assert set(copy) <= {"title", "caption"}, template["id"]
+
+    def test_the_five_recreations_kept_their_lines(self, pack: dict) -> None:
+        # These are the moving previews and the ones somebody arriving is most
+        # likely to be looking for. Their copy was hand-chosen against a
+        # reference and is the easiest thing to lose in a migration.
+        by_id = {a["id"]: a for a in self.templates(pack)}
+        expected = {
+            "template/daily-recap-summer-scrapbook": "Summer Vibes",
+            "template/cinematic-weekend-gothic": "Weekend",
+            "template/titled-video-postcard-serif": "New York",
+        }
+        for asset_id, title in expected.items():
+            assert asset_id in by_id, asset_id
+            assert by_id[asset_id]["values"]["previewCopy"]["title"] == title

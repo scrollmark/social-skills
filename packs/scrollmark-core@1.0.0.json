@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "name": "Scrollmark Core",
   "description": "The looks and shapes this repository ships.",
-  "keyspace": "1.1.0",
+  "keyspace": "1.2.0",
   "tier": "free",
   "license": {
     "spdx": "CC-BY-4.0",
@@ -2399,6 +2399,341 @@
             "role": "title"
           }
         ]
+      }
+    },
+    {
+      "id": "template/brand-origin-editorial-sage",
+      "kind": "template",
+      "name": "brand-origin-editorial-sage",
+      "description": "A Didone line and one script word, cream on a flat colour field.",
+      "guidance": "# brand-origin-editorial-sage\n\nA Didone line and one script word, cream on a flat colour field.\n\n`brand-origin` is the shape and `editorial-sage` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/brand-origin` for the structure and `style/editorial-sage` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-db9d6536fab666f52c418f165d272dbe92c7cabe13bfc3fa65284c4dcb50f0e6",
+      "values": {
+        "formatRef": "format/brand-origin",
+        "styleRef": "style/editorial-sage",
+        "why": "A Didone line and one script word, cream on a flat colour field.",
+        "previewCopy": {
+          "title": "THE everything you need",
+          "caption": "01 / 12"
+        }
+      }
+    },
+    {
+      "id": "template/brand-origin-magazine-cover",
+      "kind": "template",
+      "name": "brand-origin-magazine-cover",
+      "description": "One claim, one masthead, one red. Nothing else on screen.",
+      "guidance": "# brand-origin-magazine-cover\n\nOne claim, one masthead, one red. Nothing else on screen.\n\n`brand-origin` is the shape and `magazine-cover` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/brand-origin` for the structure and `style/magazine-cover` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-93fa7ae82d1a8952fa4d313353a162a98d0d1b4eab8383625f3a210d58ac6562",
+      "values": {
+        "formatRef": "format/brand-origin",
+        "styleRef": "style/magazine-cover",
+        "why": "One claim, one masthead, one red. Nothing else on screen."
+      }
+    },
+    {
+      "id": "template/brand-origin-warm-minimal",
+      "kind": "template",
+      "name": "brand-origin-warm-minimal",
+      "description": "One from-here-to-there story, told quietly enough to be believed.",
+      "guidance": "# brand-origin-warm-minimal\n\nOne from-here-to-there story, told quietly enough to be believed.\n\n`brand-origin` is the shape and `warm-minimal` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/brand-origin` for the structure and `style/warm-minimal` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-c0c6b1427a9ab9da7eb4e7634a94f5759bc7a324bbaad63495a48fb55d13a9c3",
+      "values": {
+        "formatRef": "format/brand-origin",
+        "styleRef": "style/warm-minimal",
+        "why": "One from-here-to-there story, told quietly enough to be believed."
+      }
+    },
+    {
+      "id": "template/brand-origin-zine-glitch",
+      "kind": "template",
+      "name": "brand-origin-zine-glitch",
+      "description": "Type photocopied until it breaks, and exactly one red.",
+      "guidance": "# brand-origin-zine-glitch\n\nType photocopied until it breaks, and exactly one red.\n\n`brand-origin` is the shape and `zine-glitch` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/brand-origin` for the structure and `style/zine-glitch` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-5c50edb2fc9d370fedd2c2245fa4c291951d3b002768d2148bee41076f87b3d9",
+      "values": {
+        "formatRef": "format/brand-origin",
+        "styleRef": "style/zine-glitch",
+        "why": "Type photocopied until it breaks, and exactly one red."
+      }
+    },
+    {
+      "id": "template/cinematic-documentary",
+      "kind": "template",
+      "name": "cinematic-documentary",
+      "description": "Cut to the track, captions off, colour left alone. The look is the footage.",
+      "guidance": "# cinematic-documentary\n\nCut to the track, captions off, colour left alone. The look is the footage.\n\n`cinematic` is the shape and `documentary` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/cinematic` for the structure and `style/documentary` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-65f8b95fd02216268efb4a78597e353b68672cff5c0e58ca8e2a07b030bd40b9",
+      "values": {
+        "formatRef": "format/cinematic",
+        "styleRef": "style/documentary",
+        "why": "Cut to the track, captions off, colour left alone. The look is the footage."
+      }
+    },
+    {
+      "id": "template/cinematic-neon-sign",
+      "kind": "template",
+      "name": "cinematic-neon-sign",
+      "description": "One word in struck neon tube, over a street that is already lit.",
+      "guidance": "# cinematic-neon-sign\n\nOne word in struck neon tube, over a street that is already lit.\n\n`cinematic` is the shape and `neon-sign` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/cinematic` for the structure and `style/neon-sign` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-5d25f28a4d60c5d579fcd82575dbc9a82b759f4b2e666a06d6a41242d90170a7",
+      "values": {
+        "formatRef": "format/cinematic",
+        "styleRef": "style/neon-sign",
+        "why": "One word in struck neon tube, over a street that is already lit."
+      }
+    },
+    {
+      "id": "template/cinematic-weekend-gothic",
+      "kind": "template",
+      "name": "cinematic-weekend-gothic",
+      "description": "One blackletter word over neon, and nothing else competing.",
+      "guidance": "# cinematic-weekend-gothic\n\nOne blackletter word over neon, and nothing else competing.\n\n`cinematic` is the shape and `weekend-gothic` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/cinematic` for the structure and `style/weekend-gothic` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-c10c9ff92d22c09ccc7eaab9286a6a055f79b651cbc0f2fdfbdc903c45403ce3",
+      "values": {
+        "formatRef": "format/cinematic",
+        "styleRef": "style/weekend-gothic",
+        "why": "One blackletter word over neon, and nothing else competing.",
+        "previewCopy": {
+          "title": "Weekend",
+          "caption": "added to the list"
+        }
+      }
+    },
+    {
+      "id": "template/daily-recap-pov-serif",
+      "kind": "template",
+      "name": "daily-recap-pov-serif",
+      "description": "Three panels of an afternoon, captioned like a thought rather than a title.",
+      "guidance": "# daily-recap-pov-serif\n\nThree panels of an afternoon, captioned like a thought rather than a title.\n\n`daily-recap` is the shape and `pov-serif` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/daily-recap` for the structure and `style/pov-serif` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-e450b305ce9d58bb223c21a5b1b12c0c859b206ec2437c551ad60971ed78697b",
+      "values": {
+        "formatRef": "format/daily-recap",
+        "styleRef": "style/pov-serif",
+        "why": "Three panels of an afternoon, captioned like a thought rather than a title.",
+        "previewCopy": {
+          "title": "pov: capturing everything so you can rewatch it later",
+          "caption": "three panels, one afternoon"
+        }
+      }
+    },
+    {
+      "id": "template/daily-recap-summer-scrapbook",
+      "kind": "template",
+      "name": "daily-recap-summer-scrapbook",
+      "description": "A season of phone footage, with one sentence worth keeping.",
+      "guidance": "# daily-recap-summer-scrapbook\n\nA season of phone footage, with one sentence worth keeping.\n\n`daily-recap` is the shape and `summer-scrapbook` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/daily-recap` for the structure and `style/summer-scrapbook` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-dd7392045caaed67a6141bec7cdfa5c02b5b34267b5eaf241b0c3f9ac84a4052",
+      "values": {
+        "formatRef": "format/daily-recap",
+        "styleRef": "style/summer-scrapbook",
+        "why": "A season of phone footage, with one sentence worth keeping.",
+        "previewCopy": {
+          "title": "Summer Vibes",
+          "caption": "let the sun melt the stress"
+        }
+      }
+    },
+    {
+      "id": "template/daily-recap-vhs-90s",
+      "kind": "template",
+      "name": "daily-recap-vhs-90s",
+      "description": "A day as a run of short beats, cut on the track, stamped like a camcorder.",
+      "guidance": "# daily-recap-vhs-90s\n\nA day as a run of short beats, cut on the track, stamped like a camcorder.\n\n`daily-recap` is the shape and `vhs-90s` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/daily-recap` for the structure and `style/vhs-90s` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-01147c92d6860127119a862377ccabfa7aa84d05bc239a22cde413c140b96c53",
+      "values": {
+        "formatRef": "format/daily-recap",
+        "styleRef": "style/vhs-90s",
+        "why": "A day as a run of short beats, cut on the track, stamped like a camcorder."
+      }
+    },
+    {
+      "id": "template/daily-recap-wet-paint",
+      "kind": "template",
+      "name": "daily-recap-wet-paint",
+      "description": "Letters that drip, lime on black, for a day with no sincerity in it.",
+      "guidance": "# daily-recap-wet-paint\n\nLetters that drip, lime on black, for a day with no sincerity in it.\n\n`daily-recap` is the shape and `wet-paint` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/daily-recap` for the structure and `style/wet-paint` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-5477e72317a2b689a100eb19326650f5de23e5bcda78243393994d3b034db731",
+      "values": {
+        "formatRef": "format/daily-recap",
+        "styleRef": "style/wet-paint",
+        "why": "Letters that drip, lime on black, for a day with no sincerity in it."
+      }
+    },
+    {
+      "id": "template/explainer-clean-corporate",
+      "kind": "template",
+      "name": "explainer-clean-corporate",
+      "description": "A concept walked through end to end, in the flat palette a deck already uses.",
+      "guidance": "# explainer-clean-corporate\n\nA concept walked through end to end, in the flat palette a deck already uses.\n\n`explainer` is the shape and `clean-corporate` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/explainer` for the structure and `style/clean-corporate` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-c2269d8056e14a5ee5a2623ed8f295429bb9897363b7505bdf2e9b4631d88ed6",
+      "values": {
+        "formatRef": "format/explainer",
+        "styleRef": "style/clean-corporate",
+        "why": "A concept walked through end to end, in the flat palette a deck already uses."
+      }
+    },
+    {
+      "id": "template/product-launch-tech-startup",
+      "kind": "template",
+      "name": "product-launch-tech-startup",
+      "description": "Three capabilities and a name to land, in a palette built to look shipped.",
+      "guidance": "# product-launch-tech-startup\n\nThree capabilities and a name to land, in a palette built to look shipped.\n\n`product-launch` is the shape and `tech-startup` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/product-launch` for the structure and `style/tech-startup` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-1977a2df2746498a28ad022d08dd1179c49f2ca3bd8f1ab54401e0742d4d65a3",
+      "values": {
+        "formatRef": "format/product-launch",
+        "styleRef": "style/tech-startup",
+        "why": "Three capabilities and a name to land, in a palette built to look shipped."
+      }
+    },
+    {
+      "id": "template/talking-head-loud-social",
+      "kind": "template",
+      "name": "talking-head-loud-social",
+      "description": "One person to camera, captions loud enough to work on mute.",
+      "guidance": "# talking-head-loud-social\n\nOne person to camera, captions loud enough to work on mute.\n\n`talking-head` is the shape and `loud-social` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/talking-head` for the structure and `style/loud-social` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-2c20bb088844ceb06523bd807b557a90ac330907f4751f359192500f49e7c98a",
+      "values": {
+        "formatRef": "format/talking-head",
+        "styleRef": "style/loud-social",
+        "why": "One person to camera, captions loud enough to work on mute."
+      }
+    },
+    {
+      "id": "template/talking-head-pov-quiet",
+      "kind": "template",
+      "name": "talking-head-pov-quiet",
+      "description": "A held moment, captioned mid-frame in a voice that does not raise.",
+      "guidance": "# talking-head-pov-quiet\n\nA held moment, captioned mid-frame in a voice that does not raise.\n\n`talking-head` is the shape and `pov-quiet` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/talking-head` for the structure and `style/pov-quiet` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-9c77069f7ba58a4c38672795b83d484566c956f8a9457b3be4b026aac11a26af",
+      "values": {
+        "formatRef": "format/talking-head",
+        "styleRef": "style/pov-quiet",
+        "why": "A held moment, captioned mid-frame in a voice that does not raise."
+      }
+    },
+    {
+      "id": "template/timeline-explainer-3b1b-dark",
+      "kind": "template",
+      "name": "timeline-explainer-3b1b-dark",
+      "description": "Numbered beats on a dark ground, the way a maths lecture counts.",
+      "guidance": "# timeline-explainer-3b1b-dark\n\nNumbered beats on a dark ground, the way a maths lecture counts.\n\n`timeline-explainer` is the shape and `3b1b-dark` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/timeline-explainer` for the structure and `style/3b1b-dark` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-0fcb9ec7a6a0331a6442071d9b5c491e1e5e202cb611f169e280311db3e5f3ad",
+      "values": {
+        "formatRef": "format/timeline-explainer",
+        "styleRef": "style/3b1b-dark",
+        "why": "Numbered beats on a dark ground, the way a maths lecture counts."
+      }
+    },
+    {
+      "id": "template/timeline-explainer-arcade-crt",
+      "kind": "template",
+      "name": "timeline-explainer-arcade-crt",
+      "description": "Phosphor green pixels counting up, the way a score does.",
+      "guidance": "# timeline-explainer-arcade-crt\n\nPhosphor green pixels counting up, the way a score does.\n\n`timeline-explainer` is the shape and `arcade-crt` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/timeline-explainer` for the structure and `style/arcade-crt` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-05a9a9126d8a691c79ccf8622e60f3bd02c5cd5a66adbc58fd5418b05fcd3ccc",
+      "values": {
+        "formatRef": "format/timeline-explainer",
+        "styleRef": "style/arcade-crt",
+        "why": "Phosphor green pixels counting up, the way a score does."
+      }
+    },
+    {
+      "id": "template/timeline-explainer-lookbook-sage",
+      "kind": "template",
+      "name": "timeline-explainer-lookbook-sage",
+      "description": "A collection that counts itself, in cream on sage.",
+      "guidance": "# timeline-explainer-lookbook-sage\n\nA collection that counts itself, in cream on sage.\n\n`timeline-explainer` is the shape and `lookbook-sage` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/timeline-explainer` for the structure and `style/lookbook-sage` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-52657ef4e7f7924f0c044ec3fd6fbdc809125556c00110690208b0a4e81b3ddb",
+      "values": {
+        "formatRef": "format/timeline-explainer",
+        "styleRef": "style/lookbook-sage",
+        "why": "A collection that counts itself, in cream on sage."
+      }
+    },
+    {
+      "id": "template/titled-video-analog-editorial",
+      "kind": "template",
+      "name": "titled-video-analog-editorial",
+      "description": "A clip you already have, titled as though it were printed on paper.",
+      "guidance": "# titled-video-analog-editorial\n\nA clip you already have, titled as though it were printed on paper.\n\n`titled-video` is the shape and `analog-editorial` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/titled-video` for the structure and `style/analog-editorial` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-056b3c1e006a9e1178b3aafb7c1bbf7a299bc95e61076a423eb77a816333e276",
+      "values": {
+        "formatRef": "format/titled-video",
+        "styleRef": "style/analog-editorial",
+        "why": "A clip you already have, titled as though it were printed on paper."
+      }
+    },
+    {
+      "id": "template/titled-video-chrome-y2k",
+      "kind": "template",
+      "name": "titled-video-chrome-y2k",
+      "description": "A colour font that paints its own bevelled chrome, on a dark frame.",
+      "guidance": "# titled-video-chrome-y2k\n\nA colour font that paints its own bevelled chrome, on a dark frame.\n\n`titled-video` is the shape and `chrome-y2k` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/titled-video` for the structure and `style/chrome-y2k` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-6f6460086365b557a2485d8d27bdbc340489290ca0044227b64738e36e9f6c42",
+      "values": {
+        "formatRef": "format/titled-video",
+        "styleRef": "style/chrome-y2k",
+        "why": "A colour font that paints its own bevelled chrome, on a dark frame."
+      }
+    },
+    {
+      "id": "template/titled-video-postcard-serif",
+      "kind": "template",
+      "name": "titled-video-postcard-serif",
+      "description": "A place name across the top, tracked until it is almost a line.",
+      "guidance": "# titled-video-postcard-serif\n\nA place name across the top, tracked until it is almost a line.\n\n`titled-video` is the shape and `postcard-serif` is the look. The pairing is the thing\nsomebody actually picks: a format alone does not say what it looks like and a\nstyle alone does not say how long it runs or how many scenes it wants.\n\nRead `format/titled-video` for the structure and `style/postcard-serif` for the treatment.\nBoth are in this pack, and applying this template applies the style and\nsurfaces the format as guidance -- a format's values are human ranges\n(\"8-14 scenes\", \"1.5-3s\"), and pretending to apply them mechanically would be\ninventing a promise the format never made.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-f477c075c0f00ab439ee38bcdb8daf4f1f1625ed04c3639e11972c333c9421d1",
+      "values": {
+        "formatRef": "format/titled-video",
+        "styleRef": "style/postcard-serif",
+        "why": "A place name across the top, tracked until it is almost a line.",
+        "previewCopy": {
+          "title": "New York",
+          "caption": "travel · vacation"
+        }
       }
     }
   ]
