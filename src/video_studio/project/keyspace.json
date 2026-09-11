@@ -1,0 +1,107 @@
+{
+  "$comment": [
+    "The key names a preset, a format and a storyboard card may use.",
+    "",
+    "Authored here and consumed twice: styles.py and formats.py load this file",
+    "directly, and scrollmark/editor generates packs/keyspace.generated.ts from",
+    "it. Before this existed the same lists were retyped in Python and in",
+    "TypeScript, in two repositories, and stayed in step only because one person",
+    "remembered to change both.",
+    "",
+    "Only NAMES and closed value sets live here. Types, units and constraints",
+    "stay on whichever side needs them -- the editor's zod schemas carry things",
+    "like `wordsPerPage` being a positive integer, and the comments explaining",
+    "why `bottom` is measured up from the bottom edge are worth more than any",
+    "generated version of them would be.",
+    "",
+    "Every space below has a consumer TODAY. A key space with no reader is the",
+    "failure styles.py exists to prevent: it stays in the file, stops matching",
+    "the render, and misleads whoever edits it next. Add a space when something",
+    "starts validating against it, not in anticipation."
+  ],
+  "version": "1.0.0",
+  "spaces": {
+    "caption": {
+      "$comment": "Caption keys the composer renders. Mirrored by captionStyleSchema in the editor's storyboard/captions.ts.",
+      "keys": [
+        "color",
+        "highlight",
+        "fontFamily",
+        "palette",
+        "stroke",
+        "strokeWidth",
+        "fontSize",
+        "bounce",
+        "wiggle",
+        "uppercase",
+        "bottom",
+        "wordsPerPage",
+        "wordGap"
+      ]
+    },
+    "cardStyle": {
+      "$comment": [
+        "How a card LOOKS. This is what a style preset is allowed to set, and",
+        "deliberately excludes cardContent: a preset supplies the treatment, never",
+        "the words. `fontFamily`/`italic`/`weight` arrived with scrollmark/editor#175;",
+        "before them a card could choose its colours and its size and then drew",
+        "Inter whatever it asked for, which is most of what a design template is."
+      ],
+      "keys": [
+        "bg",
+        "fg",
+        "tracking",
+        "fontSize",
+        "align",
+        "size",
+        "fontFamily",
+        "italic",
+        "weight",
+        "flat"
+      ]
+    },
+    "cardContent": {
+      "$comment": [
+        "What a card SAYS. Separate from `card` because the two lists answer",
+        "different questions and only look alike: a preset that set `heading`",
+        "would be writing the video's words, so styles.py rejects these, while",
+        "the editor's guards need card and cardContent together to tell a",
+        "mistyped key from a legitimate one."
+      ],
+      "keys": ["heading", "subtext", "lines", "footnote"]
+    },
+    "placement": {
+      "$comment": "Keys that sit on the LAYER rather than under `card`, though a preset may set them for a role.",
+      "keys": ["rect", "pop", "fade", "atMs", "untilMs", "enter", "exit"]
+    },
+    "music": {
+      "$comment": "Unvalidated until now, so a typo here was accepted in silence -- the exact failure the rest of this file prevents.",
+      "keys": ["moods"]
+    },
+    "rhythm": {
+      "keys": ["bpm", "fps"]
+    },
+    "format": {
+      "$comment": "Format frontmatter. All values are free text: `scenes: 3-6` is a human range, not a structure.",
+      "keys": [
+        "name",
+        "title",
+        "description",
+        "aspect",
+        "alsoWorks",
+        "scenes",
+        "sceneSeconds",
+        "captions",
+        "narration",
+        "music",
+        "needs"
+      ]
+    }
+  },
+  "enums": {
+    "aspect": {
+      "$comment": "`source` is a real answer: a format built on the user's own footage keeps its frame.",
+      "values": ["9:16", "16:9", "1:1", "4:5", "source"]
+    }
+  }
+}

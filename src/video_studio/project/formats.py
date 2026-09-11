@@ -31,6 +31,7 @@ import re
 from pathlib import Path
 
 from video_studio.paths import studio_root
+from video_studio.project import keyspace
 
 SKILL_ROOT = studio_root()
 USER_FORMATS = Path.home() / ".config" / "video-studio" / "formats"
@@ -47,19 +48,10 @@ PACKAGE_FORMATS = Path(__file__).resolve().parent.parent / "formats"
 
 #: Keys a format document may declare. Anything else is a typo, and a typo in
 #: frontmatter is invisible: it parses, it stores, and nothing ever reads it.
-FORMAT_KEYS = {
-    "name",          # the id, and the file stem
-    "title",         # the composer-facing name, e.g. TimelineExplainer
-    "description",   # one line, for a list
-    "aspect",        # the frame it is composed for
-    "alsoWorks",     # a second frame it survives
-    "scenes",        # how many, as a range
-    "sceneSeconds",  # how long each runs, as a range
-    "captions",      # on / off / optional
-    "narration",     # one voice / two voices / on camera / optional
-    "music",         # required, where the format does not work without it
-    "needs",         # a program that must run before this format can build
-}
+#: Format frontmatter keys, read from the shared key space rather than retyped
+#: -- see ``keyspace.json`` beside this module. The comments that used to sit
+#: against each name live there now, where both consumers can read them.
+FORMAT_KEYS = keyspace.space("format")
 
 #: Programs that ship inside a skill folder rather than in the package, so
 #: they are not in ``COMMANDS`` and a ``needs:`` naming one would otherwise be
@@ -70,7 +62,7 @@ BUNDLED = {"doctor", "measure", "normalize_audio", "poster", "prekey", "qc_rende
 
 #: ``aspect`` values that mean something downstream. ``source`` is a real
 #: answer: a format built on the user's own footage keeps its frame.
-ASPECTS = {"9:16", "16:9", "1:1", "4:5", "source"}
+ASPECTS = keyspace.enum("aspect")
 
 
 def format_roots(project: Path | None) -> list[Path]:

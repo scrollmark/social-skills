@@ -104,6 +104,26 @@ def test_wheel_ships_package_data(tmp_path, subdir, minimum):
     assert len(found) >= minimum, f"{subdir}: expected >={minimum} data files in the wheel, got {len(found)}"
 
 
+def test_wheel_ships_the_keyspace(tmp_path):
+    """`keyspace.json` is read at IMPORT, not on demand.
+
+    Every other data file in this package is read when something asks for it,
+    so a missing one is a failure in one command. This one is loaded when
+    `video_studio.project.keyspace` is imported, which `styles` and `formats`
+    both do at module level -- so leaving it out of the wheel is an ImportError
+    for every installed user, on every command, not a missing preset.
+    """
+    r = subprocess.run([sys.executable, "-m", "build", "--wheel", "--outdir", str(tmp_path)],
+                       capture_output=True, text=True, cwd=REPO)
+    if r.returncode != 0:
+        pytest.skip(f"wheel build unavailable: {r.stderr[-200:]}")
+    wheel = sorted(tmp_path.glob("*.whl"))[-1]
+    names = zipfile.ZipFile(wheel).namelist()
+    assert any(n.endswith("video_studio/project/keyspace.json") for n in names), (
+        f"keyspace.json is not in the wheel; project/ holds: "
+        f"{[n for n in names if '/project/' in n]}")
+
+
 def test_every_skill_has_at_least_one_scenario():
     """TESTING.md states this rule; nothing enforced it, and 9 of 16 skills
     were missing one — all of them arrivals from the consolidation, which is

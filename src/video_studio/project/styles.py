@@ -44,22 +44,34 @@ import sys
 from pathlib import Path
 
 from video_studio.paths import studio_root
+from video_studio.project import keyspace
 
 SKILL_ROOT = studio_root()
 USER_STYLES = Path.home() / ".config" / "video-studio" / "styles"
 
+#: The key names, read rather than retyped.
+#:
+#: These lists used to live here as literals and again in TypeScript, in
+#: scrollmark/editor, and stayed in step only because somebody remembered to
+#: change both. They are one authored file now -- ``keyspace.json`` beside this
+#: module -- which the editor generates its copy from. Loaded at import from
+#: disk, so there is no build step, no network, and no Python in the editor's
+#: toolchain.
+KEYSPACE_VERSION = keyspace.VERSION
+
 #: Keys the composer actually renders for captions. Anything else in a preset
 #: is a typo, and a typo that renders as nothing is the expensive kind.
-CAPTION_KEYS = {"color", "highlight", "fontFamily", "palette", "stroke",
-                "strokeWidth", "fontSize", "bounce", "wiggle", "uppercase",
-                "bottom", "wordsPerPage", "wordGap"}
-#: Card keys the composer renders, plus the placement keys that sit beside it.
-CARD_KEYS = {"bg", "fg", "tracking", "fontSize", "align", "size",
-             # The face, as of scrollmark/editor#175. Before it, a card could
-             # pick its colours and its size and then drew Inter whatever it
-             # asked for -- which is most of what a design template is.
-             "fontFamily", "italic", "weight", "flat"}
-PLACEMENT_KEYS = {"rect", "pop", "fade", "atMs", "untilMs", "enter", "exit"}
+CAPTION_KEYS = keyspace.space("caption")
+#: How a card LOOKS -- what a preset is allowed to set.
+CARD_KEYS = keyspace.space("cardStyle")
+#: What a card SAYS. A preset supplying these would be writing the video's
+#: words, so ``validate`` names them specifically rather than lumping them in
+#: with a misspelling: "that is content, not style" is a more useful thing to
+#: be told than "that is not a card key".
+CARD_CONTENT_KEYS = keyspace.space("cardContent")
+PLACEMENT_KEYS = keyspace.space("placement")
+MUSIC_KEYS = keyspace.space("music")
+RHYTHM_KEYS = keyspace.space("rhythm")
 
 
 #: Presets shipped inside the installed package. Lowest precedence of all, so
@@ -131,8 +143,28 @@ def validate(values: dict) -> list[str]:
             problems.append(f"captions.{k} is not a caption key the composer renders")
     for role, spec in values.get("cards", {}).items():
         for k in spec:
-            if k not in CARD_KEYS | PLACEMENT_KEYS:
+            if k in CARD_CONTENT_KEYS:
+                # Worth its own sentence. This one is not a typo -- it is a
+                # real card key, used in the wrong place, and "not a card key"
+                # would send someone looking for a misspelling that is not
+                # there. A preset styles every card of a role; the words
+                # belong to the one scene that says them.
+                problems.append(
+                    f"cards.{role}.{k} is card CONTENT, not style: a preset sets "
+                    f"how a card looks, and the scene sets what it says")
+            elif k not in CARD_KEYS | PLACEMENT_KEYS:
                 problems.append(f"cards.{role}.{k} is not a card or placement key")
+    # `music` and `rhythm` went unchecked until scrollmark/editor's pack work
+    # went looking for the key space and found that half of it was never
+    # validated: eleven presets set them, and a typo in one was accepted in
+    # silence -- precisely the failure the captions and cards checks exist to
+    # prevent, sitting two keys away from them.
+    for k in values.get("music", {}):
+        if k not in MUSIC_KEYS:
+            problems.append(f"music.{k} is not a music key")
+    for k in values.get("rhythm", {}):
+        if k not in RHYTHM_KEYS:
+            problems.append(f"rhythm.{k} is not a rhythm key")
     return problems
 
 
