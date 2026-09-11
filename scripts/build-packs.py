@@ -25,7 +25,6 @@ import argparse
 import hashlib
 import json
 import re
-import subprocess
 import sys
 from pathlib import Path
 
@@ -179,15 +178,6 @@ def format_assets(problems: list[str]) -> list[dict]:
     return assets
 
 
-def commit() -> str:
-    try:
-        return subprocess.run(
-            ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=True
-        ).stdout.strip()
-    except Exception:  # noqa: BLE001 -- provenance is nice to have, not required
-        return ""
-
-
 def build() -> tuple[dict, dict, list[str]]:
     problems: list[str] = []
     assets = style_assets(problems) + format_assets(problems)
@@ -201,7 +191,12 @@ def build() -> tuple[dict, dict, list[str]]:
         "keyspace": keyspace.VERSION,
         "tier": "free",
         "license": {"spdx": "CC-BY-4.0", "holder": "Scrollmark"},
-        "provenance": {"repo": "scrollmark/social-skills", "commit": commit()},
+        # No commit SHA and no timestamp. Both change on every build, and this
+        # file is COMMITTED and compared against a rebuild -- so either one
+        # makes the drift check fail forever, which is exactly what happened:
+        # the SHA recorded is necessarily the one BEFORE the commit that
+        # carries it, so it could never be right either.
+        "provenance": {"repo": "scrollmark/social-skills"},
         "assets": assets,
     }
 
@@ -223,7 +218,7 @@ def build() -> tuple[dict, dict, list[str]]:
                 "description": pack["description"],
                 "tier": pack["tier"],
                 "assetCounts": counts,
-                "digest": digest({k: v for k, v in pack.items() if k != "provenance"}),
+        "digest": digest({k: v for k, v in pack.items() if k != "provenance"}),
                 "url": f"{PACK_ID}@{PACK_VERSION}.json",
             }
         ],
