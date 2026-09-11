@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 STYLES = ROOT / "src" / "video_studio" / "styles"
 FORMATS = ROOT / "skills" / "video-formats" / "references" / "formats"
 TITLE_SCENES = ROOT / "src" / "video_studio" / "title_scenes"
+TEMPLATES = ROOT / "src" / "video_studio" / "templates"
 #: Committed, at the repo root rather than under `dist/`, which is gitignored
 #: as the Python build output -- putting the packs there would have published
 #: nothing at all. Consumers read it over raw.githubusercontent.com, the same
@@ -249,13 +250,95 @@ def title_scene_assets(problems: list[str]) -> list[dict]:
     return assets
 
 
+def template_assets(problems: list[str]) -> list[dict]:
+    """The curated pairing, which is the thing a person actually browses for.
+
+    A format is a shape and a style is a look; neither alone is what anyone
+    picks. Until these existed the pairings lived as two hand-kept Python
+    literals inside the gallery site's `sync-gallery.py` -- which meant the
+    editor could offer "summer-scrapbook" and could not offer "a season of
+    phone footage, with one sentence worth keeping."
+
+    Moving them here is a one-way door and worth naming as one: adding a
+    template is now a release of this repository rather than a commit to the
+    site. That is the point -- the editor cannot see a site commit -- and it
+    does slow down purely editorial changes.
+    """
+    assets = []
+    known = keyspace.space("template")
+    copy_keys = keyspace.space("previewCopy")
+    for path in sorted(TEMPLATES.glob("*.md")):
+        text = path.read_text()
+        values = json_block(text)
+        meta = frontmatter(text)
+        if values is None:
+            problems.append(f"{path.name}: no json block")
+            continue
+        unknown = sorted(set(values) - known)
+        if unknown:
+            problems.append(f"{path.name}: not template keys: {', '.join(unknown)}")
+            continue
+        for key in ("formatRef", "styleRef", "why"):
+            if not values.get(key):
+                problems.append(f"{path.name}: {key} is required")
+        copy = values.get("previewCopy")
+        if copy is not None:
+            if not isinstance(copy, dict):
+                problems.append(f"{path.name}: previewCopy must be an object")
+            else:
+                stray = sorted(set(copy) - copy_keys)
+                if stray:
+                    problems.append(
+                        f"{path.name}: previewCopy sets {', '.join(stray)}"
+                    )
+        assets.append(
+            {
+                "id": f"template/{path.stem}",
+                "kind": "template",
+                "name": meta.get("name", path.stem),
+                "description": meta.get("description", ""),
+                "guidance": guidance(text),
+                "status": "stable",
+                "revision": 1,
+                "digest": digest(values),
+                "values": values,
+            }
+        )
+    return assets
+
+
+def resolve_refs(assets: list[dict], problems: list[str]) -> None:
+    """Every ref must name an asset in this same pack.
+
+    Checked at BUILD time because the alternative is finding out at apply
+    time: a template whose style was renamed still compiles, still ships, and
+    then applies nothing -- which reads as the template being broken rather
+    than the ref being stale.
+    """
+    ids = {asset["id"] for asset in assets}
+    single = ("formatRef", "styleRef", "overlayRef", "titleSceneRef")
+    for asset in assets:
+        values = asset.get("values")
+        if not isinstance(values, dict):
+            continue
+        refs = [values[key] for key in single if isinstance(values.get(key), str)]
+        listed = values.get("sfxRefs")
+        if isinstance(listed, list):
+            refs += [ref for ref in listed if isinstance(ref, str)]
+        for ref in refs:
+            if ref not in ids:
+                problems.append(f"{asset['id']}: {ref} is not in this pack")
+
+
 def build() -> tuple[dict, dict, list[str]]:
     problems: list[str] = []
     assets = (
         style_assets(problems)
         + format_assets(problems)
         + title_scene_assets(problems)
+        + template_assets(problems)
     )
+    resolve_refs(assets, problems)
 
     pack = {
         "format": PACK_FORMAT,

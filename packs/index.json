@@ -1,6 +1,6 @@
 {
   "format": "scrollmark.packindex/1",
-  "keyspace": "1.1.0",
+  "keyspace": "1.2.0",
   "packs": [
     {
       "id": "scrollmark-core",
@@ -11,9 +11,10 @@
       "assetCounts": {
         "style": 29,
         "format": 11,
-        "title-scene": 3
+        "title-scene": 3,
+        "template": 21
       },
-      "digest": "sha256-144eaa4e1cbdb17cc01e995aa20f1d881a3de49ee43ebd6acc8b1718112daa6f",
+      "digest": "sha256-caa0d94ef8e1f482a7655e7eb84d8ddfbfca501c0bfade25de372b1170da9d44",
       "url": "scrollmark-core@1.0.0.json"
     }
   ]

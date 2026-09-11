@@ -19,7 +19,7 @@
     "the render, and misleads whoever edits it next. Add a space when something",
     "starts validating against it, not in anticipation."
   ],
-  "version": "1.1.0",
+  "version": "1.2.0",
   "spaces": {
     "caption": {
       "$comment": "Caption keys the composer renders. Mirrored by captionStyleSchema in the editor's storyboard/captions.ts.",
@@ -143,6 +143,36 @@
         "overlayRef",
         "layers",
         "sfxRefs"
+      ]
+    },
+    "template": {
+      "$comment": [
+        "The curated pairing -- the thing a person actually browses for. A format",
+        "alone does not say what it looks like and a style alone does not say how",
+        "long it runs, so neither is what anyone picks.",
+        "Refs resolve WITHIN the same pack. Reaching across packs needs a",
+        "dependency resolver nobody has asked for, and a ref that silently found",
+        "nothing would render as a styling choice."
+      ],
+      "keys": [
+        "formatRef",
+        "styleRef",
+        "overlayRef",
+        "titleSceneRef",
+        "sfxRefs",
+        "why",
+        "previewCopy",
+        "preview"
+      ]
+    },
+    "previewCopy": {
+      "$comment": [
+        "What a preview tile SAYS, so it shows the template's own line rather than",
+        "its format's name. Curation, not content: these words never reach a video."
+      ],
+      "keys": [
+        "title",
+        "caption"
       ]
     }
   },
