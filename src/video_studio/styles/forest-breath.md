@@ -21,9 +21,9 @@ file, stops matching the render, and misleads whoever edits it next.
     "color": "#1a2e1f",
     "highlight": "#c19a6b",
     "fontFamily": "Inter",
-    "fontSize": 28,
+    "fontSize": 62,
     "stroke": "#f5f5f0",
-    "strokeWidth": 3,
+    "strokeWidth": 5,
     "bottom": 0.12,
     "wordsPerPage": 4
   },
