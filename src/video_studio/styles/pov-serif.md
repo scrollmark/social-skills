@@ -10,6 +10,10 @@ bottom, in near-white with a thin dark outline. A sturdier face than a
 display serif: this is meant to read as a thought typed over the picture, not
 as a masthead.
 
+Small, not tiny. At 3% of the frame the line was unreadable on a phone and
+invisible in a grid of thumbnails, which is a different thing from quiet --
+the reference this comes from sets a line you can read at arm's length.
+
 Reach for it on the `pov:` register -- a held moment, a memory, anything whose
 effect is that it is understated. Three or four lines is the ceiling; it is a
 caption pretending to be a sentence, and a paragraph mid-frame is a wall.
@@ -26,7 +30,7 @@ fallback rarely fires.
     "fontFamily": "Georgia, EB Garamond, serif",
     "stroke": "#14120f",
     "strokeWidth": 3,
-    "fontSize": 40,
+    "fontSize": 46,
     "uppercase": false,
     "bounce": 1,
     "wiggle": 0,
@@ -41,14 +45,14 @@ fallback rarely fires.
       "fontFamily": "Georgia, EB Garamond, serif",
       "italic": true,
       "weight": 400,
-      "fontSize": 58,
+      "fontSize": 88,
       "align": "center",
       "tracking": 0,
       "rect": [
-        0.12,
-        0.42,
-        0.76,
-        0.16
+        0.1,
+        0.38,
+        0.8,
+        0.24
       ],
       "fade": {
         "in": 1.0,
