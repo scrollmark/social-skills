@@ -20,9 +20,11 @@ Without that install there is no `--list`, `--show`, `--apply` or `--save`, and 
     video-studio styles --apply tourism --storyboard <project>/storyboard.json
     video-studio styles --save theirs --from <project>/storyboard.json
 
-A preset is one markdown file: frontmatter (`name`, `description`), prose saying when to reach for it, and a single fenced JSON block holding the values. The JSON covers exactly two things — `captions` (colour, `stroke`, `strokeWidth`, `fontSize`, `wordGap`, `wordsPerPage`, `uppercase`, `bottom`, `palette`) and `cards`, a named role such as `label`, `stat`, `title` or `cta` mapped to `bg`, `fg`, `tracking`, `align` and a `rect`. Unknown keys are reported, not silently dropped, because a misspelled key renders as nothing and reads like a styling choice.
+A preset is one markdown file: frontmatter (`name`, `description`), prose saying when to reach for it, and a single fenced JSON block holding the values. The JSON covers exactly two things — `captions` (colour, `stroke`, `strokeWidth`, `fontSize`, `wordGap`, `wordsPerPage`, `uppercase`, `bottom`, `palette`) and `cards`, a named role such as `label`, `stat`, `title` or `cta` mapped to `bg`, `fg`, `fontFamily`, `italic`, `weight`, `fontSize`, `tracking`, `align` and a `rect`. Unknown keys are reported, not silently dropped, because a misspelled key renders as nothing and reads like a styling choice.
 
 Resolution order, first match winning: `<project>/styles/` → `$VIDEO_STUDIO_STYLES` → the user's own `~/.config/video-studio/styles/` → the presets shipped with the toolchain. The user-level directory is the load-bearing one; a preset kept in a checkout dies with the checkout.
+
+**A card can name its face.** `fontFamily` takes any family the editor loads — every Google font plus the system stacks — with `italic` and `weight` beside it. `bg: "transparent"` puts the type straight on the footage with no panel. This is most of what separates two looks: before it existed every card in every video was Inter, whatever the preset said. Name a real fallback (`"Playfair Display, Didot, Georgia, serif"`), and give an unusual display face an explicit `fontSize` — the automatic sizing is calibrated to Inter's width.
 
 **Author cards against a role, not a colour.** Write `{"card": {"style": "label", "heading": "TOKYO"}}` and let `--apply` fill in bg, fg, tracking and rect. Anything the scene sets explicitly wins, so a one-off override never means abandoning the brand.
 
