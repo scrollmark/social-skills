@@ -40,7 +40,7 @@ picture having some texture of its own.
     "title": {
       "bg": "#f4ece1",
       "fg": "#2b2118",
-      "fontSize": 78,
+      "fontSize": 150,
       "align": "left",
       "tracking": 0.08,
       "rect": [

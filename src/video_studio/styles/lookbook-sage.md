@@ -39,7 +39,7 @@ in every scene is a slide deck.
       "fontFamily": "Bodoni Moda, Didot, Georgia, serif",
       "italic": false,
       "weight": 400,
-      "fontSize": 116,
+      "fontSize": 168,
       "align": "center",
       "tracking": -0.01,
       "rect": [

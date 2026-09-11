@@ -38,7 +38,7 @@ the automatic sizing, which is calibrated to Inter and will overshoot badly.
       "bg": "transparent",
       "fg": "#39ff14",
       "fontFamily": "Press Start 2P, ui-monospace, monospace",
-      "fontSize": 72,
+      "fontSize": 120,
       "align": "center",
       "tracking": 0.02,
       "rect": [

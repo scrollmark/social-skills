@@ -39,7 +39,7 @@ and never for anything a viewer actually has to read to follow the video.
       "fg": "#e5342a",
       "fontFamily": "UnifrakturMaguntia, Pirata One, Georgia, serif",
       "weight": 400,
-      "fontSize": 104,
+      "fontSize": 236,
       "align": "center",
       "tracking": 0.01,
       "rect": [

@@ -40,7 +40,7 @@ competes for the same brightness.
       "fontFamily": "Gwendolyn, Playfair Display, Georgia, serif",
       "italic": true,
       "weight": 700,
-      "fontSize": 170,
+      "fontSize": 232,
       "align": "center",
       "tracking": -0.02,
       "rect": [
@@ -78,7 +78,7 @@ competes for the same brightness.
       "fg": "#f7ecd8",
       "fontFamily": "Cormorant Garamond, Georgia, serif",
       "weight": 500,
-      "fontSize": 30,
+      "fontSize": 34,
       "align": "center",
       "tracking": 0.01,
       "rect": [

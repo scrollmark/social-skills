@@ -37,7 +37,7 @@ background the whole word disappears into the picture.
       "bg": "transparent",
       "fg": "#ffffff",
       "fontFamily": "Nabla, Impact, sans-serif",
-      "fontSize": 140,
+      "fontSize": 200,
       "align": "center",
       "tracking": 0.02,
       "rect": [

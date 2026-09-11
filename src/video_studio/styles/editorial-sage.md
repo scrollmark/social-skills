@@ -38,7 +38,7 @@ light enough that a busy frame eats it, which is what the sage is for.
       "fg": "#efe6d2",
       "fontFamily": "Bodoni Moda, Didot, Georgia, serif",
       "weight": 400,
-      "fontSize": 118,
+      "fontSize": 176,
       "align": "center",
       "tracking": -0.01,
       "rect": [
@@ -58,7 +58,7 @@ light enough that a busy frame eats it, which is what the sage is for.
       "fontFamily": "Playfair Display, Georgia, serif",
       "italic": true,
       "weight": 500,
-      "fontSize": 104,
+      "fontSize": 150,
       "align": "center",
       "tracking": 0,
       "rect": [

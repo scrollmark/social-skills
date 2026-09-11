@@ -40,7 +40,7 @@ perfectly still.
     "title": {
       "bg": "#0b0b0f",
       "fg": "#ff3ea5",
-      "fontSize": 84,
+      "fontSize": 150,
       "align": "left",
       "tracking": 0.18,
       "rect": [

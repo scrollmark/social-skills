@@ -37,7 +37,7 @@ nothing to it, and the tube reads as broken if you crowd two lines together.
       "bg": "transparent",
       "fg": "#ff2fa8",
       "fontFamily": "Monoton, Impact, sans-serif",
-      "fontSize": 96,
+      "fontSize": 172,
       "align": "center",
       "tracking": 0.02,
       "rect": [
