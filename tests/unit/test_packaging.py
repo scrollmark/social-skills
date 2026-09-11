@@ -86,7 +86,7 @@ def test_all_extra_is_absent_and_standard_exists():
     assert "all" not in d, "[all] was removed because it never meant all; it is back"
 
 
-@pytest.mark.parametrize("subdir,minimum", [("styles", 27), ("tutorials", 3), ("qc/data", 2),
+@pytest.mark.parametrize("subdir,minimum", [("styles", 29), ("tutorials", 3), ("qc/data", 2),
                                             ("formats", 11)])
 def test_wheel_ships_package_data(tmp_path, subdir, minimum):
     """Data files ride along only because the build sweeps the package tree.
