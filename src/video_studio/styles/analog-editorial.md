@@ -43,8 +43,18 @@ picture having some texture of its own.
       "fontSize": 78,
       "align": "left",
       "tracking": 0.08,
-      "rect": [0.08, 0.34, 0.84, 0.24],
-      "fade": { "in": 0.8, "out": 0.5 }
+      "rect": [
+        0.08,
+        0.34,
+        0.84,
+        0.24
+      ],
+      "fade": {
+        "in": 0.8,
+        "out": 0.5
+      },
+      "fontFamily": "Fraunces, Georgia, serif",
+      "italic": true
     },
     "label": {
       "bg": "#2b2118",
@@ -52,8 +62,17 @@ picture having some texture of its own.
       "fontSize": 24,
       "align": "left",
       "tracking": 0.16,
-      "rect": [0.08, 0.8, 0.5, 0.06],
-      "fade": { "in": 0.4, "out": 0.3 }
+      "rect": [
+        0.08,
+        0.8,
+        0.5,
+        0.06
+      ],
+      "fade": {
+        "in": 0.4,
+        "out": 0.3
+      },
+      "fontFamily": "Inter, Helvetica, sans-serif"
     },
     "stat": {
       "bg": "#e0a34a",
@@ -61,8 +80,17 @@ picture having some texture of its own.
       "fontSize": 40,
       "align": "left",
       "tracking": 0.04,
-      "rect": [0.08, 0.72, 0.56, 0.12],
-      "fade": { "in": 0.4, "out": 0.3 }
+      "rect": [
+        0.08,
+        0.72,
+        0.56,
+        0.12
+      ],
+      "fade": {
+        "in": 0.4,
+        "out": 0.3
+      },
+      "fontFamily": "Fraunces, Georgia, serif"
     }
   }
 }
