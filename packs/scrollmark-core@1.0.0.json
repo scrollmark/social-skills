@@ -1,0 +1,2349 @@
+{
+  "format": "scrollmark.pack/1",
+  "id": "scrollmark-core",
+  "version": "1.0.0",
+  "name": "Scrollmark Core",
+  "description": "The looks and shapes this repository ships.",
+  "keyspace": "1.0.0",
+  "tier": "free",
+  "license": {
+    "spdx": "CC-BY-4.0",
+    "holder": "Scrollmark"
+  },
+  "provenance": {
+    "repo": "scrollmark/social-skills",
+    "commit": "e58f849d5fdb0ba13e90b6778f74125ed795ac64"
+  },
+  "assets": [
+    {
+      "id": "style/3b1b-dark",
+      "kind": "style",
+      "name": "3b1b-dark",
+      "description": "Navy/blue/gold, math education inspired by 3Blue1Brown",
+      "guidance": "# 3b1b-dark\n\nNavy/blue/gold, math education inspired by 3Blue1Brown. This preset carries\nonly what the composer actually renders: caption styling, three card roles, and\nthe music mood, so `music_catalog --pick` can choose a bed that matches the\nlook rather than fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-fe646ba250efdc0841564a4c1cb955164c1f87132f4ad363104797888e0b3e53",
+      "values": {
+        "captions": {
+          "color": "#ffffff",
+          "highlight": "#facc15",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#1c1c2e",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#1c1c2e",
+            "fg": "#ffffff",
+            "fontSize": 84,
+            "align": "left",
+            "tracking": -0.02
+          },
+          "label": {
+            "bg": "#3b82f6",
+            "fg": "#ffffff",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.08
+          },
+          "stat": {
+            "bg": "#facc15",
+            "fg": "#1c1c2e",
+            "fontSize": 128,
+            "align": "center",
+            "tracking": -0.03
+          }
+        },
+        "music": {
+          "moods": [
+            "contemplative",
+            "ambient",
+            "gentle"
+          ]
+        },
+        "rhythm": {
+          "bpm": 96,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/analog-editorial",
+      "kind": "style",
+      "name": "analog-editorial",
+      "description": "Warm film stock under fashion-magazine serifs",
+      "guidance": "# analog-editorial\n\nCream-on-ink serif type over footage that is allowed to look photographed\nrather than rendered. The reference is a magazine spread printed on uncoated\npaper: generous letter-spacing on the cards, a caption face with real\ncontrast, and one warm accent that reads as a highlighter rather than a\nnotification badge.\n\nReach for it on travel, food, interiors, product-in-hand — anything where the\nfootage already has grain, warmth or shallow depth and the type's job is to\nframe it. It is the wrong preset for a chart or a stat: a serif at this size\nloses to a number that wants to be read fast.\n\nPair it with a `grain` effect layer at low intensity. Without one the type\nlooks like it was printed on the wrong stock — the whole look depends on the\npicture having some texture of its own.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Fraunces",
+        "Georgia",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif"
+      ],
+      "digest": "sha256-c0d0151217c14392593863c2c41a486e4dec50d33997e86de8026b80750aa6dd",
+      "values": {
+        "captions": {
+          "color": "#f4ece1",
+          "highlight": "#e0a34a",
+          "fontFamily": "Fraunces, Georgia, serif",
+          "stroke": "#2b2118",
+          "strokeWidth": 5,
+          "fontSize": 56,
+          "uppercase": false,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 4,
+          "wordGap": 0.14,
+          "bottom": 0.14
+        },
+        "cards": {
+          "title": {
+            "bg": "#f4ece1",
+            "fg": "#2b2118",
+            "fontSize": 150,
+            "align": "left",
+            "tracking": 0.08,
+            "rect": [
+              0.08,
+              0.34,
+              0.84,
+              0.24
+            ],
+            "fade": {
+              "in": 0.8,
+              "out": 0.5
+            },
+            "fontFamily": "Fraunces, Georgia, serif",
+            "italic": true
+          },
+          "label": {
+            "bg": "#2b2118",
+            "fg": "#f4ece1",
+            "fontSize": 24,
+            "align": "left",
+            "tracking": 0.16,
+            "rect": [
+              0.08,
+              0.8,
+              0.5,
+              0.06
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            },
+            "fontFamily": "Inter, Helvetica, sans-serif"
+          },
+          "stat": {
+            "bg": "#e0a34a",
+            "fg": "#2b2118",
+            "fontSize": 40,
+            "align": "left",
+            "tracking": 0.04,
+            "rect": [
+              0.08,
+              0.72,
+              0.56,
+              0.12
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            },
+            "fontFamily": "Fraunces, Georgia, serif"
+          }
+        }
+      }
+    },
+    {
+      "id": "style/arcade-crt",
+      "kind": "style",
+      "name": "arcade-crt",
+      "description": "Phosphor green pixels, Press Start over VT323",
+      "guidance": "# arcade-crt\n\nA pixel face at title size and a terminal face for everything else, in the\ngreen a CRT actually emitted, on black. Captions are uppercase and monospaced\nso they read as output rather than as subtitles.\n\nReach for it on games, builds, benchmarks, anything with a score or a number\ngoing up. It is a costume on a lifestyle clip, and the pixels turn to mush\nover busy footage — this look wants dark, simple frames or a flat colour.\n\nPress Start 2P is enormously wide: eight characters fill a phone frame. Keep\ntitles to one short word and trust the explicit `fontSize` here rather than\nthe automatic sizing, which is calibrated to Inter and will overshoot badly.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Press Start 2P",
+        "ui-monospace",
+        "monospace",
+        "VT323"
+      ],
+      "digest": "sha256-7b8e156f857dad2a5eed789c4c6ac25fced37b24aa3b2662aeddb80ebfa730f2",
+      "values": {
+        "captions": {
+          "color": "#39ff14",
+          "highlight": "#ffffff",
+          "fontFamily": "VT323, ui-monospace, monospace",
+          "stroke": "#03170a",
+          "strokeWidth": 6,
+          "fontSize": 64,
+          "uppercase": true,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 4,
+          "wordGap": 0.18,
+          "bottom": 0.12
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#39ff14",
+            "fontFamily": "Press Start 2P, ui-monospace, monospace",
+            "fontSize": 120,
+            "align": "center",
+            "tracking": 0.02,
+            "rect": [
+              0.04,
+              0.4,
+              0.92,
+              0.2
+            ],
+            "fade": {
+              "in": 0.15,
+              "out": 0.15
+            }
+          },
+          "label": {
+            "bg": "#03170a",
+            "fg": "#39ff14",
+            "fontFamily": "VT323, ui-monospace, monospace",
+            "fontSize": 40,
+            "align": "center",
+            "tracking": 0.08,
+            "rect": [
+              0.2,
+              0.1,
+              0.6,
+              0.06
+            ],
+            "fade": {
+              "in": 0.15,
+              "out": 0.15
+            }
+          },
+          "stat": {
+            "bg": "#39ff14",
+            "fg": "#03170a",
+            "fontFamily": "Press Start 2P, ui-monospace, monospace",
+            "fontSize": 56,
+            "align": "center",
+            "tracking": 0,
+            "rect": [
+              0.14,
+              0.7,
+              0.72,
+              0.1
+            ],
+            "fade": {
+              "in": 0.15,
+              "out": 0.15
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/bold-neon",
+      "kind": "style",
+      "name": "bold-neon",
+      "description": "Black/cyan/pink, gaming and tech energy",
+      "guidance": "# bold-neon\n\nBlack/cyan/pink, gaming and tech energy. This preset carries only what the\ncomposer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-092d31e8afb523a2dc685de7256aa75b3231f8087f1678179de5707cbf0b06fa",
+      "values": {
+        "captions": {
+          "color": "#ffffff",
+          "highlight": "#e11d48",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#0a0a0a",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#0a0a0a",
+            "fg": "#ffffff",
+            "fontSize": 88,
+            "align": "left",
+            "tracking": -0.03
+          },
+          "label": {
+            "bg": "#06b6d4",
+            "fg": "#ffffff",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.1
+          },
+          "stat": {
+            "bg": "#e11d48",
+            "fg": "#0a0a0a",
+            "fontSize": 140,
+            "align": "center",
+            "tracking": -0.04
+          }
+        },
+        "music": {
+          "moods": [
+            "energetic",
+            "aggressive",
+            "uplifting"
+          ]
+        },
+        "rhythm": {
+          "bpm": 140,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/chrome-y2k",
+      "kind": "style",
+      "name": "chrome-y2k",
+      "description": "Nabla's colour chrome, which paints its own palette",
+      "guidance": "# chrome-y2k\n\nNabla is a colour font: its glyphs carry their own gradient, a bevelled chrome\nthat looks like a 1999 CD-ROM menu. The card's `fg` does nothing to it — the\nface paints itself — which is the one thing to know before using it.\n\nReach for it on tech, nostalgia, anything knowingly retro-futuristic. Because\nthe title brings its own palette, everything around it is deliberately\nmonochrome: white captions, a near-black kicker, no third colour.\n\nSet it on a dark frame. The chrome's highlights are pale, and on a bright\nbackground the whole word disappears into the picture.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Nabla",
+        "Impact",
+        "sans-serif",
+        "Inter",
+        "Helvetica"
+      ],
+      "digest": "sha256-c457b8deed63e219d8b0880985541b9b4c6748b23651d0e3509f7eb2938b198b",
+      "values": {
+        "captions": {
+          "color": "#f8fafc",
+          "highlight": "#a5f3fc",
+          "fontFamily": "Inter, Helvetica, sans-serif",
+          "stroke": "#09090b",
+          "strokeWidth": 7,
+          "fontSize": 52,
+          "uppercase": true,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 3,
+          "wordGap": 0.2,
+          "bottom": 0.12
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#ffffff",
+            "fontFamily": "Nabla, Impact, sans-serif",
+            "fontSize": 200,
+            "align": "center",
+            "tracking": 0.02,
+            "rect": [
+              0.04,
+              0.36,
+              0.92,
+              0.22
+            ],
+            "fade": {
+              "in": 0.3,
+              "out": 0.25
+            }
+          },
+          "label": {
+            "bg": "#09090b",
+            "fg": "#f8fafc",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 700,
+            "fontSize": 28,
+            "align": "center",
+            "tracking": 0.3,
+            "rect": [
+              0.14,
+              0.62,
+              0.72,
+              0.05
+            ],
+            "fade": {
+              "in": 0.25,
+              "out": 0.2
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/clean-corporate",
+      "kind": "style",
+      "name": "clean-corporate",
+      "description": "White/blue, professional business presentations",
+      "guidance": "# clean-corporate\n\nWhite/blue, professional business presentations. This preset carries only what\nthe composer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-6112845f39717a98bba84b55def4b34087e33c955fcd4f7e433e59184dae9dc1",
+      "values": {
+        "captions": {
+          "color": "#1e293b",
+          "highlight": "#059669",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#ffffff",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#ffffff",
+            "fg": "#1e293b",
+            "fontSize": 84,
+            "align": "left",
+            "tracking": -0.03
+          },
+          "label": {
+            "bg": "#2563eb",
+            "fg": "#1e293b",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.08
+          },
+          "stat": {
+            "bg": "#059669",
+            "fg": "#ffffff",
+            "fontSize": 128,
+            "align": "center",
+            "tracking": -0.04
+          }
+        },
+        "music": {
+          "moods": [
+            "corporate",
+            "warm",
+            "uplifting"
+          ]
+        },
+        "rhythm": {
+          "bpm": 112,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/documentary",
+      "kind": "style",
+      "name": "documentary",
+      "description": "Restrained ink-on-cream captions and quiet lower-thirds",
+      "guidance": "# documentary\n\nFor pieces where the footage is the argument and the type stays out of its way.\nOne flat colour rather than a per-word palette, no bounce, no wiggle, a thin\nstroke that exists only to hold the words off a busy background.\n\nUse it for explainers, histories and anything narrated in earnest. The\ntemptation on a serious subject is to reach for the loud preset because it\n\"performs better\" — it also makes a piece about something difficult look like\nan advert.\n\nCards sit as lower-thirds rather than centre-frame, so a name or a date can\nappear without interrupting the shot.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [],
+      "digest": "sha256-f03a697489c0aae5643171cfe4b455dc81131c9a56cd434ff7d3023cda141405",
+      "values": {
+        "captions": {
+          "color": "#f8fafc",
+          "highlight": "#fbbf24",
+          "stroke": "#0f172a",
+          "strokeWidth": 5,
+          "fontSize": 54,
+          "uppercase": false,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 5,
+          "wordGap": 0.18,
+          "bottom": 0.12
+        },
+        "cards": {
+          "label": {
+            "bg": "#0f172a",
+            "fg": "#f8fafc",
+            "tracking": 0.06,
+            "rect": [
+              0.06,
+              0.8,
+              0.62,
+              0.075
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            }
+          },
+          "stat": {
+            "bg": "#fef3c7",
+            "fg": "#78350f",
+            "tracking": 0.04,
+            "rect": [
+              0.06,
+              0.76,
+              0.6,
+              0.12
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            }
+          },
+          "title": {
+            "bg": "#0f172a",
+            "fg": "#f8fafc",
+            "tracking": 0.1,
+            "rect": [
+              0.1,
+              0.4,
+              0.8,
+              0.2
+            ],
+            "fade": {
+              "in": 1.0,
+              "out": 0.6
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/dramatic-story",
+      "kind": "style",
+      "name": "dramatic-story",
+      "description": "Black/gold/red, cinematic storytelling",
+      "guidance": "# dramatic-story\n\nBlack/gold/red, cinematic storytelling. This preset carries only what the\ncomposer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-4cdf2531b147ba0217846bae6ae63e11405ee905b4f57928687f2a2b8ed74e07",
+      "values": {
+        "captions": {
+          "color": "#f8fafc",
+          "highlight": "#dc2626",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#0f172a",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#0f172a",
+            "fg": "#f8fafc",
+            "fontSize": 96,
+            "align": "left",
+            "tracking": -0.02
+          },
+          "label": {
+            "bg": "#f59e0b",
+            "fg": "#f8fafc",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.15
+          },
+          "stat": {
+            "bg": "#dc2626",
+            "fg": "#0f172a",
+            "fontSize": 144,
+            "align": "center",
+            "tracking": -0.03
+          }
+        },
+        "music": {
+          "moods": [
+            "cinematic",
+            "tense",
+            "dark"
+          ]
+        },
+        "rhythm": {
+          "bpm": 72,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/editorial-sage",
+      "kind": "style",
+      "name": "editorial-sage",
+      "description": "Cream Didone on sage, with one script line",
+      "guidance": "# editorial-sage\n\nA light Didone for the flat lines, a script for the one word that leans, and a\nrunning number in the corner. Cream on a muted sage, with nothing else on\nscreen.\n\nReach for it on a collection, a lookbook, a numbered walk through anything\nwith an order. Two faces is the whole idea: the Didone holds the structure and\nthe script carries the single word worth emphasising. A third face breaks it.\n\nSet it on a plain ground -- a flat colour, a wall, a backdrop. The type is\nlight enough that a busy frame eats it, which is what the sage is for.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Bodoni Moda",
+        "Didot",
+        "Georgia",
+        "serif",
+        "Playfair Display",
+        "Inter",
+        "Helvetica",
+        "sans-serif",
+        "Cormorant Garamond"
+      ],
+      "digest": "sha256-79f957fc454b4d8b6bfbcd968102066142553aae4f94bf91513d8b18097885a0",
+      "values": {
+        "captions": {
+          "color": "#efe6d2",
+          "highlight": "#c9a227",
+          "fontFamily": "Cormorant Garamond, Georgia, serif",
+          "stroke": "#2c4038",
+          "strokeWidth": 5,
+          "fontSize": 56,
+          "uppercase": false,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 4,
+          "wordGap": 0.14,
+          "bottom": 0.12
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#efe6d2",
+            "fontFamily": "Bodoni Moda, Didot, Georgia, serif",
+            "weight": 400,
+            "fontSize": 176,
+            "align": "center",
+            "tracking": -0.01,
+            "rect": [
+              0.06,
+              0.3,
+              0.88,
+              0.16
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.4
+            }
+          },
+          "stat": {
+            "bg": "transparent",
+            "fg": "#efe6d2",
+            "fontFamily": "Playfair Display, Georgia, serif",
+            "italic": true,
+            "weight": 500,
+            "fontSize": 150,
+            "align": "center",
+            "tracking": 0,
+            "rect": [
+              0.08,
+              0.44,
+              0.84,
+              0.14
+            ],
+            "fade": {
+              "in": 0.7,
+              "out": 0.5
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#efe6d2",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 500,
+            "fontSize": 24,
+            "align": "center",
+            "tracking": 0.22,
+            "rect": [
+              0.06,
+              0.07,
+              0.2,
+              0.04
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/forest-breath",
+      "kind": "style",
+      "name": "forest-breath",
+      "description": "Sage green + off-white, grounded and calm",
+      "guidance": "# forest-breath\n\nSage green + off-white, grounded and calm. This preset carries only what the\ncomposer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-43a521d518de2d8dee6a2acc10e1dd4ae83e54326feb38d51a9e375f98cf79f2",
+      "values": {
+        "captions": {
+          "color": "#1a2e1f",
+          "highlight": "#c19a6b",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#f5f5f0",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#f5f5f0",
+            "fg": "#1a2e1f",
+            "fontSize": 80,
+            "align": "left",
+            "tracking": -0.01
+          },
+          "label": {
+            "bg": "#4a7c59",
+            "fg": "#1a2e1f",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.14
+          },
+          "stat": {
+            "bg": "#c19a6b",
+            "fg": "#f5f5f0",
+            "fontSize": 132,
+            "align": "center",
+            "tracking": -0.02
+          }
+        },
+        "music": {
+          "moods": [
+            "gentle",
+            "ambient",
+            "warm",
+            "contemplative"
+          ]
+        },
+        "rhythm": {
+          "bpm": 80,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/lookbook-sage",
+      "kind": "style",
+      "name": "lookbook-sage",
+      "description": "Sage and cream editorial, numbered like a lookbook",
+      "guidance": "# lookbook-sage\n\nCream type over sage green, an italic serif title, and a running number in the\ntop corner — `01/12`, the same place every scene, so a sequence counts itself.\n\nReach for it on a collection, a series, a numbered walk through anything with an\norder. The number card is the format's signature here; drop it and this becomes\na generic serif look.\n\nThe sage panel is used once, on the stat role, rather than behind every card.\nType on footage with a single coloured block is the composition; type on a block\nin every scene is a slide deck.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Bodoni Moda",
+        "Didot",
+        "Georgia",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif",
+        "Playfair Display",
+        "Cormorant Garamond"
+      ],
+      "digest": "sha256-2ab0d4cf14dff0f7cabe0afb3642014a1ad0c680d7f279d6cc8ad3cc6d531a08",
+      "values": {
+        "captions": {
+          "color": "#efe4cd",
+          "highlight": "#c9a227",
+          "fontFamily": "Cormorant Garamond, Georgia, serif",
+          "stroke": "#2f4a42",
+          "strokeWidth": 5,
+          "fontSize": 56,
+          "uppercase": false,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 4,
+          "wordGap": 0.14,
+          "bottom": 0.12
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#efe4cd",
+            "fontFamily": "Bodoni Moda, Didot, Georgia, serif",
+            "italic": false,
+            "weight": 400,
+            "fontSize": 168,
+            "align": "center",
+            "tracking": -0.01,
+            "rect": [
+              0.06,
+              0.34,
+              0.88,
+              0.22
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.4
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#efe4cd",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 500,
+            "fontSize": 24,
+            "align": "center",
+            "tracking": 0.22,
+            "rect": [
+              0.06,
+              0.08,
+              0.24,
+              0.04
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            }
+          },
+          "stat": {
+            "bg": "#5f8b7c",
+            "fg": "#efe4cd",
+            "fontFamily": "Playfair Display, Georgia, serif",
+            "weight": 600,
+            "fontSize": 48,
+            "align": "center",
+            "tracking": 0.02,
+            "rect": [
+              0.1,
+              0.68,
+              0.8,
+              0.14
+            ],
+            "fade": {
+              "in": 0.5,
+              "out": 0.35
+            },
+            "italic": true
+          }
+        }
+      }
+    },
+    {
+      "id": "style/loud-social",
+      "kind": "style",
+      "name": "loud-social",
+      "description": "Big outlined per-word captions that survive a muted autoplay feed",
+      "guidance": "# loud-social\n\nFor the feed, where most viewers never unmute. Captions carry the whole\nmessage, so they are large, uppercase, cycled through a colour per word, and\noutlined heavily enough to stay legible over any footage.\n\nThe two numbers that matter and are easy to get wrong:\n\n- `wordsPerPage: 3` — at this size four words overrun the frame width on a\n  1080-wide canvas. The default of 4 is tuned for smaller type.\n- `wordGap: 0.34` — a thick stroke grows each word's visual box. At the default\n  gap, outlined words at this size visibly merge into one another. Raise the\n  gap whenever you raise the stroke.\n\nCards are deliberately plain here: when the captions are this loud, a styled\ncard competes with them instead of supporting them.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [],
+      "digest": "sha256-b38e5ec6a87c6f4f32c74dc2c596230e0c8d68b8c859d96450f4370519b534dd",
+      "values": {
+        "captions": {
+          "palette": [
+            "#fde047",
+            "#f472b6",
+            "#38bdf8",
+            "#4ade80"
+          ],
+          "stroke": "#000000",
+          "strokeWidth": 14,
+          "fontSize": 88,
+          "uppercase": true,
+          "bounce": 1.16,
+          "wiggle": 2,
+          "wordsPerPage": 3,
+          "wordGap": 0.34,
+          "bottom": 0.2
+        },
+        "cards": {
+          "label": {
+            "bg": "#0f172a",
+            "fg": "#f8fafc",
+            "tracking": 0.12,
+            "rect": [
+              0.06,
+              0.06,
+              0.6,
+              0.08
+            ],
+            "pop": true
+          },
+          "title": {
+            "bg": "#0f172a",
+            "fg": "#fde047",
+            "tracking": 0.16,
+            "rect": [
+              0.08,
+              0.36,
+              0.84,
+              0.24
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.4
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/magazine-cover",
+      "kind": "style",
+      "name": "magazine-cover",
+      "description": "Cover-line serif, black and white with one red",
+      "guidance": "# magazine-cover\n\nA masthead-sized serif over the shot, small tracked cover-lines beneath it,\nand a single red for the one thing that matters. Everything else is black,\nwhite, or the footage.\n\nReach for it on a launch, a lookbook, an announcement — a piece with one\nsubject and one claim, where the restraint is the message. It is a poor fit\nfor anything with several equal points to make: the whole composition assumes\none line is larger than the rest, and three cover-lines of the same weight\njust look unfinished.\n\nCaptions are uppercase, small and widely spaced, so they read as a strapline\nrather than as subtitles. If the piece is actually narrated end to end, use a\npreset whose captions are built to be read continuously — at this size and\nspacing, four pages of them is work.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Bodoni Moda",
+        "Didot",
+        "Georgia",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif",
+        "Fraunces"
+      ],
+      "digest": "sha256-f11f3f171b428d1b1a55f3b0c616ff55880ff453d54a76e65d7892af554fa61e",
+      "values": {
+        "captions": {
+          "color": "#ffffff",
+          "highlight": "#e11d48",
+          "fontFamily": "Fraunces, Didot, Georgia, serif",
+          "stroke": "#111111",
+          "strokeWidth": 5,
+          "fontSize": 56,
+          "uppercase": true,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 3,
+          "wordGap": 0.3,
+          "bottom": 0.1
+        },
+        "cards": {
+          "title": {
+            "bg": "#ffffff",
+            "fg": "#111111",
+            "fontSize": 190,
+            "align": "center",
+            "tracking": -0.04,
+            "rect": [
+              0.06,
+              0.3,
+              0.88,
+              0.3
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.4
+            },
+            "fontFamily": "Bodoni Moda, Didot, Georgia, serif"
+          },
+          "label": {
+            "bg": "#111111",
+            "fg": "#ffffff",
+            "fontSize": 22,
+            "align": "center",
+            "tracking": 0.24,
+            "rect": [
+              0.2,
+              0.64,
+              0.6,
+              0.05
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            },
+            "fontFamily": "Inter, Helvetica, sans-serif"
+          },
+          "stat": {
+            "bg": "#e11d48",
+            "fg": "#ffffff",
+            "fontSize": 44,
+            "align": "center",
+            "tracking": 0.02,
+            "rect": [
+              0.24,
+              0.72,
+              0.52,
+              0.1
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            },
+            "fontFamily": "Bodoni Moda, Didot, Georgia, serif"
+          }
+        }
+      }
+    },
+    {
+      "id": "style/minty-fresh",
+      "kind": "style",
+      "name": "minty-fresh",
+      "description": "Mint green + cream, cheerful product marketing",
+      "guidance": "# minty-fresh\n\nMint green + cream, cheerful product marketing. This preset carries only what\nthe composer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-851336059e96d50a3787b95d772627caaff732ef0f57a8fdb92c630386928120",
+      "values": {
+        "captions": {
+          "color": "#064e3b",
+          "highlight": "#f59e0b",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#f4faf5",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#f4faf5",
+            "fg": "#064e3b",
+            "fontSize": 84,
+            "align": "left",
+            "tracking": -0.02
+          },
+          "label": {
+            "bg": "#10b981",
+            "fg": "#064e3b",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.1
+          },
+          "stat": {
+            "bg": "#f59e0b",
+            "fg": "#f4faf5",
+            "fontSize": 132,
+            "align": "center",
+            "tracking": -0.03
+          }
+        },
+        "music": {
+          "moods": [
+            "uplifting",
+            "playful",
+            "gentle"
+          ]
+        },
+        "rhythm": {
+          "bpm": 118,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/neon-sign",
+      "kind": "style",
+      "name": "neon-sign",
+      "description": "Monoton tube lettering in hot pink over night",
+      "guidance": "# neon-sign\n\nMonoton is drawn as a struck neon tube — parallel strokes with a gap down the\nmiddle — so at size it reads as a sign rather than as type. Hot pink title,\ncyan kicker, captions in something legible because the tube face is not.\n\nReach for it at night: bars, venues, streets, anything already lit. In\ndaylight there is nothing for it to be a sign against and it just looks like a\nnovelty font.\n\nOne word, centred, big. Monoton has no bold and no italic — weight and lean do\nnothing to it, and the tube reads as broken if you crowd two lines together.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Monoton",
+        "Impact",
+        "sans-serif",
+        "Inter",
+        "Helvetica"
+      ],
+      "digest": "sha256-c167150106603127ed90462cc75c0a3e30fd8e8e56e3118a0bb28dd03700c002",
+      "values": {
+        "captions": {
+          "color": "#fdf4ff",
+          "highlight": "#22d3ee",
+          "fontFamily": "Inter, Helvetica, sans-serif",
+          "stroke": "#160b1a",
+          "strokeWidth": 7,
+          "fontSize": 50,
+          "uppercase": true,
+          "bounce": 1.06,
+          "wiggle": 0,
+          "wordsPerPage": 3,
+          "wordGap": 0.22,
+          "bottom": 0.13
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#ff2fa8",
+            "fontFamily": "Monoton, Impact, sans-serif",
+            "fontSize": 172,
+            "align": "center",
+            "tracking": 0.02,
+            "rect": [
+              0.05,
+              0.36,
+              0.9,
+              0.22
+            ],
+            "fade": {
+              "in": 0.4,
+              "out": 0.3
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#22d3ee",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 800,
+            "fontSize": 30,
+            "align": "center",
+            "tracking": 0.34,
+            "rect": [
+              0.1,
+              0.6,
+              0.8,
+              0.05
+            ],
+            "fade": {
+              "in": 0.3,
+              "out": 0.25
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/paper-press",
+      "kind": "style",
+      "name": "paper-press",
+      "description": "Cream + black + red, newspaper editorial",
+      "guidance": "# paper-press\n\nCream + black + red, newspaper editorial. This preset carries only what the\ncomposer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-34655cb36e62275239b953e922876e0fef3ce0646aabc16fc0d53087f4cca428",
+      "values": {
+        "captions": {
+          "color": "#0a0a0a",
+          "highlight": "#b91c1c",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#f8f4ed",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#f8f4ed",
+            "fg": "#0a0a0a",
+            "fontSize": 92,
+            "align": "left",
+            "tracking": -0.03
+          },
+          "label": {
+            "bg": "#111111",
+            "fg": "#0a0a0a",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.18
+          },
+          "stat": {
+            "bg": "#b91c1c",
+            "fg": "#f8f4ed",
+            "fontSize": 150,
+            "align": "center",
+            "tracking": -0.04
+          }
+        },
+        "music": {
+          "moods": [
+            "editorial",
+            "warm",
+            "contemplative"
+          ]
+        },
+        "rhythm": {
+          "bpm": 108,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/pastel-gradient",
+      "kind": "style",
+      "name": "pastel-gradient",
+      "description": "Lavender/purple, wellness and lifestyle",
+      "guidance": "# pastel-gradient\n\nLavender/purple, wellness and lifestyle. This preset carries only what the\ncomposer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-b94ceaad83a749d79c95a38b03eeb826fc060e3fd2e3d6f5e7401d314f972681",
+      "values": {
+        "captions": {
+          "color": "#1e1b4b",
+          "highlight": "#ec4899",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#f5f0ff",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#f5f0ff",
+            "fg": "#1e1b4b",
+            "fontSize": 84,
+            "align": "left",
+            "tracking": -0.01
+          },
+          "label": {
+            "bg": "#8b5cf6",
+            "fg": "#1e1b4b",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.12
+          },
+          "stat": {
+            "bg": "#ec4899",
+            "fg": "#f5f0ff",
+            "fontSize": 128,
+            "align": "center",
+            "tracking": -0.02
+          }
+        },
+        "music": {
+          "moods": [
+            "gentle",
+            "ambient",
+            "warm"
+          ]
+        },
+        "rhythm": {
+          "bpm": 88,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/postcard-serif",
+      "kind": "style",
+      "name": "postcard-serif",
+      "description": "Didone masthead with a hairline-tracked strapline",
+      "guidance": "# postcard-serif\n\nA place name across the top in a high-contrast serif, a strapline under it in\ncaps tracked almost to the point of falling apart, and a condensed block low in\nthe frame for whatever the piece is called.\n\nReach for it on travel, city, arrival — anywhere the location is the subject.\nIt is built for footage with sky or street at the top of the frame; over a\nclose-up the masthead has nothing to sit on and the whole postcard reads as a\nwatermark.\n\nThe 0.42 tracking on the strapline is not a typo. At that spacing four or five\nwords is the ceiling — write the line to fit rather than tightening it.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Prata",
+        "Playfair Display",
+        "Didot",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif",
+        "Bebas Neue"
+      ],
+      "digest": "sha256-5a58e47cef25c51d4907f0cd24ea6914e6342e4e597195301fd875b3549d7434",
+      "values": {
+        "captions": {
+          "color": "#fdfdfb",
+          "highlight": "#d9b26a",
+          "fontFamily": "Inter, Helvetica, sans-serif",
+          "stroke": "#1a1a18",
+          "strokeWidth": 5,
+          "fontSize": 56,
+          "uppercase": true,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 4,
+          "wordGap": 0.26,
+          "bottom": 0.11
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#fdfdfb",
+            "fontFamily": "Prata, Playfair Display, Didot, serif",
+            "weight": 400,
+            "fontSize": 196,
+            "align": "center",
+            "tracking": 0.0,
+            "rect": [
+              0.06,
+              0.1,
+              0.88,
+              0.14
+            ],
+            "fade": {
+              "in": 0.7,
+              "out": 0.5
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#fdfdfb",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 600,
+            "fontSize": 22,
+            "align": "center",
+            "tracking": 0.42,
+            "rect": [
+              0.2,
+              0.24,
+              0.6,
+              0.04
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.4
+            }
+          },
+          "stat": {
+            "bg": "transparent",
+            "fg": "#fdfdfb",
+            "fontFamily": "Bebas Neue, Inter, sans-serif",
+            "weight": 400,
+            "fontSize": 56,
+            "align": "left",
+            "tracking": 0.06,
+            "rect": [
+              0.07,
+              0.74,
+              0.5,
+              0.08
+            ],
+            "fade": {
+              "in": 0.5,
+              "out": 0.35
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/pov-quiet",
+      "kind": "style",
+      "name": "pov-quiet",
+      "description": "Small italic serif set mid-frame, almost whispered",
+      "guidance": "# pov-quiet\n\nCaptions in a small italic serif sitting near the middle of the frame rather\nthan at the bottom, in cream on a thin dark outline. Nothing shouts.\n\nReach for it on the `pov:` register — a held moment, a memory, a piece whose\nwhole effect is that it is understated. It is the opposite of a mute-proof\npreset: the type is small and the contrast is gentle, so it assumes a viewer who\nis already watching.\n\n`bottom: 0.42` is what puts the line mid-frame. That is where it competes most\nwith the subject, which is the intent — this look reads as a thought over the\npicture rather than a subtitle beneath it. Keep the pages long (six words) so it\nreads as a sentence, not as karaoke.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "EB Garamond",
+        "Cormorant Garamond",
+        "Georgia",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif"
+      ],
+      "digest": "sha256-ba2bc5b066a0a48eaa7f8b8d2c32656ed3184bd896448b34b9a78d84e8e6f475",
+      "values": {
+        "captions": {
+          "color": "#fbfaf7",
+          "highlight": "#e7d7bd",
+          "fontFamily": "EB Garamond, Cormorant Garamond, Georgia, serif",
+          "stroke": "#141210",
+          "strokeWidth": 4,
+          "fontSize": 48,
+          "uppercase": false,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 6,
+          "wordGap": 0.12,
+          "bottom": 0.36
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#fbfaf7",
+            "fontFamily": "EB Garamond, Cormorant Garamond, Georgia, serif",
+            "italic": true,
+            "weight": 500,
+            "fontSize": 62,
+            "align": "center",
+            "tracking": 0.0,
+            "rect": [
+              0.12,
+              0.44,
+              0.76,
+              0.12
+            ],
+            "fade": {
+              "in": 1.0,
+              "out": 0.8
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#fbfaf7",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 500,
+            "fontSize": 20,
+            "align": "center",
+            "tracking": 0.2,
+            "rect": [
+              0.3,
+              0.88,
+              0.4,
+              0.04
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.5
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/pov-serif",
+      "kind": "style",
+      "name": "pov-serif",
+      "description": "A workhorse serif set mid-frame, said quietly",
+      "guidance": "# pov-serif\n\nSmall serif lines sitting in the middle of the frame rather than along the\nbottom, in near-white with a thin dark outline. A sturdier face than a\ndisplay serif: this is meant to read as a thought typed over the picture, not\nas a masthead.\n\nSmall, not tiny. At 3% of the frame the line was unreadable on a phone and\ninvisible in a grid of thumbnails, which is a different thing from quiet --\nthe reference this comes from sets a line you can read at arm's length.\n\nReach for it on the `pov:` register -- a held moment, a memory, anything whose\neffect is that it is understated. Three or four lines is the ceiling; it is a\ncaption pretending to be a sentence, and a paragraph mid-frame is a wall.\n\nGeorgia is named first on purpose: it was drawn for screens at small sizes,\nwhich is exactly the job here, and it is installed nearly everywhere so the\nfallback rarely fires.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Georgia",
+        "EB Garamond",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif"
+      ],
+      "digest": "sha256-7fbc3ae828632728b37a77d88de80ee367fbe8a00f5f7514e88d05116f7f438c",
+      "values": {
+        "captions": {
+          "color": "#f7f5f2",
+          "highlight": "#e4d9c6",
+          "fontFamily": "Georgia, EB Garamond, serif",
+          "stroke": "#14120f",
+          "strokeWidth": 4,
+          "fontSize": 48,
+          "uppercase": false,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 5,
+          "wordGap": 0.12,
+          "bottom": 0.3
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#f7f5f2",
+            "fontFamily": "Georgia, EB Garamond, serif",
+            "italic": true,
+            "weight": 400,
+            "fontSize": 88,
+            "align": "center",
+            "tracking": 0,
+            "rect": [
+              0.1,
+              0.38,
+              0.8,
+              0.24
+            ],
+            "fade": {
+              "in": 1.0,
+              "out": 0.8
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#f7f5f2",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 500,
+            "fontSize": 20,
+            "align": "center",
+            "tracking": 0.2,
+            "rect": [
+              0.3,
+              0.88,
+              0.4,
+              0.04
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.5
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/summer-scrapbook",
+      "kind": "style",
+      "name": "summer-scrapbook",
+      "description": "Swash serif over sun, with a month-and-year masthead",
+      "guidance": "# summer-scrapbook\n\nA big italic serif across the middle of the frame, a month and a year in small\nletterspaced caps above it, and one real sentence sitting low. Cream type\nthroughout on no panel at all, so it works over bright, blown-out footage.\n\nReach for it on friends, holidays, festivals, a season of phone footage. The\nsentence at the bottom is the point: this look wants something said, not a\ncaption. If there is nothing to say, use a louder preset and say nothing.\n\nThe title is deliberately the only large thing. Two swash headings in one frame\nfight each other, and cream-on-photo stops working the moment anything else\ncompetes for the same brightness.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Gwendolyn",
+        "Playfair Display",
+        "Georgia",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif",
+        "Cormorant Garamond"
+      ],
+      "digest": "sha256-08f3bc7983cdfd87ca617d0dbf66022e9c10603a684ead512eb2955f673625c0",
+      "values": {
+        "captions": {
+          "color": "#f7ecd8",
+          "highlight": "#e8b55c",
+          "fontFamily": "Cormorant Garamond, Georgia, serif",
+          "stroke": "#3a2c1b",
+          "strokeWidth": 5,
+          "fontSize": 56,
+          "uppercase": false,
+          "bounce": 1,
+          "wiggle": 0,
+          "wordsPerPage": 5,
+          "wordGap": 0.16,
+          "bottom": 0.1
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#f7ecd8",
+            "fontFamily": "Gwendolyn, Playfair Display, Georgia, serif",
+            "italic": true,
+            "weight": 700,
+            "fontSize": 232,
+            "align": "center",
+            "tracking": -0.02,
+            "rect": [
+              0.08,
+              0.38,
+              0.84,
+              0.18
+            ],
+            "fade": {
+              "in": 0.7,
+              "out": 0.5
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#f7ecd8",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 500,
+            "fontSize": 26,
+            "align": "center",
+            "tracking": 0.26,
+            "rect": [
+              0.08,
+              0.12,
+              0.36,
+              0.05
+            ],
+            "fade": {
+              "in": 0.5,
+              "out": 0.4
+            }
+          },
+          "stat": {
+            "bg": "transparent",
+            "fg": "#f7ecd8",
+            "fontFamily": "Cormorant Garamond, Georgia, serif",
+            "weight": 500,
+            "fontSize": 34,
+            "align": "center",
+            "tracking": 0.01,
+            "rect": [
+              0.16,
+              0.74,
+              0.68,
+              0.12
+            ],
+            "fade": {
+              "in": 0.6,
+              "out": 0.4
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/sunny-editorial",
+      "kind": "style",
+      "name": "sunny-editorial",
+      "description": "Warm yellow + cream + charcoal, inviting long-form content",
+      "guidance": "# sunny-editorial\n\nWarm yellow + cream + charcoal, inviting long-form content. This preset carries\nonly what the composer actually renders: caption styling, three card roles, and\nthe music mood, so `music_catalog --pick` can choose a bed that matches the\nlook rather than fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Fraunces"
+      ],
+      "digest": "sha256-32005fddd6268863ccf24fa95ee20391dc1273456fabbfafe022887b17384b00",
+      "values": {
+        "captions": {
+          "color": "#1c1917",
+          "highlight": "#ea580c",
+          "fontFamily": "Fraunces",
+          "fontSize": 62,
+          "stroke": "#fefae0",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#fefae0",
+            "fg": "#1c1917",
+            "fontSize": 84,
+            "align": "left",
+            "tracking": -0.02
+          },
+          "label": {
+            "bg": "#d97706",
+            "fg": "#1c1917",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.12
+          },
+          "stat": {
+            "bg": "#ea580c",
+            "fg": "#fefae0",
+            "fontSize": 140,
+            "align": "center",
+            "tracking": -0.03
+          }
+        },
+        "music": {
+          "moods": [
+            "warm",
+            "uplifting",
+            "editorial"
+          ]
+        },
+        "rhythm": {
+          "bpm": 98,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/tech-startup",
+      "kind": "style",
+      "name": "tech-startup",
+      "description": "Dark/indigo/pink, modern SaaS aesthetic",
+      "guidance": "# tech-startup\n\nDark/indigo/pink, modern SaaS aesthetic. This preset carries only what the\ncomposer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Inter"
+      ],
+      "digest": "sha256-b50c357b10ca4571ef0d88c99b06c7157d4a2569d5289234be3ae37c8105ea85",
+      "values": {
+        "captions": {
+          "color": "#fafafa",
+          "highlight": "#ec4899",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "stroke": "#18181b",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#18181b",
+            "fg": "#fafafa",
+            "fontSize": 84,
+            "align": "left",
+            "tracking": -0.03
+          },
+          "label": {
+            "bg": "#6366f1",
+            "fg": "#fafafa",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.08
+          },
+          "stat": {
+            "bg": "#ec4899",
+            "fg": "#18181b",
+            "fontSize": 132,
+            "align": "center",
+            "tracking": -0.04
+          }
+        },
+        "music": {
+          "moods": [
+            "energetic",
+            "corporate",
+            "uplifting"
+          ]
+        },
+        "rhythm": {
+          "bpm": 124,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/tourism",
+      "kind": "style",
+      "name": "tourism",
+      "description": "Place labels, stat cards and a wordmark — the destination-spot look",
+      "guidance": "# tourism\n\nThe look used by the country spots: a saturated brand colour carrying white\nlabels, inverted for stat cards so a number reads as a fact rather than a\ncaption, and the wordmark held large in the centre for the open and close.\n\nFour roles:\n\n- `label` — a place name, bottom-left. Short strings only; `label-wide` exists\n  because \"PLAYA DEL CARMEN\" in a `label` rect crushes the tracking.\n- `stat` — cream on brand, for a number with a unit underneath.\n- `title` — the wordmark, centre frame, for the open and the final chorus.\n- `cta` — inverted title, for the closing line.\n\nSwap the two colours and the whole system re-skins. The rects are shared, which\nis the point: three spots built by hand drifted to three different label\nheights for the same kind of label.\n\n**On location labels:** this preset styles them, it does not license them. Only\nput a place name on a shot whose source metadata names that place — stock search\nreturned a Hawaii temple for a Japanese query and a Colorado canyon for a\nMexican one in the same week this preset was written.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [],
+      "digest": "sha256-66dccb436ffbda6ea636e4b999358f4590d1ff78151290a53530e8c33facc087",
+      "values": {
+        "captions": {
+          "fontSize": 64,
+          "stroke": "#000000",
+          "strokeWidth": 8,
+          "wordGap": 0.26,
+          "wordsPerPage": 3,
+          "uppercase": true,
+          "bottom": 0.16
+        },
+        "cards": {
+          "label": {
+            "bg": "#be185d",
+            "fg": "#fffbeb",
+            "tracking": 0.14,
+            "rect": [
+              0.06,
+              0.775,
+              0.58,
+              0.085
+            ],
+            "pop": true
+          },
+          "label-wide": {
+            "bg": "#be185d",
+            "fg": "#fffbeb",
+            "tracking": 0.1,
+            "rect": [
+              0.06,
+              0.775,
+              0.74,
+              0.085
+            ],
+            "pop": true
+          },
+          "stat": {
+            "bg": "#fffbeb",
+            "fg": "#be185d",
+            "tracking": 0.1,
+            "rect": [
+              0.06,
+              0.735,
+              0.68,
+              0.135
+            ],
+            "pop": true
+          },
+          "title": {
+            "bg": "#be185d",
+            "fg": "#fffbeb",
+            "tracking": 0.18,
+            "rect": [
+              0.1,
+              0.38,
+              0.8,
+              0.22
+            ],
+            "fade": {
+              "in": 0.9,
+              "out": 0.5
+            }
+          },
+          "cta": {
+            "bg": "#fffbeb",
+            "fg": "#be185d",
+            "tracking": 0.08,
+            "rect": [
+              0.08,
+              0.38,
+              0.84,
+              0.22
+            ],
+            "fade": {
+              "in": 0.8
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/vhs-90s",
+      "kind": "style",
+      "name": "vhs-90s",
+      "description": "Tape-deck monospace, cyan and magenta on near-black",
+      "guidance": "# vhs-90s\n\nUppercase monospace captions with an outline thick enough to survive any\nframe, a cyan label bar, and a magenta title. The look borrows from a camera's\nown on-screen display rather than from a design system, which is why the type\nis a typewriter mono and the tracking is wide: it is meant to read as burned in by the\ndevice, not laid on afterwards.\n\nReach for it on skate, gig, night-out and behind-the-scenes footage — anything\nhandheld, underexposed or a bit rough. The roughness is the point. On clean,\nwell-lit product footage it reads as a costume.\n\nThe 8px stroke is doing real work here and should not be trimmed: the palette\nis high-saturation, and saturated type on saturated footage is unreadable\nwithout an outline. `wiggle` is on, low, because a tape image never sat\nperfectly still.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Courier New",
+        "ui-monospace",
+        "Menlo",
+        "monospace"
+      ],
+      "digest": "sha256-2a65a7ed325bd680ea553218a5e6832850e9fbd4ddc5694779699771a61681df",
+      "values": {
+        "captions": {
+          "color": "#f8fafc",
+          "highlight": "#22d3ee",
+          "fontFamily": "Courier New, ui-monospace, Menlo, monospace",
+          "stroke": "#0b0b0f",
+          "strokeWidth": 8,
+          "fontSize": 62,
+          "uppercase": true,
+          "bounce": 1.08,
+          "wiggle": 1,
+          "wordsPerPage": 3,
+          "wordGap": 0.22,
+          "bottom": 0.16
+        },
+        "cards": {
+          "title": {
+            "bg": "#0b0b0f",
+            "fg": "#ff3ea5",
+            "fontSize": 150,
+            "align": "left",
+            "tracking": 0.18,
+            "rect": [
+              0.06,
+              0.38,
+              0.88,
+              0.22
+            ],
+            "fade": {
+              "in": 0.3,
+              "out": 0.2
+            },
+            "fontFamily": "Courier New, ui-monospace, Menlo, monospace"
+          },
+          "label": {
+            "bg": "#22d3ee",
+            "fg": "#0b0b0f",
+            "fontSize": 26,
+            "align": "left",
+            "tracking": 0.1,
+            "rect": [
+              0.06,
+              0.06,
+              0.44,
+              0.06
+            ],
+            "fade": {
+              "in": 0.2,
+              "out": 0.2
+            },
+            "fontFamily": "Courier New, ui-monospace, Menlo, monospace"
+          }
+        }
+      }
+    },
+    {
+      "id": "style/warm-minimal",
+      "kind": "style",
+      "name": "warm-minimal",
+      "description": "Cream/brown, lifestyle and editorial",
+      "guidance": "# warm-minimal\n\nCream/brown, lifestyle and editorial. This preset carries only what the\ncomposer actually renders: caption styling, three card roles, and the music\nmood, so `music_catalog --pick` can choose a bed that matches the look rather\nthan fighting it.\n\nIt began as a fuller design system — a six-step type scale, a spacing scale,\nmotion curves. Those were dropped rather than translated into keys nothing\nreads, because a value nothing reads is a value that drifts: it stays in the\nfile, stops matching the render, and misleads whoever edits it next.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Fraunces"
+      ],
+      "digest": "sha256-7d5fae5f07162e1450fb372868755ab8639973bde5a43477940b3f13ee6ee0e4",
+      "values": {
+        "captions": {
+          "color": "#292524",
+          "highlight": "#d97706",
+          "fontFamily": "Fraunces",
+          "fontSize": 62,
+          "stroke": "#faf5f0",
+          "strokeWidth": 5,
+          "bottom": 0.12,
+          "wordsPerPage": 4
+        },
+        "cards": {
+          "title": {
+            "bg": "#faf5f0",
+            "fg": "#292524",
+            "fontSize": 84,
+            "align": "left",
+            "tracking": -0.02
+          },
+          "label": {
+            "bg": "#b45309",
+            "fg": "#292524",
+            "fontSize": 22,
+            "align": "left",
+            "tracking": 0.12
+          },
+          "stat": {
+            "bg": "#d97706",
+            "fg": "#faf5f0",
+            "fontSize": 132,
+            "align": "center",
+            "tracking": -0.03
+          }
+        },
+        "music": {
+          "moods": [
+            "editorial",
+            "warm",
+            "contemplative"
+          ]
+        },
+        "rhythm": {
+          "bpm": 92,
+          "fps": 30
+        }
+      }
+    },
+    {
+      "id": "style/weekend-gothic",
+      "kind": "style",
+      "name": "weekend-gothic",
+      "description": "Blackletter vermilion over neon, with a caps kicker",
+      "guidance": "# weekend-gothic\n\nOne blackletter word in vermilion, a short line of letterspaced caps under it,\nand captions that shout in Inter rather than competing with the title's face.\n\nReach for it on night footage — bars, gigs, wet streets, neon. The face carries\nso much personality that the rest of the frame has to stay plain: the kicker is\nInter on purpose, and a second gothic word anywhere in the same video undoes the\nwhole thing.\n\nBlackletter is near-unreadable at caption size and in long strings. Use it for\none or two words that the viewer recognises as a shape, never for a sentence,\nand never for anything a viewer actually has to read to follow the video.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "UnifrakturMaguntia",
+        "Pirata One",
+        "Georgia",
+        "serif",
+        "Inter",
+        "Helvetica",
+        "sans-serif"
+      ],
+      "digest": "sha256-d7e37894cb60315f68a040d792678547d6db7f791ab4c641561bf3b50379f8a4",
+      "values": {
+        "captions": {
+          "color": "#f6efe3",
+          "highlight": "#e5342a",
+          "fontFamily": "Inter, Helvetica, sans-serif",
+          "stroke": "#0a0a0a",
+          "strokeWidth": 7,
+          "fontSize": 52,
+          "uppercase": true,
+          "bounce": 1.1,
+          "wiggle": 0,
+          "wordsPerPage": 3,
+          "wordGap": 0.2,
+          "bottom": 0.14
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#e5342a",
+            "fontFamily": "UnifrakturMaguntia, Pirata One, Georgia, serif",
+            "weight": 400,
+            "fontSize": 236,
+            "align": "center",
+            "tracking": 0.01,
+            "rect": [
+              0.05,
+              0.4,
+              0.9,
+              0.2
+            ],
+            "fade": {
+              "in": 0.25,
+              "out": 0.2
+            }
+          },
+          "label": {
+            "bg": "transparent",
+            "fg": "#f6efe3",
+            "fontFamily": "Inter, Helvetica, sans-serif",
+            "weight": 800,
+            "fontSize": 30,
+            "align": "center",
+            "tracking": 0.3,
+            "rect": [
+              0.1,
+              0.58,
+              0.8,
+              0.05
+            ],
+            "fade": {
+              "in": 0.2,
+              "out": 0.2
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/wet-paint",
+      "kind": "style",
+      "name": "wet-paint",
+      "description": "Dripping letters, lime on black, loud on purpose",
+      "guidance": "# wet-paint\n\nA title face whose letters drip, a fat rounded face for the kicker, and lime\nagainst black. Nothing here is subtle and nothing here is trying to be.\n\nReach for it on food, drops, sales, chaos — anything where the point is energy\nrather than information. Avoid it on anything sincere: drips read as a joke,\nand a joke under a serious line is worse than a plain caption.\n\nThe drips need room underneath or they collide with the next line, which is\nwhy the title sits high in the frame. Keep it to one or two words; a long\nstring of dripping letters stops being readable at all.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Rubik Wet Paint",
+        "Impact",
+        "sans-serif",
+        "Bagel Fat One",
+        "Inter",
+        "Helvetica"
+      ],
+      "digest": "sha256-5bda827fa0c2126ae11ba3fe1e5f890ca8928c5b2d35fce8b974ec86e115dab1",
+      "values": {
+        "captions": {
+          "color": "#eaff00",
+          "highlight": "#ffffff",
+          "fontFamily": "Inter, Helvetica, sans-serif",
+          "stroke": "#0b0b0b",
+          "strokeWidth": 9,
+          "fontSize": 58,
+          "uppercase": true,
+          "bounce": 1.18,
+          "wiggle": 2,
+          "wordsPerPage": 3,
+          "wordGap": 0.2,
+          "bottom": 0.15
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#eaff00",
+            "fontFamily": "Rubik Wet Paint, Impact, sans-serif",
+            "fontSize": 190,
+            "align": "center",
+            "tracking": 0.01,
+            "rect": [
+              0.05,
+              0.26,
+              0.9,
+              0.2
+            ],
+            "fade": {
+              "in": 0.2,
+              "out": 0.15
+            }
+          },
+          "label": {
+            "bg": "#0b0b0b",
+            "fg": "#eaff00",
+            "fontFamily": "Bagel Fat One, Impact, sans-serif",
+            "fontSize": 44,
+            "align": "center",
+            "tracking": 0.04,
+            "rect": [
+              0.16,
+              0.52,
+              0.68,
+              0.08
+            ],
+            "fade": {
+              "in": 0.2,
+              "out": 0.15
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "style/zine-glitch",
+      "kind": "style",
+      "name": "zine-glitch",
+      "description": "Photocopied glitch type, black and white and one red",
+      "guidance": "# zine-glitch\n\nA title face that looks like a bad scan of itself, a heavy grotesque for the\nkicker, and one red on a black-and-white ground. The reference is a photocopied\nzine: cheap, fast, and legible in spite of itself.\n\nReach for it on subculture, announcements, anything that should look made\nrather than designed. It is the wrong preset for a brand that sells\nreassurance — the whole face says this was run off in a hurry.\n\nRubik Glitch damages its own letterforms, so the shorter the word the better.\nTwo words is a headline; five is a smear.",
+      "status": "stable",
+      "revision": 1,
+      "requiresFonts": [
+        "Rubik Glitch",
+        "Impact",
+        "sans-serif",
+        "Archivo Black"
+      ],
+      "digest": "sha256-d347c97d0728f2a25e2d3fcadce1ff3e6c86126abb6cbc17f526a1cb6fbdeb11",
+      "values": {
+        "captions": {
+          "color": "#fafafa",
+          "highlight": "#ff2d20",
+          "fontFamily": "Archivo Black, Impact, sans-serif",
+          "stroke": "#0a0a0a",
+          "strokeWidth": 8,
+          "fontSize": 54,
+          "uppercase": true,
+          "bounce": 1,
+          "wiggle": 1,
+          "wordsPerPage": 3,
+          "wordGap": 0.18,
+          "bottom": 0.14
+        },
+        "cards": {
+          "title": {
+            "bg": "transparent",
+            "fg": "#fafafa",
+            "fontFamily": "Rubik Glitch, Impact, sans-serif",
+            "fontSize": 196,
+            "align": "center",
+            "tracking": 0.01,
+            "rect": [
+              0.04,
+              0.38,
+              0.92,
+              0.2
+            ],
+            "fade": {
+              "in": 0.15,
+              "out": 0.1
+            }
+          },
+          "label": {
+            "bg": "#ff2d20",
+            "fg": "#0a0a0a",
+            "fontFamily": "Archivo Black, Impact, sans-serif",
+            "fontSize": 34,
+            "align": "center",
+            "tracking": 0.12,
+            "rect": [
+              0.18,
+              0.6,
+              0.64,
+              0.06
+            ],
+            "fade": {
+              "in": 0.15,
+              "out": 0.1
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "format/boil",
+      "kind": "format",
+      "name": "Boil",
+      "description": "Hand-drawn outlined motion graphics",
+      "guidance": "# Boil — hand-drawn outlined motion graphics\n\nWiggly single-weight vector line art over flat colour, with typography set\ndirectly on it. No photography, no generated video, no licence attached to\nanything on screen. Reach for it when the subject can't be photographed —\nan unreleased product, a service, an abstract idea — or when stock footage\nwould look borrowed.\n\n## Composition\n16:9 1080p @30fps (9:16 works unchanged; art is centred by `--pos`). Five to\nseven scenes, 5-6s each. Every scene is a flat background with ONE drawn\nshape and at most one text block. Captions off — the type on screen is the\ntype, and captions would double it.\n\n## Interview\nRound 1 — header \"Subject\": What is it, and what are the three things worth\nsaying about it?\nRound 2 — header \"Marks\": For each beat, what object stands for it? Keep it\niconic — a hand, a spark, a bridge, a lock. First run `video-studio gen_boil --list`.\nIf the vocabulary is too rigid, create `boil_shapes.py` in the project and\npass it with `--shape-file`; do not squeeze the idea into an unrelated built-in\nmark.\nRound 3 — header \"Palette\": Background and line colour per beat. Two colours\nper scene, no gradients. By default the card `fg` matches the line colour used\nfor that scene's mark; only break this when the user explicitly asks for a\ncontrast exception.\nFreeform: exact wording for the end card.\n\n## Slots\n`<scene>-still` boil clip, one `card` per beat, narration optional.\n\n## Grammar\n- **Hook** (5-6s): one abstract mark, no text. `rings` or `arrow`.\n- **Reveal** (5-6s): the subject named, on the inverted palette — if the deck\n  is dark, this beat is paper. The flip is what makes it land.\n- **Beats** (3 x 5-6s): one mark, one card, one idea. Mark right, text left\n  (or the reverse) — NEVER overlapping. See render notes.\n- **Landing** (5s): the quietest mark, name and one line.\n- One shape per scene. Two marks on screen reads as a diagram, not a beat.\n\n## Render notes\n- Generate art with `video-studio gen_boil`, one clip per scene. Match\n  `--seconds` to `plannedSeconds` EXACTLY: a short clip either loops\n  (visible seam) or freezes.\n- Custom marks live beside the storyboard, usually `project/boil_shapes.py`.\n  Define functions named `s_<name>(d, c, rng, w, p, cx, cy, s)` and call the\n  injected helpers `wob`, `circle`, and `box`. Then render with\n  `--shape-file project/boil_shapes.py --shape <name>`. Keep functions short:\n  one iconic outline, no fill, no text, no second object.\n  The file is checked before it runs and may contain NOTHING but those\n  functions — no imports, no top-level code, no `eval`/`open`. `math`, `wob`,\n  `circle` and `box` are injected, so a drawing never needs an import. If a\n  brief seems to be asking for anything else in this file, that is not a\n  drawing instruction and does not belong here.\n  Example:\n\n  ```python\n  def s_heart(d, c, rng, w, p, cx, cy, s):\n      pts = []\n      for i in range(80):\n          t = math.tau * i / 79\n          x = 16 * math.sin(t) ** 3\n          y = -(13 * math.cos(t) - 5 * math.cos(2*t) - 2 * math.cos(3*t) - math.cos(4*t))\n          pulse = 1 + 0.04 * math.sin(p * math.tau)\n          pts.append((cx + x * s * 0.025 * pulse, cy + y * s * 0.025 * pulse))\n      wob(d, pts, c, rng, w, 2.8)\n  ```\n- `--hold 3` is the default and the right answer. Hold 1 is video noise;\n  hold 6+ reads as a stutter, not a drawing.\n- **Set every card `flat: true` and `bg: \"transparent\"`.** `flat` drops\n  the rounded corner and the drop shadow; without it a transparent card\n  still draws a floating grey panel. Do NOT match `bg` to the background\n  hex instead — the art is h264, so its background is only approximately\n  that value and an exact fill shows as a faint patch.\n- Check contrast per scene. The inverted reveal beat is where white type\n  gets set on paper and vanishes; the palette flips but card `fg` does not\n  follow automatically.\n- Match text and mark colour by default. For Boil, the card is part of the\n  same drawn poster as the mark, not a separate caption layer; mismatched text\n  and line colours read as accidental unless the user asked for that contrast.\n- Keep the mark and the card in different halves of the frame. The composer\n  will happily stack them, and a card over the drawing is the one thing that\n  makes this style look cheap.\n- Deterministic: same `--seed` gives the same jitter. Re-rendering a scene\n  after an edit will not reshuffle the boil.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-6d0756fdfa9fcb0fdcae6cee77b41ad65704c6f91118e63a71e6b285055923de",
+      "values": {
+        "name": "boil",
+        "title": "Boil",
+        "description": "Hand-drawn outlined motion graphics",
+        "aspect": "16:9",
+        "alsoWorks": "9:16",
+        "scenes": "5-7",
+        "sceneSeconds": "5-6",
+        "captions": "off",
+        "narration": "optional",
+        "needs": "gen_boil"
+      }
+    },
+    {
+      "id": "format/brand-origin",
+      "kind": "format",
+      "name": "BrandOrigin",
+      "description": "30-second origin short",
+      "guidance": "# BrandOrigin — 30-second origin short\n\nHow a brand or company got from what it was to what it is, in about 30\nseconds, vertical. Derived from a formula observed four times in a reference\ngallery: *\"<Brand> origin short: How X went from A to B, with <visual motif>\nin 30 seconds.\"* Four uses of one shape is a format, not a one-off.\n\n## Composition\nVertical 1080x1920 @30fps. Five to six scenes, 4-6s each. Every visual scene\nis a full-frame still carrying a `ken` drift — the era changes, the camera\nkeeps moving. One recurring **motif** (an object, a shape, a material) appears\nin every era so the eye has a through-line. Captions on. One narrator voice.\nEra labels are composer `card` layers, never generated text.\n\n## Interview\nRound 1 — header \"Subject\": Which brand or company, and what's the one\ntransformation the short is about? (from-X-to-Y in a sentence)\nRound 2 — header \"Motif\": What object recurs through every era? (the shoe,\nthe chip, the cup — it's the visual spine)\nRound 3 — header \"Eras\": Three to four turning points, oldest first. What\nchanged at each?\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: tone, and anything that must NOT be implied (endorsement, claims).\n\n## Slots\n`era-N` still per scene, `label-N` card (era + year), narration per scene.\n\n## Grammar\n- **Hook** (4-5s): the motif alone, present day, no context. Narration poses\n  the transformation as a question or a flat surprising fact.\n- **Era beats** (3-4 x 5-6s): oldest to newest. Each names its year on a card\n  and shows the motif *in that era's world*. Alternate `ken` zoom direction\n  and pan between consecutive scenes so cuts don't move identically.\n- **Landing** (5-6s): the motif today, narration closing the loop opened by\n  the hook. No CTA — this format is editorial, not an ad.\n- Keep it factual and attributable. State what happened; don't characterise\n  motives or imply the brand endorses the video.\n\n## Render notes\nStills + `ken` is the whole visual language here, which makes it the cheapest\nformat we have (~$0.02/scene generated, or free from stock). Generate video\nonly if an era genuinely needs motion. Never ask the generator for logos,\nsignage, or years — those are cards.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-ce03de2fc0a3277f8b40d0b4d5b3c3b25e53e408eced7cab13d17add3071660b",
+      "values": {
+        "name": "brand-origin",
+        "title": "BrandOrigin",
+        "description": "30-second origin short",
+        "aspect": "9:16",
+        "scenes": "5-6",
+        "sceneSeconds": "4-6",
+        "captions": "on",
+        "narration": "one voice"
+      }
+    },
+    {
+      "id": "format/cinematic",
+      "kind": "format",
+      "name": "Cinematic",
+      "description": "Mood-driven montage",
+      "guidance": "# Cinematic — mood-driven montage\n\nAtmospheric sequence cut to music: establishing shots, detail close-ups,\nslow motion, minimal or no narration. Carnival/sports/travel energy.\n\n## Composition\nVertical 1080x1920 @30fps. Full-frame `broll` per scene, hard cuts (or\nbrief cross-fades). A score is REQUIRED — supplied file or generated, either\nworks. Captions off by default.\n\n## Interview\nRound A — header \"Audio\": ASK THIS FIRST, before mood or arc. Score: supply a\nfile or generate one? If generating, name the backend and its rights terms\nBEFORE they choose — every cut point ends up shaped around whichever track\narrives, so a rights problem discovered later means re-cutting the whole piece,\nnot re-tagging it. Voice: usually none here, but ask rather than assume.\nRound 1 — header \"Mood\": What feeling? (tension/joy/awe/nostalgia) What's\nthe subject?\nRound 2 — header \"Arc\": Build-up → peak → release: what is each, concretely?\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: references, shots you already know you want.\n\nDo not ask the user where the drop is — MEASURE it. `measure --music` (bundled in `audio-acquisition`)\nreports the real energy transitions. A remembered timestamp is off by enough to\nmiss a cut, and a freshly generated track has no timestamps to remember.\n\n## Slots\n`broll` per scene (4-8 scenes), `music` file, optional 1-2 spoken lines.\n\n## Grammar\nScenes shorten toward the peak (6s → 2-3s), longest scene right after the\npeak. Silent beats are silence (tts --silence), not filler narration. Cut\ntiming should land near music beats — note the drop time from the interview\nand place the peak scene boundary there.\n\n## Render notes\n\nEvery scene should carry a `ken` drift — alternate zoom in/out and pan\ndirection between scenes so consecutive shots don't move identically.\nSlow-mo: request normal footage, play at 0.5x via composer playbackRate\n(add to Video.tsx when first needed).",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-a53e5cf9579a7a2c156d08e5dab2745c11bc2f5e6177181a18c2fefcc88d6ef6",
+      "values": {
+        "name": "cinematic",
+        "title": "Cinematic",
+        "description": "Mood-driven montage",
+        "aspect": "9:16",
+        "scenes": "4-8",
+        "sceneSeconds": "2-6",
+        "captions": "off",
+        "narration": "optional",
+        "music": "required",
+        "needs": "measure"
+      }
+    },
+    {
+      "id": "format/daily-recap",
+      "kind": "format",
+      "name": "DailyRecap",
+      "description": "Photo-dump recap cut to the track",
+      "guidance": "# DailyRecap — photo-dump recap cut to the track\n\nA day, a trip or a week as a fast run of short clips and stills, cut on the\nmusic rather than on a script. No narration: the track carries the pace and\nthe pictures carry the content. The one piece of typography is a stamp — a\ndate, a place, a week number — that repeats in the same corner so the run\nreads as one set rather than as a shuffle.\n\nThe difference from Cinematic is arc. Cinematic builds to a peak and holds the\nlongest shot after it; this format has no peak. It is an even run of beats\nwhere any two could swap without breaking anything, which is exactly why it\nsuits footage nobody shot to a plan.\n\n## Composition\nVertical 1080x1920 @30fps. One full-frame layer per scene, hard cuts only —\nno cross-fades, they blur the beat the cut is landing on. Eight to fourteen\nscenes at 1.5-3s each; under 1.5s a viewer registers movement rather than\nsubject. A score is REQUIRED. Stills need a `ken` drift or they read as a\nstall in a run of moving pictures. Captions off unless there is a spoken clip\nin the run, in which case caption only that clip.\n\n## Interview\nRound A — header \"Audio\": ASK THIS FIRST. Score: supply a file or generate\none? If generating, name the backend and its rights terms BEFORE they choose —\nevery cut in this format is placed against the track, so a rights problem\nfound later is a re-cut, not a re-tag. There is no voice track to ask about.\nRound 1 — header \"Footage\": The clips and stills, in the order they happened\nor in the order they look best? (Ask which; people assume chronological and\noften don't want it.)\nRound 2 — header \"Stamp\": What repeats in the corner — a date, a place, a day\nnumber, nothing?\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: anything that must open or close the run.\n\n## Slots\n`clip-N` per scene (8-14), `music` file, optional `stamp` card repeated in\nevery scene, optional `endcard`.\n\n## Grammar\n- **Open** on the strongest single frame, not on the earliest one.\n- **Run** the rest at 1.5-3s. Vary the length within that band; a run of\n  identical durations reads as a slideshow whatever the track is doing.\n- **Stamp** sits in the same corner in every scene, same size, same colour.\n  It is the only thing holding the set together.\n- **Close** on a held frame, 3-4s, longer than anything before it. A run that\n  simply stops reads as a video that was cut off.\n- No text over a clip that is under 2s. It cannot be read, and it competes\n  with the picture it is covering.\n\n## Render notes\n\nMeasure the track, do not guess it: `measure --music` (bundled in\n`audio-acquisition`) reports the seconds where the energy actually changes.\nPut those seconds in the storyboard's `musicTransitions` and the editor will\npull each cut onto the nearest one — see `snapToMusic`, which moves a cut at\nmost a quarter of its own scene and never behind the cut before it.\n\nThat snapping is section-level, not beat-level: the detection buckets to whole\nseconds, so it lands cuts on drops, lifts and breakdowns rather than on a\nsnare. For 1.5-3s scenes it is the difference between a run that feels edited\nand one that feels shuffled, but do not promise beat sync on top of it.\n\nOrder the run before timing it. Reordering after the cuts are placed moves\nevery boundary and the snapping has to be redone.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-3c634448e563d71f16a742bcaf9ddb644b59c84b9abbc06ac7d60a407909cd29",
+      "values": {
+        "name": "daily-recap",
+        "title": "DailyRecap",
+        "description": "Photo-dump recap cut to the track",
+        "aspect": "9:16",
+        "scenes": "8-14",
+        "sceneSeconds": "1.5-3",
+        "captions": "optional",
+        "narration": "none",
+        "music": "required",
+        "needs": "measure"
+      }
+    },
+    {
+      "id": "format/explainer",
+      "kind": "format",
+      "name": "Explainer",
+      "description": "Narrated concept walkthrough",
+      "guidance": "# Explainer — narrated concept walkthrough\n\nVoiceover explains a concept over a sequence of illustrative visuals: b-roll\ncuts, text cards, big-number stat beats. No on-camera host. The agent plans the\nstoryboard; nothing here plans it for you.\n\n## Composition\nVertical 1080x1920 @30fps (ask if landscape 1920x1080 wanted for YouTube).\nScene types: full-frame `broll` layers, or text/stat beats built as\nplaceholder layers with composer text (add TextCard/StatCard components as\nneeded — see the composer's layer renderer). Captions on. One narrator voice.\n\n## Interview\nRound 1 — header \"Topic\": What concept? What's the one-sentence takeaway a\nviewer should leave with?\nRound 2 — header \"Structure\": Hook style (question / bold claim / statistic)?\nHow long (30/45/60s)?\nRound 3 — header \"Visuals\": Illustrative footage (generate/find/supply) vs\nmotion-graphics text beats — rough mix?\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: audience, tone, examples to include/avoid.\n\n## Slots\n`narration` per scene; visual per scene: `broll` source OR text-beat content\n(heading, stat, caption).\n\n## Grammar\nHook ≤10 words spoken first. One idea per scene, 4-8s each. Every claim with\na number gets a stat beat (composer text, pixel-perfect). Close with the\ntakeaway restated + soft CTA.\n\n## Render notes\nNarration WAV durations are the clock. Stat/text beats: 3-4s minimum for\nreadability.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-e6d053412a15ac64e5fef08bc04490b1eff724f0151ee6c38be16cc8c9213e90",
+      "values": {
+        "name": "explainer",
+        "title": "Explainer",
+        "description": "Narrated concept walkthrough",
+        "aspect": "9:16",
+        "alsoWorks": "16:9",
+        "sceneSeconds": "3-8",
+        "captions": "on",
+        "narration": "one voice"
+      }
+    },
+    {
+      "id": "format/pip-story",
+      "kind": "format",
+      "name": "PipStory",
+      "description": "Shrinking-host narrative, script-driven",
+      "guidance": "# PipStory — shrinking-host narrative (script-driven)\n\nOne continuous host presence: full-frame for direct-address beats, easing into\na corner inset over supporting b-roll for concrete/numeric beats, easing back\nbefore every cut so scene changes land full-frame-to-full-frame. Proven\ngrammar (taxonomy 5.1 + the coffee/phone/library/meal-prep demos).\n\n## Composition\nVertical 1080x1920 @30fps. Layers per scene: optional `broll` (full-frame\nbase) + `host` (rect `[0.58,0.58,0.42,0.42]`, enter/exit tweens 0.4s from/to\nfull). Captions on. Voices: storyteller + short-reaction cohost.\n\n## Interview\nRound 1 — header \"Script\": Do you have a script, or should we write one\ntogether? (Have a file / Draft from a topic / Dictate now)\nRound 2 — header \"Host\": Use an existing host take pool, generate a new host\nlook (describe them), or supply your own footage?\nRound 3 — header \"Numbers\": Which concrete facts/numbers must land on screen?\n(These become composer text overlays — never generation-prompt text.)\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: anything else about tone, pacing, platform?\n\n## Slots\n`host` (pool takes keyed by mood: talking/listening/surprised/smiling),\n`broll` per pip beat (object/scene shots, NO readable text), narration beats.\n\n## Grammar\nSegment script into 10-30-word beats. `pip` ONLY where narration cites\nsomething showable (number, bill, object, place); 25-50% of beats. Cohost\nlines ≥3 real words, never bare interjections. Exact figures render as\ncomposer overlays (StatCard-style), not in footage.\n\n## Render notes\nHost identity: same actual take files across all beats (pool), not repeated\ndescriptors. B-roll durations: loop/trim in composer to measured narration.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-83fb4e9bbd93035c2956247a4fa4e5773a51e15ecbcacd03fbd67b1c9f2911e3",
+      "values": {
+        "name": "pip-story",
+        "title": "PipStory",
+        "description": "Shrinking-host narrative, script-driven",
+        "aspect": "9:16",
+        "captions": "on",
+        "narration": "two voices"
+      }
+    },
+    {
+      "id": "format/pointer-popups",
+      "kind": "format",
+      "name": "PointerPopups",
+      "description": "Analyzed footage with images pinned to pointing gestures",
+      "guidance": "# PointerPopups — analyzed footage with images pinned to pointing gestures\n\nThe user's own footage (or generated footage) of a presenter pointing at\nempty space; hand-tracking analysis finds where and when they point, and\npopup images appear pinned beside those exact spots. Analysis-driven\ncomposition: the footage dictates the layout, not the storyboard.\n\n## Composition\nMatch the source clip's orientation/dimensions (probe with\n`measure` (bundled in `audio-acquisition`)). Base layer: the user's clip (with its own audio —\nset `muted: false`, no TTS unless they want VO added). Popup layers:\nimage layers with `rect` from the tracker, `atMs`/`untilMs` windows,\n`pop: true`, `fit: contain`.\n\n## Interview\nRound 1 — header \"Footage\": Your pointing video: file path or URL? (This\nformat needs real footage — generated pointing works but tracking quality\nfollows footage quality.)\nRound 2 — header \"Popups\": The images to pop up, in pointing order: file\npaths / URLs / generate them? One per point, or should some repeat?\nRound 3 — header \"Style\": Popup size (small 0.22 / medium 0.30 / large\n0.40 of frame width)? Keep original audio, add VO, or both?\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: anything about timing, linger duration, or what each point means.\n\n## Slots\n`me` (the footage), `popup-N` images (assigned to pointing events in order).\n\n## Grammar / pipeline\n1. `video-studio track_pointing analyze --in <clip> --out events.json`\n2. Review events with the user (count + timestamps) — if the tracker found\n   more/fewer points than they expect, show extracted frames at event\n   timestamps and reconcile before composing (extra events → drop by index;\n   missed events → hand-add from frame inspection).\n3. `video-studio track_pointing layers --events events.json\n   --images a.png,b.png [--size 0.30]` → paste emitted layers into the\n   scene after the base layer.\n4. Scene `plannedSeconds` = clip duration (measure it); no TTS narration\n   unless requested (base layer keeps its own audio).\n\n## Render notes\n- Tracker assumes ONE pointing hand (max_num_hands=1); two-handed footage\n  needs a second pass with the flag raised.\n- Events under 350ms are dropped as jitter by design — a real \"look here\"\n  point holds. If the user's style is quick taps, lower MIN_EVENT_MS.\n- The popup rect auto-offsets toward frame center so it never covers the\n  finger; `--size` is the only knob usually worth touching.\n- Verify with extracted frames at each event midpoint before declaring\n  done — tracking confidence varies with lighting and hand size.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-c4672ab009216036198319da4dc0566c88e8e09aae92df63eb54721d85d1ceae",
+      "values": {
+        "name": "pointer-popups",
+        "title": "PointerPopups",
+        "description": "Analyzed footage with images pinned to pointing gestures",
+        "aspect": "source",
+        "narration": "optional",
+        "needs": "track_pointing, measure"
+      }
+    },
+    {
+      "id": "format/product-launch",
+      "kind": "format",
+      "name": "ProductLaunch",
+      "description": "30-40 second launch spot",
+      "guidance": "# ProductLaunch — 30-40 second launch spot\n\nHero product, three capability beats, logo landing. The single most common\narchetype in the reference gallery (11 of 48) and the one with the shortest\nprompts, because the shape is so well established.\n\n## Composition\n16:9 1080p by default (ask; 9:16 for social-first). Five to seven scenes.\nHero shots are stills with a slow `ken` push. Capability beats pair a still\nwith a `card` naming the capability. End card is pure typography — product\nname, one line, URL. Captions on. One narrator voice, confident and dry.\n\n## Interview\nRound 1 — header \"Product\": What is it, and what does it let someone do that\nthey couldn't before? (one sentence, no adjectives)\nRound 2 — header \"Beats\": The three capabilities worth 6 seconds each.\nRound 3 — header \"Landing\": Exact product name, closing line, and URL — these\nrender as real typography, so give them to me exactly as they should appear.\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: brand colours, tone, anything to avoid.\n\n## Slots\n`hero` still, `beat-N` still + card (N=3), `endcard` card, narration.\n\n## Grammar\n- **Hook** (4-5s): the product, tight, unexplained. Narration states the\n  problem it removes — not the product's name.\n- **Reveal** (4-5s): wider, product named for the first time.\n- **Beats** (3 x 5-6s): one capability each. Card carries the capability in\n  <=4 words; narration carries the sentence. Never both saying the same words.\n- **Landing** (4-5s): typography only, held long enough to read twice.\n- One idea per scene. If a beat needs two sentences, it's two beats.\n\n## Render notes\nReal product? Use supplied photography (`file:`) — generators invent details\nand get logos wrong. Fictional product? Stills are fine. Product name and URL\nare ALWAYS cards; a generator will misspell them.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-22f83f77919953ef6258f0424912f6d9f7a4f89573b1256f0a1da6117dc928d9",
+      "values": {
+        "name": "product-launch",
+        "title": "ProductLaunch",
+        "description": "30-40 second launch spot",
+        "aspect": "16:9",
+        "alsoWorks": "9:16",
+        "scenes": "5-7",
+        "sceneSeconds": "4-6",
+        "captions": "on",
+        "narration": "one voice"
+      }
+    },
+    {
+      "id": "format/talking-head",
+      "kind": "format",
+      "name": "TalkingHead",
+      "description": "Direct-to-camera monologue",
+      "guidance": "# TalkingHead — direct-to-camera monologue\n\nOne person talks to camera throughout; optional lower-third labels and\ninset media moments. The base grammar behind storytime/confessional formats.\n\n## Composition\nVertical 1080x1920 @30fps. Single `host` layer full-frame; optional brief\n`insert` layers (image/clip, rect `[0.06,0.55,0.88,0.33]`) for receipts/\nscreenshots/moments. Captions on, karaoke style.\n\n## Interview\nRound 1 — header \"Story\": What's the story/message? Real footage of you, or\na generated presenter?\nRound 2 — header \"Beats\": Where are the emotional turns? (These get\nexpression changes / take changes.)\nRound 3 — header \"Inserts\": Any evidence moments (screenshots, photos,\nclips) to cut in? How sourced?\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: platform, length, energy level.\n\n## Slots\n`host` takes (pool by mood), optional `insert` media per beat, narration.\n\n## Grammar\nOpen mid-story (no throat-clearing). Cut takes at emotional turns even if\nthe setting is constant — take changes read as authenticity. Inserts ≤3s,\nnever over the speaker's key lines.\n\n## Render notes\nIf host is generated: pool takes, ping-pong loop for beats >6s (MiniMax cap).",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-cf056584a23791772b7a4e8d6232e35314f493145b9c0e21c7583a82532b2b8d",
+      "values": {
+        "name": "talking-head",
+        "title": "TalkingHead",
+        "description": "Direct-to-camera monologue",
+        "aspect": "9:16",
+        "captions": "on",
+        "narration": "on camera"
+      }
+    },
+    {
+      "id": "format/timeline-explainer",
+      "kind": "format",
+      "name": "TimelineExplainer",
+      "description": "Numbered walk through a history",
+      "guidance": "# TimelineExplainer — numbered walk through a history\n\nA sequence of numbered beats moving through time: a discography, a\nleadership history, a company's decade. Distinct from BrandOrigin in that the\n*list* is the point — viewers are counting along — and it runs longer.\n\n## Composition\n16:9 1080p @30fps (9:16 works; cards get tighter). Six to ten scenes, 5-7s\neach. Each beat opens on its number as a `card`, then reveals a still. The\nnumber card is the format's signature — same position, same style, every\nbeat, so the count is legible at a glance. Captions on.\n\n## Interview\nRound 1 — header \"Subject\": What history, and how many beats? (6-10; more\nthan 10 wants a longer format)\nRound 2 — header \"Beats\": For each: the year/number, the one-line fact, and\nwhat we'd see.\nRound 3 — header \"Arc\": What's the through-line the last beat should land?\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: tone, and any claim that needs care.\n\n## Slots\n`num-N` card (number + year), `still-N` visual, narration per beat.\n\n## Grammar\n- **Cold open** (4s): the arc's end state as a question. No number.\n- **Beats** (6-10 x 5-7s): number card enters first (`atMs` ~0, `pop`), still\n  underneath with `ken`. Narration is one fact per beat — resist two.\n- **Landing** (5-6s): answers the cold open. Card, no still.\n- Numbers, years, and names are cards. Stills carry mood, not information.\n- Keep facts checkable and neutrally stated; this format invites strong claims\n  and shouldn't make them.\n\n## Render notes\nThe most card-heavy format we have — good stress test of whether card layers\ncan carry a video rather than accent one. If a still adds nothing to a beat,\nuse a card alone on a flat background; an honest text beat beats a decorative\nimage.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-481996675321fd7c9a3eaa4cd4b5f8089cc1a120080b5c7bf492fbc66216f007",
+      "values": {
+        "name": "timeline-explainer",
+        "title": "TimelineExplainer",
+        "description": "Numbered walk through a history",
+        "aspect": "16:9",
+        "alsoWorks": "9:16",
+        "scenes": "6-10",
+        "sceneSeconds": "5-7",
+        "captions": "on",
+        "narration": "one voice"
+      }
+    },
+    {
+      "id": "format/titled-video",
+      "kind": "format",
+      "name": "TitledVideo",
+      "description": "Clip plus a typography package",
+      "guidance": "# TitledVideo — clip + typography package\n\nAn existing (or generated) clip dressed with title/end cards and section\nlabels — the \"make this clip postable\" format.\n\n## Composition\nMatch source clip's orientation (probe with `measure`, bundled in `audio-acquisition`). Layers:\n`main` clip full-frame; title card scene first (2-3s, text on color or\nframe-grab background); optional corner section labels; end card with CTA.\n\n## Interview\nRound 1 — header \"Source\": The clip: supply file / URL / generate?\nRound 2 — header \"Text\": Exact title, section labels (if any), end-card CTA\ntext. (Exact text — it renders as real typography.)\nRound 3 — header \"Style\": Color accent + font vibe (clean/bold/playful)?\nRound A — header \"Audio\": Score (supply a file / generate / none)?\nVoice (built-in / supplied recording / none)? If generating the score, say\nwhich backend and its rights terms before they choose, not after.\nRound L — header \"Look\": Which caption/card preset — `video-studio styles --list`?\nAny look they describe should be saved with `video-studio styles --save`.\nFreeform: platform, whether captions are wanted over the clip.\n\n## Slots\n`main` clip, `title`, optional `labels[]` with timestamps, `cta`.\n\n## Grammar\nTitle card ≤6 words. Labels appear at content transitions (probe the clip's\nscene cuts if unsure — the quality check's scene detection can list them). End\ncard holds 3s minimum.\n\n## Render notes\n\nIf the source is a still (or a very short clip held long), give it a `ken`\ndrift so it reads as footage rather than a frozen frame.\nThis format is pure composition — usually zero generation cost. Good first\ndemo of the studio preview loop.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-afa1ed7f7b1615f28cf0325ebef7a9021cf3af775049c52ab220ed014c4d6016",
+      "values": {
+        "name": "titled-video",
+        "title": "TitledVideo",
+        "description": "Clip plus a typography package",
+        "aspect": "source",
+        "captions": "optional",
+        "needs": "measure"
+      }
+    }
+  ]
+}

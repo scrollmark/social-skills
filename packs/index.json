@@ -1,0 +1,19 @@
+{
+  "format": "scrollmark.packindex/1",
+  "keyspace": "1.0.0",
+  "packs": [
+    {
+      "id": "scrollmark-core",
+      "version": "1.0.0",
+      "name": "Scrollmark Core",
+      "description": "The looks and shapes this repository ships.",
+      "tier": "free",
+      "assetCounts": {
+        "style": 29,
+        "format": 11
+      },
+      "digest": "sha256-43d0b2f75c7459384fb99671c251f398338349f7971d7f915571fe35311d53e9",
+      "url": "scrollmark-core@1.0.0.json"
+    }
+  ]
+}
