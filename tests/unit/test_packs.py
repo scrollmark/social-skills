@@ -129,3 +129,55 @@ def test_the_index_points_at_a_file_that_exists(pack: dict):
     for entry in index["packs"]:
         assert (DIST / entry["url"]).exists()
         assert sum(entry["assetCounts"].values()) == len(pack["assets"])
+
+
+class TestTitleScenes:
+    """Layouts, and the two things they must never carry."""
+
+    def scenes(self, pack: dict) -> list[dict]:
+        return [a for a in pack["assets"] if a["kind"] == "title-scene"]
+
+    def test_they_are_in_the_pack(self, pack: dict) -> None:
+        assert self.scenes(pack), "title scenes are authored but not compiled"
+
+    def test_none_binds_itself_to_a_style(self, pack: dict) -> None:
+        # A title scene is a LAYOUT and every preset can wear it. One that
+        # named a style would have to be written 29 times, and would make
+        # "open this in the look the video already uses" impossible to ask
+        # for -- the editor's applier takes the style from the caller.
+        for scene in self.scenes(pack):
+            assert "styleRef" not in scene["values"], scene["id"]
+
+    def test_none_writes_the_video_s_words(self, pack: dict) -> None:
+        # The same line styles.py draws, from the other side. A layout
+        # shipping `text` would put the pack's copy in someone's video and
+        # the editor would render it as a deliberate choice.
+        for scene in self.scenes(pack):
+            for layer in scene["values"]["layers"]:
+                assert "text" not in layer, scene["id"]
+
+    def test_every_layer_names_a_role(self, pack: dict) -> None:
+        for scene in self.scenes(pack):
+            assert scene["values"]["layers"]
+            for layer in scene["values"]["layers"]:
+                assert layer.get("role"), scene["id"]
+
+    def test_every_role_is_one_some_preset_styles(self, pack: dict) -> None:
+        # Otherwise the scene compiles, ships, and rejects every layer at
+        # apply time for a reason nobody sees until they try it.
+        styled = {
+            role
+            for asset in pack["assets"]
+            if asset["kind"] == "style"
+            for role in (asset["values"].get("cards") or {})
+        }
+        for scene in self.scenes(pack):
+            for layer in scene["values"]["layers"]:
+                assert layer["role"] in styled, f"{scene['id']}: {layer['role']}"
+
+    def test_guidance_survives_the_compile(self, pack: dict) -> None:
+        # The prose is the only place "when to reach for this" has ever
+        # lived, and it is the same string the editor shows a person and
+        # hands an agent.
+        for scene in self.scenes(pack):
+            assert len(scene["guidance"]) > 200, scene["id"]

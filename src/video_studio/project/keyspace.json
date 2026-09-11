@@ -19,7 +19,7 @@
     "the render, and misleads whoever edits it next. Add a space when something",
     "starts validating against it, not in anticipation."
   ],
-  "version": "1.0.0",
+  "version": "1.1.0",
   "spaces": {
     "caption": {
       "$comment": "Caption keys the composer renders. Mirrored by captionStyleSchema in the editor's storyboard/captions.ts.",
@@ -68,18 +68,36 @@
         "the editor's guards need card and cardContent together to tell a",
         "mistyped key from a legitimate one."
       ],
-      "keys": ["heading", "subtext", "lines", "footnote"]
+      "keys": [
+        "heading",
+        "subtext",
+        "lines",
+        "footnote"
+      ]
     },
     "placement": {
       "$comment": "Keys that sit on the LAYER rather than under `card`, though a preset may set them for a role.",
-      "keys": ["rect", "pop", "fade", "atMs", "untilMs", "enter", "exit"]
+      "keys": [
+        "rect",
+        "pop",
+        "fade",
+        "atMs",
+        "untilMs",
+        "enter",
+        "exit"
+      ]
     },
     "music": {
       "$comment": "Unvalidated until now, so a typo here was accepted in silence -- the exact failure the rest of this file prevents.",
-      "keys": ["moods"]
+      "keys": [
+        "moods"
+      ]
     },
     "rhythm": {
-      "keys": ["bpm", "fps"]
+      "keys": [
+        "bpm",
+        "fps"
+      ]
     },
     "format": {
       "$comment": "Format frontmatter. All values are free text: `scenes: 3-6` is a human range, not a structure.",
@@ -96,12 +114,48 @@
         "music",
         "needs"
       ]
+    },
+    "titleSceneLayer": {
+      "$comment": [
+        "What one layer of a title scene may say. A layer names a ROLE and, at",
+        "most, when it appears and where -- never what it looks like, which comes",
+        "from the style the scene is dressed in, and never what it says, which is",
+        "the scene's own words supplied at apply time."
+      ],
+      "keys": [
+        "role",
+        "text",
+        "rect",
+        "atMs",
+        "untilMs",
+        "pop"
+      ]
+    },
+    "titleScene": {
+      "$comment": [
+        "The scene itself. `styleRef` is optional and usually absent: a title scene",
+        "is a LAYOUT that every preset can wear, and binding one to one look would",
+        "mean authoring the same three files twenty-nine times."
+      ],
+      "keys": [
+        "seconds",
+        "styleRef",
+        "overlayRef",
+        "layers",
+        "sfxRefs"
+      ]
     }
   },
   "enums": {
     "aspect": {
       "$comment": "`source` is a real answer: a format built on the user's own footage keeps its frame.",
-      "values": ["9:16", "16:9", "1:1", "4:5", "source"]
+      "values": [
+        "9:16",
+        "16:9",
+        "1:1",
+        "4:5",
+        "source"
+      ]
     }
   }
 }

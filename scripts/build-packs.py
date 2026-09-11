@@ -31,6 +31,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 STYLES = ROOT / "src" / "video_studio" / "styles"
 FORMATS = ROOT / "skills" / "video-formats" / "references" / "formats"
+TITLE_SCENES = ROOT / "src" / "video_studio" / "title_scenes"
 #: Committed, at the repo root rather than under `dist/`, which is gitignored
 #: as the Python build output -- putting the packs there would have published
 #: nothing at all. Consumers read it over raw.githubusercontent.com, the same
@@ -178,9 +179,83 @@ def format_assets(problems: list[str]) -> list[dict]:
     return assets
 
 
+def title_scene_assets(problems: list[str]) -> list[dict]:
+    """Layouts, not looks.
+
+    A title scene names roles and leaves both the treatment and the words to
+    someone else: the treatment to whichever style it is dressed in at apply
+    time, the words to the scene. That is why none of these files carries a
+    `styleRef` -- binding a layout to one of the 29 presets would mean writing
+    the same three files 29 times, and would make "open this in the look the
+    video already uses" impossible to ask for.
+    """
+    assets = []
+    known = keyspace.space("titleScene")
+    layer_keys = keyspace.space("titleSceneLayer")
+    for path in sorted(TITLE_SCENES.glob("*.md")):
+        text = path.read_text()
+        values = json_block(text)
+        meta = frontmatter(text)
+        if values is None:
+            problems.append(f"{path.name}: no json block")
+            continue
+        unknown = sorted(set(values) - known)
+        if unknown:
+            problems.append(f"{path.name}: not title-scene keys: {', '.join(unknown)}")
+            continue
+        if not isinstance(values.get("seconds"), (int, float)):
+            problems.append(f"{path.name}: seconds must be a number")
+            continue
+        layers = values.get("layers")
+        if not isinstance(layers, list) or not layers:
+            problems.append(f"{path.name}: needs at least one layer")
+            continue
+        bad = False
+        for index, layer in enumerate(layers):
+            if not isinstance(layer, dict) or not layer.get("role"):
+                problems.append(f"{path.name}: layer {index} has no role")
+                bad = True
+                continue
+            stray = sorted(set(layer) - layer_keys)
+            if stray:
+                problems.append(
+                    f"{path.name}: layer {index} sets {', '.join(stray)}, "
+                    "which is not a layer key"
+                )
+                bad = True
+            # The same line styles.py draws, from the other side. A layout that
+            # shipped `text` would be the pack writing the video's words, and
+            # the editor would render it as a deliberate choice.
+            if "text" in layer:
+                problems.append(
+                    f"{path.name}: layer {index} sets text; the words belong to the scene"
+                )
+                bad = True
+        if bad:
+            continue
+        assets.append(
+            {
+                "id": f"title-scene/{path.stem}",
+                "kind": "title-scene",
+                "name": meta.get("name", path.stem),
+                "description": meta.get("description", ""),
+                "guidance": guidance(text),
+                "status": "stable",
+                "revision": 1,
+                "digest": digest(values),
+                "values": values,
+            }
+        )
+    return assets
+
+
 def build() -> tuple[dict, dict, list[str]]:
     problems: list[str] = []
-    assets = style_assets(problems) + format_assets(problems)
+    assets = (
+        style_assets(problems)
+        + format_assets(problems)
+        + title_scene_assets(problems)
+    )
 
     pack = {
         "format": PACK_FORMAT,
