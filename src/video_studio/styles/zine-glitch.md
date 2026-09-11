@@ -37,7 +37,7 @@ Two words is a headline; five is a smear.
       "bg": "transparent",
       "fg": "#fafafa",
       "fontFamily": "Rubik Glitch, Impact, sans-serif",
-      "fontSize": 128,
+      "fontSize": 196,
       "align": "center",
       "tracking": 0.01,
       "rect": [

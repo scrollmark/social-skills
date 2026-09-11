@@ -37,7 +37,7 @@ string of dripping letters stops being readable at all.
       "bg": "transparent",
       "fg": "#eaff00",
       "fontFamily": "Rubik Wet Paint, Impact, sans-serif",
-      "fontSize": 124,
+      "fontSize": 190,
       "align": "center",
       "tracking": 0.01,
       "rect": [

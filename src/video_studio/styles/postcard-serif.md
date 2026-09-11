@@ -39,7 +39,7 @@ words is the ceiling — write the line to fit rather than tightening it.
       "fg": "#fdfdfb",
       "fontFamily": "Prata, Playfair Display, Didot, serif",
       "weight": 400,
-      "fontSize": 124,
+      "fontSize": 196,
       "align": "center",
       "tracking": 0.0,
       "rect": [

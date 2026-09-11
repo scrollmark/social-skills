@@ -40,7 +40,7 @@ spacing, four pages of them is work.
     "title": {
       "bg": "#ffffff",
       "fg": "#111111",
-      "fontSize": 120,
+      "fontSize": 190,
       "align": "center",
       "tracking": -0.04,
       "rect": [
