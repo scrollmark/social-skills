@@ -40,6 +40,22 @@ def test_the_committed_pack_matches_the_presets():
     assert result.returncode == 0, result.stderr
 
 
+def test_the_pack_records_nothing_that_changes_between_builds(pack: dict):
+    """No timestamp, and no commit SHA.
+
+    Both change on every build, and this file is COMMITTED and compared against
+    a rebuild -- so either one makes the drift check fail forever. It did: the
+    first version embedded `git rev-parse HEAD`, which is necessarily the
+    commit BEFORE the one carrying it, so it could never have been right
+    either. CI caught it; the local run could not, because locally HEAD had not
+    moved since the build.
+    """
+    volatile = {"commit", "builtAt", "generatedAt", "timestamp"}
+    assert set(pack.get("provenance", {})) & volatile == set()
+    index = json.loads((DIST / "index.json").read_text())
+    assert set(index) & volatile == set()
+
+
 def test_the_build_is_deterministic():
     """`--check` compares a rebuild against the committed file, so a build that
     changed nothing must produce an identical one -- otherwise the check
