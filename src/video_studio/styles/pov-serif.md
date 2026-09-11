@@ -36,7 +36,7 @@ fallback rarely fires.
     "wiggle": 0,
     "wordsPerPage": 5,
     "wordGap": 0.12,
-    "bottom": 0.44
+    "bottom": 0.30
   },
   "cards": {
     "title": {
