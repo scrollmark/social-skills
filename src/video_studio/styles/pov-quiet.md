@@ -32,7 +32,7 @@ reads as a sentence, not as karaoke.
     "wiggle": 0,
     "wordsPerPage": 6,
     "wordGap": 0.12,
-    "bottom": 0.42
+    "bottom": 0.36
   },
   "cards": {
     "title": {
