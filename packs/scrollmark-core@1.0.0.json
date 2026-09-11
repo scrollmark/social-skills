@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "name": "Scrollmark Core",
   "description": "The looks and shapes this repository ships.",
-  "keyspace": "1.0.0",
+  "keyspace": "1.1.0",
   "tier": "free",
   "license": {
     "spdx": "CC-BY-4.0",
@@ -2342,6 +2342,63 @@
         "aspect": "source",
         "captions": "optional",
         "needs": "measure"
+      }
+    },
+    {
+      "id": "title-scene/chapter-break",
+      "kind": "title-scene",
+      "name": "chapter-break",
+      "description": "A number and a name, for the cut between sections",
+      "guidance": "# chapter-break\n\nThe card that says where you are. A `stat` layer for the number and a `title`\nlayer for the section name, in that order — the number is the backdrop and the\nname draws over it.\n\nShorter than the opening card on purpose. A chapter break is read in transit;\nit is punctuation, not a scene. At two seconds it starts to feel like the video\nhas stopped.\n\nUse it when the format has named sections — `daily-recap` and `how-to` both do.\nDo not use it to pad a video that has one continuous thought: a break between\nnothing and nothing reads as a mistake.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-dad01a32cb5743b0084077915b28411062b02824f379840b2d6783a6f9f92fbd",
+      "values": {
+        "seconds": 1.5,
+        "layers": [
+          {
+            "role": "stat"
+          },
+          {
+            "role": "title"
+          }
+        ]
+      }
+    },
+    {
+      "id": "title-scene/close-cta",
+      "kind": "title-scene",
+      "name": "close-cta",
+      "description": "The closing line, inverted, over the last beat",
+      "guidance": "# close-cta\n\nThe last card. One `cta` layer — which every preset styles as the inverse of\nits title, so the close reads as the open's answer rather than a repeat of it.\n\nTwo seconds, matching `open-wordmark`, because the pair is what makes a series\nrecognisable. A close that runs long is the second most common reason a recap\nloses its ending: the payoff has landed and the video is still going.\n\n**This asks for something.** Write the line as an instruction a person can act\non in the next five seconds — \"save this for Sunday\" beats \"follow for more\".\nThe words are the scene's; the preset supplies only the treatment.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-079623b4bb6448ece3699f9fc13feed88b4deced751b2592a5fb71f266048f0e",
+      "values": {
+        "seconds": 2,
+        "layers": [
+          {
+            "role": "cta"
+          }
+        ]
+      }
+    },
+    {
+      "id": "title-scene/open-wordmark",
+      "kind": "title-scene",
+      "name": "open-wordmark",
+      "description": "The wordmark alone, centre frame, for the first two seconds",
+      "guidance": "# open-wordmark\n\nThe opening card. One `title` layer and nothing else, held long enough to read\nand short enough that a viewer who already knows the channel is not waiting.\n\nIt carries no style of its own. A title scene is a LAYOUT, and every preset in\nthis library can wear it — `tourism` renders it as a wordmark on brand colour,\n`analog-editorial` as type on paper. Binding one layout to one look would mean\nauthoring this file twenty-nine times, and would make \"open this in the look\nthe video already uses\" impossible to ask for.\n\n**Two seconds is the whole argument.** A title that outstays it is the most\ncommon reason a recap loses its first viewer: the shape of the video is not yet\nvisible, so there is nothing to stay for. If the wordmark needs longer, it\nneeds a shot behind it, which is a different scene.\n\nThe words are the scene's. `heading` is what the layer says, and no preset may\nsupply it.",
+      "status": "stable",
+      "revision": 1,
+      "digest": "sha256-02be7a95b7cd6366fa47c2a5db103dcb49cabc19f984fd509c1eed95a2db0af8",
+      "values": {
+        "seconds": 2,
+        "layers": [
+          {
+            "role": "title"
+          }
+        ]
       }
     }
   ]
