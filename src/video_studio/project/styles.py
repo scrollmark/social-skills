@@ -54,7 +54,11 @@ CAPTION_KEYS = {"color", "highlight", "fontFamily", "palette", "stroke",
                 "strokeWidth", "fontSize", "bounce", "wiggle", "uppercase",
                 "bottom", "wordsPerPage", "wordGap"}
 #: Card keys the composer renders, plus the placement keys that sit beside it.
-CARD_KEYS = {"bg", "fg", "tracking", "fontSize", "align", "size"}
+CARD_KEYS = {"bg", "fg", "tracking", "fontSize", "align", "size",
+             # The face, as of scrollmark/editor#175. Before it, a card could
+             # pick its colours and its size and then drew Inter whatever it
+             # asked for -- which is most of what a design template is.
+             "fontFamily", "italic", "weight", "flat"}
 PLACEMENT_KEYS = {"rect", "pop", "fade", "atMs", "untilMs", "enter", "exit"}
 
 
