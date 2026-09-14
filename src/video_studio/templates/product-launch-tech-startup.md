@@ -1,9 +1,10 @@
 ---
 name: product-launch-tech-startup
+title: Tech startup launch
 description: Three capabilities and a name to land, in a palette built to look shipped.
 ---
 
-# product-launch-tech-startup
+# Tech startup launch
 
 Three capabilities and a name to land, in a palette built to look shipped.
 

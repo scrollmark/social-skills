@@ -1,9 +1,10 @@
 ---
 name: talking-head-pov-quiet
+title: Quiet POV talking head
 description: A held moment, captioned mid-frame in a voice that does not raise.
 ---
 
-# talking-head-pov-quiet
+# Quiet POV talking head
 
 A held moment, captioned mid-frame in a voice that does not raise.
 

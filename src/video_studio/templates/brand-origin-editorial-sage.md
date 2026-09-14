@@ -1,9 +1,10 @@
 ---
 name: brand-origin-editorial-sage
+title: Editorial sage origin story
 description: A Didone line and one script word, cream on a flat colour field.
 ---
 
-# brand-origin-editorial-sage
+# Editorial sage origin story
 
 A Didone line and one script word, cream on a flat colour field.
 

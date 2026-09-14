@@ -1,9 +1,10 @@
 ---
 name: timeline-explainer-arcade-crt
+title: Arcade CRT timeline
 description: Phosphor green pixels counting up, the way a score does.
 ---
 
-# timeline-explainer-arcade-crt
+# Arcade CRT timeline
 
 Phosphor green pixels counting up, the way a score does.
 

@@ -1,9 +1,10 @@
 ---
 name: daily-recap-pov-serif
+title: POV serif recap
 description: Three panels of an afternoon, captioned like a thought rather than a title.
 ---
 
-# daily-recap-pov-serif
+# POV serif recap
 
 Three panels of an afternoon, captioned like a thought rather than a title.
 

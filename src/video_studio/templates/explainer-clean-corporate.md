@@ -1,9 +1,10 @@
 ---
 name: explainer-clean-corporate
+title: Clean corporate explainer
 description: A concept walked through end to end, in the flat palette a deck already uses.
 ---
 
-# explainer-clean-corporate
+# Clean corporate explainer
 
 A concept walked through end to end, in the flat palette a deck already uses.
 

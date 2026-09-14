@@ -1,9 +1,10 @@
 ---
 name: daily-recap-wet-paint
+title: Wet paint recap
 description: Letters that drip, lime on black, for a day with no sincerity in it.
 ---
 
-# daily-recap-wet-paint
+# Wet paint recap
 
 Letters that drip, lime on black, for a day with no sincerity in it.
 

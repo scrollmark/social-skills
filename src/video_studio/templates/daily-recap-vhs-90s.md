@@ -1,9 +1,10 @@
 ---
 name: daily-recap-vhs-90s
+title: VHS '90s recap
 description: A day as a run of short beats, cut on the track, stamped like a camcorder.
 ---
 
-# daily-recap-vhs-90s
+# VHS '90s recap
 
 A day as a run of short beats, cut on the track, stamped like a camcorder.
 

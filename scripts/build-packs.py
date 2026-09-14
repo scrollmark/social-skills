@@ -295,7 +295,10 @@ def template_assets(problems: list[str]) -> list[dict]:
             {
                 "id": f"template/{path.stem}",
                 "kind": "template",
-                "name": meta.get("name", path.stem),
+                # The title a person reads on the tile, falling back to the slug.
+                # `name` stays the slug: it is how the file and the id are named,
+                # and the gallery orders cards by id, not by anything shown.
+                "name": meta.get("title") or meta.get("name", path.stem),
                 "description": meta.get("description", ""),
                 "guidance": guidance(text),
                 "status": "stable",

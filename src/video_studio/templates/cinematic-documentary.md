@@ -1,9 +1,10 @@
 ---
 name: cinematic-documentary
+title: Documentary cut
 description: Cut to the track, captions off, colour left alone. The look is the footage.
 ---
 
-# cinematic-documentary
+# Documentary cut
 
 Cut to the track, captions off, colour left alone. The look is the footage.
 

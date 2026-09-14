@@ -1,9 +1,10 @@
 ---
 name: daily-recap-summer-scrapbook
+title: Summer scrapbook recap
 description: A season of phone footage, with one sentence worth keeping.
 ---
 
-# daily-recap-summer-scrapbook
+# Summer scrapbook recap
 
 A season of phone footage, with one sentence worth keeping.
 

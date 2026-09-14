@@ -1,9 +1,10 @@
 ---
 name: titled-video-chrome-y2k
+title: Chrome Y2K title
 description: A colour font that paints its own bevelled chrome, on a dark frame.
 ---
 
-# titled-video-chrome-y2k
+# Chrome Y2K title
 
 A colour font that paints its own bevelled chrome, on a dark frame.
 

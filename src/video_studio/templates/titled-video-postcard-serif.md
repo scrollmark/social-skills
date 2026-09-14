@@ -1,9 +1,10 @@
 ---
 name: titled-video-postcard-serif
+title: Postcard serif title
 description: A place name across the top, tracked until it is almost a line.
 ---
 
-# titled-video-postcard-serif
+# Postcard serif title
 
 A place name across the top, tracked until it is almost a line.
 

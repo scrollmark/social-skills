@@ -1,9 +1,10 @@
 ---
 name: timeline-explainer-3b1b-dark
+title: Dark maths timeline
 description: Numbered beats on a dark ground, the way a maths lecture counts.
 ---
 
-# timeline-explainer-3b1b-dark
+# Dark maths timeline
 
 Numbered beats on a dark ground, the way a maths lecture counts.
 

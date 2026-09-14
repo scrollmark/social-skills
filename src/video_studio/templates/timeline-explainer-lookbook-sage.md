@@ -1,9 +1,10 @@
 ---
 name: timeline-explainer-lookbook-sage
+title: Lookbook sage timeline
 description: A collection that counts itself, in cream on sage.
 ---
 
-# timeline-explainer-lookbook-sage
+# Lookbook sage timeline
 
 A collection that counts itself, in cream on sage.
 
