@@ -1,9 +1,10 @@
 ---
 name: brand-origin-warm-minimal
+title: Warm minimal origin story
 description: One from-here-to-there story, told quietly enough to be believed.
 ---
 
-# brand-origin-warm-minimal
+# Warm minimal origin story
 
 One from-here-to-there story, told quietly enough to be believed.
 

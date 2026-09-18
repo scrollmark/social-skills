@@ -1,9 +1,10 @@
 ---
 name: brand-origin-magazine-cover
+title: Magazine cover origin story
 description: One claim, one masthead, one red. Nothing else on screen.
 ---
 
-# brand-origin-magazine-cover
+# Magazine cover origin story
 
 One claim, one masthead, one red. Nothing else on screen.
 

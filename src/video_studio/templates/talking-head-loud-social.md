@@ -1,9 +1,10 @@
 ---
 name: talking-head-loud-social
+title: Loud social talking head
 description: One person to camera, captions loud enough to work on mute.
 ---
 
-# talking-head-loud-social
+# Loud social talking head
 
 One person to camera, captions loud enough to work on mute.
 

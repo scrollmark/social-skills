@@ -1,9 +1,10 @@
 ---
 name: cinematic-neon-sign
+title: Neon sign
 description: One word in struck neon tube, over a street that is already lit.
 ---
 
-# cinematic-neon-sign
+# Neon sign
 
 One word in struck neon tube, over a street that is already lit.
 

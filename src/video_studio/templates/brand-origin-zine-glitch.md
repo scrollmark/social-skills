@@ -1,9 +1,10 @@
 ---
 name: brand-origin-zine-glitch
+title: Zine glitch origin story
 description: Type photocopied until it breaks, and exactly one red.
 ---
 
-# brand-origin-zine-glitch
+# Zine glitch origin story
 
 Type photocopied until it breaks, and exactly one red.
 

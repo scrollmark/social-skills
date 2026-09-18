@@ -1,9 +1,10 @@
 ---
 name: cinematic-weekend-gothic
+title: Weekend gothic
 description: One blackletter word over neon, and nothing else competing.
 ---
 
-# cinematic-weekend-gothic
+# Weekend gothic
 
 One blackletter word over neon, and nothing else competing.
 

@@ -1,9 +1,10 @@
 ---
 name: titled-video-analog-editorial
+title: Analog editorial title
 description: A clip you already have, titled as though it were printed on paper.
 ---
 
-# titled-video-analog-editorial
+# Analog editorial title
 
 A clip you already have, titled as though it were printed on paper.
 
