@@ -1,0 +1,56 @@
+name: sync-editor-skills
+
+# The `editor-*` skills are written in scrollmark/platform, where SocialGPT's
+# editor agent loads them, and published from there as the
+# @scrollmark/editor-skills package on GitHub Packages. This pulls the latest
+# release and runs the sync script it ships: export into skills/, check with
+# verify-skills.sh, and open or update one PR on bot/editor-skills. A run with
+# nothing new changes nothing.
+#
+# No secret: GITHUB_TOKEN reads the package (it grants this repository Actions
+# access) and opens the PR. A PR opened by GITHUB_TOKEN does not trigger ci, which
+# is why the sync runs verify-skills.sh itself.
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  packages: read
+
+concurrency:
+  group: sync-editor-skills
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The sync replays its commit on top of master's merge base.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@scrollmark"
+
+      - name: Fetch the latest @scrollmark/editor-skills
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Unpacked outside the checkout, so none of it is committed.
+        run: |
+          cd "$RUNNER_TEMP"
+          npm pack --silent @scrollmark/editor-skills@latest
+          tar -xzf scrollmark-editor-skills-*.tgz
+
+      - name: Sync
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_BRANCH: master
+        run: bash "$RUNNER_TEMP/package/sync.sh"
