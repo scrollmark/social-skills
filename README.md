@@ -64,6 +64,22 @@ Every row's "Use when" text is the skill's own frontmatter `description`, copied
 so this table cannot quietly drift from the skills. `./scripts/verify-skills.sh` fails if a
 skill is missing from it.
 
+<!-- editor-skills:start -->
+### Editing in the Scrollmark editor
+
+The skills SocialGPT's own editor agent uses, for a coding agent driving the same editor through
+`scrollmark mcp`. They are generated from scrollmark/platform: change them there, not here.
+
+| Skill | Use when | Standalone? |
+|-------|----------|-------------|
+| `editor-captions` | Adding or restyling captions in the Scrollmark editor, one word at a time (the default for "Add captions" and "Cut this for TikTok" on a talking-head video) or in short three-word chunks. | **No.** It drives a running Scrollmark editor (SocialGPT, or `scrollmark mcp` from `@scrollmark/cli`). The judgement in it still reads without one. |
+| `editor-beat-sync` | The user wants cuts or moments in a Scrollmark editor video "on the beat" or "to the music", or a montage of several shots set to music. Never moves speech cuts. | **No.** It drives a running Scrollmark editor (SocialGPT, or `scrollmark mcp` from `@scrollmark/cli`). The judgement in it still reads without one. |
+| `editor-sfx-sparse` | Something arrives on screen in a Scrollmark editor video (B-roll in, a title, a punch line the user wants hit) or the user asks for sound design. Not for speech-only recuts or interviews, and never a whoosh per cut. | **No.** It drives a running Scrollmark editor (SocialGPT, or `scrollmark mcp` from `@scrollmark/cli`). The judgement in it still reads without one. |
+| `editor-soundtrack` | A recut social talking-head video in the Scrollmark editor needs a music bed, or the user asks to add, swap or remove background music. Not for seated interviews or podcasts, footage that is already a song, or when the user said no music. | **No.** It drives a running Scrollmark editor (SocialGPT, or `scrollmark mcp` from `@scrollmark/cli`). The judgement in it still reads without one. |
+| `editor-camera-directing` | Adding zooms, pans or Ken Burns moves to a Scrollmark editor video, or a first recut that should feel directed rather than static. | **No.** It drives a running Scrollmark editor (SocialGPT, or `scrollmark mcp` from `@scrollmark/cli`). The judgement in it still reads without one. |
+| `editor-plan-and-check` | Making any timeline edit in the Scrollmark editor, to turn the request into one plan, apply it as one undo step, then check the result once and answer. | **No.** It drives a running Scrollmark editor (SocialGPT, or `scrollmark mcp` from `@scrollmark/cli`). The judgement in it still reads without one. |
+<!-- editor-skills:end -->
+
 ## What ships where
 
 The engine used to live in a separate private repo, `scrollmark/video-studio`, and no
