@@ -172,6 +172,14 @@ Also update, by hand:
 - **[MIGRATION-NOTES.md](MIGRATION-NOTES.md)**, if you changed the structure of the repo
   rather than its content.
 
+## The `editor-*` skills are generated
+
+`skills/editor-*/` and the README table between the `editor-skills` markers are written
+in scrollmark/platform, where SocialGPT's own editor agent loads them, and synced here by
+`.github/workflows/sync-editor-skills.yml`. Change them there: the next sync overwrites
+an edit made here. They follow every rule above, and the sync runs `verify-skills.sh`
+before it opens its PR.
+
 ## Adding a Platform Reference
 
 Create the canonical file at `references/platforms/{platform-name}.md` (repo root), then
