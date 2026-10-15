@@ -257,7 +257,7 @@ Two things that bite people, both verified rather than guessed:
 ### The skills
 
 ```bash
-npx skills add scrollmark/social-skills                    # all sixteen
+npx skills add scrollmark/social-skills                    # every skill
 npx skills add scrollmark/social-skills -s hook-anatomy    # just one
 ```
 
@@ -268,7 +268,7 @@ Needs Node. If you would rather not install Node, the same thing without it — 
 mkdir -p ~/social-skills
 curl -Ls https://github.com/scrollmark/social-skills/archive/refs/heads/master.tar.gz \
   | tar xz --strip-components=1 -C ~/social-skills
-~/social-skills/install.sh                                 # all sixteen
+~/social-skills/install.sh                                 # every skill
 ~/social-skills/install.sh hook-anatomy                    # just one
 ```
 
