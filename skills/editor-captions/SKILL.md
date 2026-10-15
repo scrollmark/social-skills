@@ -31,4 +31,4 @@ After the recut, or on a timeline that already has the keep list:
    Do not use `tiktok`, `creator-classic`, `sticker-box`, `cinematic`, `yellow-punch`, `meme-loud`, or `active-word` unless the user names that look.
 3. Size: `s` for word captions, since at `m` long words clip on a vertical video; `m` or `l` only when the user asks for bigger captions.
 4. Placing for a platform (the user named one, or the editor's safe zone shows one): pass the same `platform` to `captions.applyRhythm` and to `captions.applyPreset`. The preset recomputes where captions sit, so leaving it out of either call puts them back under the platform's caption block. Then check that platform with `qc_run` (`checks: ["document"]`) and fix what it finds with `qc_applyFix`.
-5. If captions already exist with role `word`, `captions_resync`, then `captions_applyPreset` with the vibe kit if the look is wrong.
+5. If captions already exist with role `word`, `captions_resync`. It keeps their kit, colour and size, so do not apply a preset afterwards unless the user asks for a different look.
