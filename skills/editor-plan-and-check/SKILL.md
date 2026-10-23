@@ -31,6 +31,7 @@ Call everything the plan needs together: `timeline_describe` (`transcript: "word
 - **Captions:** a `captions.applyRhythm` op, then a `captions.applyPreset` op with `kitId`, `size`, `placement` and `platform`, in the same plan, as `editor-captions` says. Do not leave sizing for a second plan.
 - **Overlays:** start time from describe's words, a duration, and a position inside the safe area.
 - **Order:** cuts first (`keepRanges` or `timeline.applySourceRanges`), then captions (they follow the cut), then overlays and audio.
+- **Track names:** when the plan puts one kind of thing on a track that has no name yet (B-roll, title cards, an end card, music, a voiceover), add a `timeline.renameTrack` op naming it by what is on it ("B-roll", "End card"), with the clip's `$name` as `elementId`. Keep names the track already has.
 
 ## 4. Apply one plan
 
