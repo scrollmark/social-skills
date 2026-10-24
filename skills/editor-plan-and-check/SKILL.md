@@ -54,4 +54,4 @@ If the plan failed because something outside the edit failed (a stock download, 
 
 Make at most one fix pass, and do not inspect frames again after it: its result's `lint` is the check. If something is still off, tell the user what it is instead of looping.
 
-Then say what changed and the defaults you chose. Mention undo only when you deleted something, made a large change, or the user is unhappy.
+Then say what changed, what you removed, and the defaults you chose. Do not tell the user how to undo; mention ⌘Z only when they ask how to go back or are unhappy with the result.
