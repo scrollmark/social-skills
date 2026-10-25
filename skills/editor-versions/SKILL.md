@@ -21,19 +21,48 @@ Most requests are one clear edit: make it, once. Do not offer options for a cut,
   - a whole restyle ("make it cinematic", a new look or grade)
   - the user asked for versions, or to compare
   - the user rejected your last attempt at the same thing ("I don't like this music", "now it's too dark"): make the next try a version, so the one before is still there
-- **Keep the original before a restyle.** Before changing the whole look, style or pacing of a timeline the user has worked on, copy it first (step 2 below), so "put it back" is a switch, not an undo through many steps.
+- **Keep the original before a restyle.** Make a change to the whole look, style or pacing of a timeline the user has worked on as a new version, so "put it back" is a switch, not an undo through many steps.
 
 One video for several platforms ("for TikTok and Reels") is one video, not versions. Make a version per platform, account or store only when the user asks for one each.
 
 ## Make versions
 
-These commands run through `editor_run` (`editor_read` for `sequences.list` and `sequences.diff`); a plan refuses them. Their arguments are below, so skip `editor_lookup` for them. Calls in one round run in order. Budget: gather, copy, edit, answer.
+These commands run through `editor_run` (`editor_read` for `sequences.diff`); a plan refuses them. Their arguments are here, so skip `editor_lookup` for them.
 
-1. **Gather:** in your first round, with `timeline_describe` and the skills, call `sequences.list`: it gives the open sequence's `sequenceId`, which you need to copy from it again.
-2. **Copy and describe in ONE round**, without waiting for the copy's result: `editor_run` with `sequences.duplicate` (`sequenceId`: the one to start from; `name`: what differs, such as "Music: synth", "Length: 30s", "Hook: question"), then `timeline_describe` as the next call in the same response. The copy is open by then, so the describe reads it; clip handles from before belong to the other sequence. Splitting these into two rounds is the most common way to run out of rounds.
-3. **Edit the copy** in one plan, as for any edit. Its result lists what changed; that is your check.
-4. **One new version per turn** by default: the original and the new one are the two to compare. Make two only when asked for two or more ("a 30 and a 60 second version"); copy each from the ORIGINAL, not from the version before. Offer more in your answer instead of making them.
-5. The copy stays open, so the person sees it. Use `sequences.switch` only to open a different one, and `sequences.diff` (`a`, `b`: sequence ids) only when a version took more than one plan and you need to check it changed only what you meant.
+- `sequences.branch` makes a version in one call: `stateToken` and handles from `timeline_describe` of the open sequence, `name` (what differs: "Music: synth", "Length: 30s", "Hook: question"), and `ops` as for `timeline_applyPlan`. It copies the open sequence and applies the plan to the copy. The open sequence stays open and unchanged, so the same description makes the next version; `open: true` leaves that version open instead. If the plan fails, no copy is left. The result has the new `sequenceId` and what the plan changed. Overlays over the speech (cut-aways, cards, sound effects) move with it through a `recut`.
+- `sequences.switch` (`sequenceId`) opens a sequence; `sequences.diff` (`a`, `b`: sequence ids) lists what differs between two.
+
+1. **Gather:** `timeline_describe` (with the transcript when a version cuts speech) and the skills. Decide every version now, down to its plan.
+2. **Branch:** one `sequences.branch` per version, all in the same response, each from that one description. Put everything a version needs in its one plan; a `recut` takes the music bed to the new end by itself. List the version you recommend last, with `open: true`, so it is open when you answer.
+3. **Answer** from the branch results.
+
+That is three rounds for one version or several. Make one new version per turn by default: the original and the new one are the two to compare. Make more only when asked ("a 30 and a 60 second version", "3 hooks"), and offer more in your answer instead of making them.
+
+If a branch fails, fix that plan from its error and branch it again in the next round; the others are made. If the failed one was the one you meant to open, open your next pick with `sequences.switch` in that round. Do not make a version with `sequences.duplicate` and then edit the copy: that takes three rounds per version where `sequences.branch` takes one.
+
+### Hook versions
+
+A hook version changes the first few seconds and keeps the rest of the cut. Make it with one `recut` of the original's ranges: `recut` plays its ranges in the order given, so list the hook's line first, then the original's ranges without that line. To tease a line and still play it in place, list it first and leave it in the rest too.
+
+- **Question:** open on a line where the speaker asks something. If they never ask one, say so and make another kind instead.
+- **Cold open:** open on the most surprising moment or the payoff, pulled from later in the video, then go back to the start.
+- **Bold statement:** open on the strongest claim or result.
+
+Each version opens on a different line, and none on the line the original opens on: that version already exists, it is the original. If the best line for a kind is the original's opening, say the original already is that hook and make the others. If two kinds would open on the same line, make one and say why.
+
+### Other kinds
+
+Every version differs from the original in what varies: never the kit, music track, pacing or opening the original already has. If one of the options asked for is what the original already is, say so and make the others.
+
+- **Ending or call to action:** a `recut` that closes on a different line.
+- **Pacing:** keep the same lines. For a tighter version, trim each range closer to its first and last words and drop pauses inside it. For a looser one, widen each range by up to 0.5 s of the pause around it, from the transcript's word times. Work out each version's length from its ranges before you branch: a tighter one must be shorter than the original and a looser one longer. A cut already as tight as its words allow has no tighter version: say so and make only the looser one. Then check `durationS` (`original`, `version`) in each branch result, and say so if a version did not come out shorter or longer.
+- **Caption style:** a `captions` op with a `kit` other than the one the caption track has (`kit` in `timeline_describe`).
+- **Music:** remove the bed and add another in one plan: `{"op":"timeline.deleteClips","args":{"elements":[{"trackId":"<the bed's track>","elementId":"<the bed>"}]}}`, then `{"op":"music","args":{"query":"<2-4 word vibe>"}}`. Never the track the original has. A plan that removes a clip gets its own approval card.
+- **Camera moves:** camera-move ops on the original's clips, in one plan.
+
+### Say what each version is
+
+Describe each version from its branch result, not from what you meant to do: the line it now opens on, what moved, and how its length changed. A version whose plan changed nothing was not made; fix it or say so. A pacing or length version whose `durationS.version` equals `durationS.original` is the original again: say that plainly ("the looser version came out the same length as your cut"), never call it looser or tighter. Use `sequences.diff` (`a`, `b`: sequence ids) only when the person asks what differs, or a version took more than one plan.
 
 Never delete or rename the user's sequences unless they ask.
 
