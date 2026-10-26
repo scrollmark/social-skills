@@ -12,12 +12,11 @@ The agent swaps the bed in place for one new track and says it changed the music
 
 ## With skill (expected)
 
-The agent treats this as a rejected attempt on the music. It lists the sequences with its first describe, copies the timeline as "Music: synth" and describes the copy in the same round, replaces the bed there in one plan, and answers in about four rounds: the new version is open, the original with the acoustic bed is still there, which it recommends and why, and an offer to make another (say, electronic pop).
+The agent treats this as a rejected attempt on the music. It describes the timeline, makes "Music: synth" with one `sequences.branch` whose plan replaces the bed, opens it, and answers in about four rounds: the new version is open, the original with the acoustic bed is still there, which it recommends and why, and an offer to make another (say, electronic pop).
 
 ## Behavioral markers
 
-- [ ] Uses `sequences.duplicate` with a name that says what differs
-- [ ] Calls `timeline_describe` after the copy, in the same round
+- [ ] Uses `sequences.branch` with a name that says what differs
 - [ ] Makes one new version and keeps the original unchanged
 - [ ] Does not look up the sequence commands
 - [ ] Answers naming the version, that it is open, that the original is kept, a recommendation, and offers another
