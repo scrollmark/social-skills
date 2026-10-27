@@ -1,6 +1,6 @@
 ---
 name: editor-versions
-description: Use when a request in the Scrollmark editor is a matter of taste (music, caption style or font, look or grade, length or pacing, the hook or opening), when the user asks for options, another version or to compare, when they rejected the last attempt at something, or before restyling the whole video. Decides between one result, options in chat, and separate versions (sequences) to compare.
+description: Use when a request in the Scrollmark editor is a matter of taste (music, caption style or font, look or grade, length or pacing, the hook or opening), when the user asks for options, another version or to compare, when they choose one of the versions, when they rejected the last attempt at something, or before restyling the whole video. Decides between one result, options in chat, and separate versions (sequences) to compare.
 ---
 
 # Editor Versions
@@ -30,7 +30,7 @@ One video for several platforms ("for TikTok and Reels") is one video, not versi
 These commands run through `editor_run` (`editor_read` for `sequences.diff`); a plan refuses them. Their arguments are here, so skip `editor_lookup` for them.
 
 - `sequences.branch` makes a version in one call: `stateToken` and handles from `timeline_describe` of the open sequence, `name` (what differs: "Music: synth", "Length: 30s", "Hook: question"), and `ops` as for `timeline_applyPlan`. It copies the open sequence and applies the plan to the copy. The open sequence stays open and unchanged, so the same description makes the next version; `open: true` leaves that version open instead. If the plan fails, no copy is left. The result has the new `sequenceId` and what the plan changed. Overlays over the speech (cut-aways, cards, sound effects) move with it through a `recut`.
-- `sequences.switch` (`sequenceId`) opens a sequence; `sequences.diff` (`a`, `b`: sequence ids) lists what differs between two.
+- `sequences.switch` (`sequenceId`) opens a sequence to look at or edit; when the person chooses a version, use `sequences.pick` instead (below). `sequences.diff` (`a`, `b`: sequence ids) lists what differs between two.
 
 1. **Gather:** `timeline_describe` (with the transcript when a version cuts speech) and the skills. Decide every version now, down to its plan.
 2. **Branch:** one `sequences.branch` per version, all in the same response, each from that one description. Put everything a version needs in its one plan; a `recut` takes the music bed to the new end by itself. List the version you recommend last, with `open: true`, so it is open when you answer.
@@ -63,6 +63,10 @@ Every version differs from the original in what varies: never the kit, music tra
 ### Say what each version is
 
 Describe each version from its branch result, not from what you meant to do: the line it now opens on, what moved, and how its length changed. A version whose plan changed nothing was not made; fix it or say so. A pacing or length version whose `durationS.version` equals `durationS.original` is the original again: say that plainly ("the looser version came out the same length as your cut"), never call it looser or tighter. Use `sequences.diff` (`a`, `b`: sequence ids) only when the person asks what differs, or a version took more than one plan.
+
+### When they pick
+
+When the person says which version they want ("go with the cold open", "the second one"), call `sequences.pick` (`sequenceId`, and `reason`: why, in their words, if they said) through `editor_run`. It opens that version and marks it picked; the pick is kept for their brand, so later versions can lead with what they choose. In the SocialGPT chat they can also pick on the card of versions under your answer. `sequences.list` shows a pick as `picked`. Picking keeps the other versions. To export a version, call `export.start` with its `sequenceId` from `sequences.list`; it renders that version without opening it, and its result names the sequence it rendered.
 
 Never delete or rename the user's sequences unless they ask.
 

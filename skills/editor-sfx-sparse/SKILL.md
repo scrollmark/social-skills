@@ -15,9 +15,17 @@ Load only when something is arriving (B-roll in, a title, a punch they asked to 
 
 ## Search and place
 
-`media_searchCatalog` `providerId: "freesound"`, `kind: "audio"`. Pass **`sfxRole`** only for chip roles: `hit` `whoosh` `riser` `reverse` `glitch` `foley` `ambience`. Do not invent roles (`downer` `stinger` `drone` `ui` `drop` `explosion` `impact` are not `sfxRole`). Extra query tokens AND; do not free-type "cinematic dark whoosh".
+`media_searchCatalog` `providerId: "freesound"`, `kind: "audio"`. Pass **`sfxRole`** only for chip roles: `hit` `whoosh` `riser` `reverse` `glitch` `foley` `ambience` `ui`. Do not invent roles (`pop` `click` `downer` `stinger` `drone` `drop` `explosion` `impact` are not `sfxRole`). Extra query tokens AND; do not free-type "cinematic dark whoosh".
 
-Import a `remoteId` from **that** search and place it at the **timeline** second of the event in the same plan: `media.importFromCatalog` with `"as": "$hit"`, then `timeline.addMediaClip` with `mediaId: "$hit"` and `"as": "$sfx"`, then `element.setParams` with `elementId: "$sfx"` and `params: { "volumePercent": 90 }` (**80–100**, still under voice). Keep hits short.
+A sound the user names (mouse click, cork pop, ding, notification, camera shutter) is `sfxRole: "ui"` with the name as `query` (`"cork pop"`): the role adds no word of its own and only returns sounds of 0.3 s or more, long enough to hear over a voice.
+
+Import a `remoteId` from **that** search and place it at the **timeline** second of the event in the same plan: `media.importFromCatalog` with `"as": "$hit"`, then `timeline.addMediaClip` with `mediaId: "$hit"` and `"as": "$sfx"`, then `element.setParams` with `elementId: "$sfx"` and `params: { "volumePercent": 90 }` (**80–100**; a one-shot under a voice needs **100**, and louder is `volume` in dB). Keep hits short, but not shorter than 0.3 s: a 0.15 s click disappears under speech.
+
+## Check that it can be heard
+
+You cannot listen, and a clip on the timeline is not a sound anyone hears. The plan result lists each short sound it placed under `sounds`, with a `verdict` (`clear`, `quiet`, `buried`, `too short`, `unmeasured`) and its `marginDb` over what plays under it; `audio.measureSounds` (through `editor_read`) measures any of them later. Fix every one that is not `clear` in the follow-up plan: `too short` → search again and swap in a longer sound; `quiet` or `buried` → make it louder than its file with `volume` in dB (`+6` is about twice as loud, up to `+20`; `volumePercent` stops at 100, its file's own level), and if it still is not `clear`, a punchier sound, or move it a little off the spoken word into a pause. `unmeasured` means a clip under it could not be mixed (its `unmeasured` says which): you do not know whether it can be heard, so say that, and do not call it audible. Then say which sounds you changed and what the check reads now.
+
+When the user says they can't hear a sound: measure it first (`audio.measureSounds` on those clips), tell them what it found ("the click is 0.16 s and 20 dB under your voice"), change what it shows is wrong, and measure again. Never reply that it is fixed after only moving clips or placing the same files again, and never give a cause the tool results do not show.
 
 Do not: one whoosh per keep-range join; SFX on every word caption; a second bed via `ambience` or drone.
 
@@ -47,6 +55,6 @@ Match the picture. Skip if it does not earn it. Tighten later.
 | drone | They asked for a tonal bed/hum. Never a second bed. Not room air | chips off `drone` (or ambience + `drone`), ~8–16s |
 | foley | Picture shows the action (step, cloth, door). Skip talking-head with no object motion. Not a designed hit/whoosh | `sfxRole: foley` `short` + `footstep` / `cloth` / `door` (+ surface) |
 | ambience | Room tone only if they asked. Never a music bed | `sfxRole: ambience` `phrase` + place (`roomtone`, `park`, `wind`) |
-| ui | On-screen tap, click, or notification | chips off `click` / `ui` / `button` |
+| ui | On-screen tap, click, pop, ding or notification | `sfxRole: ui` + the sound's name (`mouse click`, `cork pop`, `ding`) |
 | drop | Beat drop they asked for. Not downer, not explosion | chips off `drop` |
 | explosion | Picture explodes or they asked | `sfxRole: hit` + `explosion` |
