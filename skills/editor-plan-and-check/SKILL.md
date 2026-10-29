@@ -53,6 +53,8 @@ Checking is read-only; fixes go in one follow-up plan.
 
 Write one follow-up plan against the result's `stateToken`, using handles from the result (including track handles such as `t2`). Describe again only to touch clips the result did not list. For safe-area findings, `qc_applyFix` with `allSafe: true` is fine.
 
+A `main_track_gap` in `lint` is black between clips on the main track. Close it in the fix pass with a `closeGaps` op (`{ "op": "closeGaps", "args": { "at": <seconds inside the gap> } }`), even when your plan did not make it, unless the user asked for that pause. It moves everything after the gap back, so voiceover and captions stay with their picture. Tell the user you closed it.
+
 If the plan failed because something outside the edit failed (a stock download, a provider error), nothing was applied. Send the plan once more without that item and the ops that used it, then tell the user what you left out and why. Do not drop the whole edit for one missing download.
 
 Make at most one fix pass, and do not call `preview_inspectFrames` after it: its result's frames and `lint` are the check. If something is still off, tell the user what it is instead of looping.
