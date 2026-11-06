@@ -16,7 +16,7 @@ Aim for three rounds: gather, plan, check. Every extra plan costs the user a rou
 Settle these from the request and `timeline_describe` before writing anything:
 
 - **What changes, and what stays.** Keep the user's own clips, text they wrote and edits they made unless they asked to change them.
-- **Platform.** One they named, else the editor's safe zone, else generic. The canvas size is fixed; you cannot change the aspect ratio.
+- **Platform.** One they named, else the editor's safe zone, else generic. Keep the aspect ratio unless they ask for a shape or a platform that implies one ("a reel" is 9:16): then set it first with `project.setAspectRatio`, and build for that frame.
 - **Length.** A number they gave. Without one, keep the strongest complete takes; do not cut to a length nobody asked for.
 - **Look.** Caption kit from the `editor-captions` skill. Keep the existing look unless they asked for a new one.
 
