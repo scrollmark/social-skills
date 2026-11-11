@@ -27,4 +27,6 @@ A move only if the line is motivated **and** the subject (or a face, for a joke 
 
 Stills/B-roll that would sit dead get a slow Ken Burns (`zoom_in` or a pan) over the hold. Talking-head: punch in on the beat; do not Ken Burns the entire speech. Match pan/tilt to where the subject is. Never `element_setParams` for motion (that clears camera keys). To take a move off a clip without undoing other edits, `element_clearCameraMove`.
 
+The Library's Zoom presets (`zoom.slowpush`, `zoom.quickin` and the rest, applied with `library.apply`) zoom across a whole clip. Use one only when the clip is the beat (a short B-roll insert, a cut-in); for a line inside a longer take, `element_applyCameraMove` over the beat. See `editor-library-fx`.
+
 Do not: a move on every keep-range; filmstrip the whole tape; animate captions/stickers.
