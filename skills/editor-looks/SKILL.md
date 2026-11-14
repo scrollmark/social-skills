@@ -1,6 +1,6 @@
 ---
 name: editor-looks
-description: Use when a Scrollmark editor user names a Library filter (Moody, Latte, Vintage…) or asks for a look or mood in the colour (warm, moody, cinematic, film, brighter).
+description: Use when a Scrollmark editor user names a Library filter (Moody, Latte, Vintage…) or asks for a look or mood in the colour (warm, moody, cinematic, film, brighter). Not for design styles, which are graphics (editor-motion-graphics).
 ---
 
 # Editor Looks
