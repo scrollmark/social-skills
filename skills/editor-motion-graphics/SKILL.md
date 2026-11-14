@@ -1,6 +1,6 @@
 ---
 name: editor-motion-graphics
-description: Use when the user asks for an on-screen title, hook, text graphic, stat, step card, product or price tag, call to action, or any other designed graphic for a moment of a Scrollmark editor video, or wants one changed, moved or removed.
+description: Use when the user asks for an on-screen title, header, hook, text graphic, stat, step card, product or price tag, call to action, design styles or design-style graphics, or any other designed graphic for a moment of a Scrollmark editor video, or wants one changed, moved or removed.
 ---
 
 # Editor Motion Graphics
@@ -15,7 +15,18 @@ A motion graphic is a short designed clip for one moment: a photo cutaway, a sta
 
 Make a graphic only when the user asked for one, in any words ("add a title", "put her name up", "show the price", "make the stat pop"). Never add a hook, title or text graphic on your own, even to open a video or after a recut. Captions are not motion graphics: the editor captions the whole video (`editor-captions`).
 
-The template title commands `graphics.addTitleCard` and `packs.insertTitleScene` are turned off; titles, hooks, CTAs and text graphics all come from `media_generate` with `kind: "motion"`.
+The template title commands `graphics.addTitleCard` and `packs.insertTitleScene` are turned off; titles, hooks, CTAs and text graphics all come from `media_generate` with `kind: "motion"`, except design-style graphics (below).
+
+## Design-style graphics: instant and free
+
+When the user asks for design styles, design-style graphics or a graphic "in a design style" ("add some design styles", "a header design style"), use the design style's ready-made graphics, not a motion generation and not a colour filter: `designStyles.addGraphic`, a plan op. They appear at once, cost nothing and keep the text editable.
+
+1. The look first. Without a design style on the project the call returns `CHOOSE_LOOK`: follow its message and ask with the style tiles (`designStyles.list`, then `ask_person` with each option's `style_id`), then `designStyles.apply` their pick.
+2. The words. Use the user's own text. When they gave none, ask in the same question card: a few short suggestions that fit the video, recommend one.
+3. Place it: `kind` title for a header, title or hook, label for a short tag, lower for a name and role, caption for a line to read, callout to point at a detail, stat for a number and what it means, quote, list. `main` is the words, `sub` an optional second line, `kick` a small line above a title. `atS` at the moment it belongs to, the opening at 0. A title goes to the top centre, clear of the platform's top bar, and other kinds where the style puts them; only when they name a spot pass `place` `{x, y}` (0–1, its centre).
+4. Changes to the words or corner: `designStyles.updateGraphic`. A different look: `designStyles.apply` restyles every one of them.
+
+Make a motion graphic instead only when they want it animated or bespoke, with a photo or logo, or ask for a custom design.
 
 ## 2. One call per moment
 
