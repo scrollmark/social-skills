@@ -1,6 +1,6 @@
 ---
 name: editor-transitions
-description: Use when a Scrollmark editor user names a Library transition, asks for transitions, or asks to make the cuts flow. Not for jump cuts inside one talking-head take.
+description: Use when a Scrollmark editor user asks for a transition between clips or shots (add transitions, a fade, fade in or out, fade to black, crossfade, dissolve, wipe, whip pan, swipe, a zoom or glitch transition, smooth the cuts, make the cuts flow) or names a Library transition. Not for jump cuts inside one talking-head take.
 ---
 
 # Editor Transitions

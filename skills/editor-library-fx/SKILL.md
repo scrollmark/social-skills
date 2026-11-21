@@ -1,6 +1,6 @@
 ---
 name: editor-library-fx
-description: Use when a Scrollmark editor user names a Library FX (Sway, Shake, Glitch, RGB split, Magnifying glass, a Zoom preset…) or asks for an effect such as shake, glitch, spotlight or blur on a clip. For zooms on a moment in a longer take, see editor-camera-directing.
+description: Use when a Scrollmark editor user asks for a visual effect on a clip (an effect or FX, glitch, shake, camera shake, flash, strobe, RGB split, blur, spotlight, magnify, mosaic, VHS or retro), names a Library FX (Sway, Shake, Glitch, Magnifying glass, a Zoom preset…), or says make it pop. For zooms on a moment in a longer take, see editor-camera-directing.
 ---
 
 # Editor Library FX
