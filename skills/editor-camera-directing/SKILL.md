@@ -1,6 +1,6 @@
 ---
 name: editor-camera-directing
-description: Use when adding zooms, pans or Ken Burns moves to a Scrollmark editor video, or a first recut that should feel directed rather than static.
+description: Use when a Scrollmark editor user asks for camera motion (zoom in, punch in, push in, pan, tilt, Ken Burns, less static, more dynamic), or for the first full recut of a talking head such as Cut this for TikTok. Not for a cut, trim, look, transition, effect, title or music change on its own, or a vague follow-up edit.
 ---
 
 # Editor Camera Directing

@@ -16,6 +16,14 @@ A running Scrollmark editor whose commands you can call: the SocialGPT editor ch
 
 Never `phrase` (8-word lines), never `phrase-plus-word` (an extra word track), and never `captions_generate`: it makes sequential chunks without the rhythm you chose.
 
+## Already captioned?
+
+Read the caption state first (`project_snapshot.captions`, or `captions_getState`). If captions exist:
+
+- "Add captions" again: they are already there. Say so and ask what to change; do not rebuild them.
+- A new look ("bigger", "yellow", another font or kit, "move them up"): `captions.applyPreset` with that track's `trackId` and only what changed (`size: "l"` for bigger). Never re-run the rhythm for a restyle.
+- A different rhythm the user asked for (one word at a time instead of chunks): the rhythm op, which replaces the old tracks.
+
 ## Steps
 
 After the recut, or on a timeline that already has the keep list:
@@ -32,3 +40,4 @@ After the recut, or on a timeline that already has the keep list:
 3. Size: `s` for word captions, since at `m` long words clip on a vertical video; `m` or `l` only when the user asks for bigger captions.
 4. Placing for a platform (the user named one, or the editor's safe zone shows one): pass the same `platform` to `captions.applyRhythm` and to `captions.applyPreset`. The preset recomputes where captions sit, so leaving it out of either call puts them back under the platform's caption block. Then check that platform with `qc_run` (`checks: ["document"]`) and fix what it finds with `qc_applyFix`.
 5. If captions already exist with role `word`, `captions_resync`. It keeps their kit, colour and size, so do not apply a preset afterwards unless the user asks for a different look.
+6. Check the plan result's `frames[].overlaps`. A caption track over itself (`"t1 (1 cue)"` with `"t1 (1 cue)"`) means each word was captioned twice, usually because the same speech plays twice (the footage on two tracks, a voiceover over clips with their own words). Follow the result's `text_overlap` note: `captions_planCues`, then `captions_replaceTracks` with those cues and the same `kitId`, `size` and `placement`; then `preview_inspectFrames` at those seconds.
