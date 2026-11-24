@@ -17,7 +17,7 @@ A Library effect or `zoom.*` preset runs over the **whole clip**. Never put one 
 
 Library FX run over the **whole clip** they sit on. Use them on short clips (a shot in a montage, a B-roll insert, a beat), and on one or two moments of a video, not as decoration. A named effect goes on the clip they named, and only that one.
 
-A vague "make it pop" or "more exciting" is a request for the whole edit, not for effects. Do what lifts the video most, following those skills: tighten the pacing, add captions and music if it has none, and punch in on the strongest lines. Library effects are at most one or two accents on top, never the whole answer, and on a talking head usually none. Say what you changed and why.
+A vague "make it pop" or "more exciting" is a request for the whole edit, not for effects. Do what lifts the video most, following those skills: tighten the pacing, add captions if it has none, and punch in on the strongest lines. Add music only if they asked for it. Library effects are at most one or two accents on top, never the whole answer, and on a talking head usually none. Say what you changed and why.
 
 ## Picking an effect
 

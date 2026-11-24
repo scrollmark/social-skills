@@ -1,6 +1,6 @@
 ---
 name: editor-soundtrack
-description: Use when a recut social talking-head video in the Scrollmark editor needs a music bed, or the user asks to add, swap or remove background music. Not for seated interviews or podcasts, footage that is already a song, or when the user said no music.
+description: Use when the user asks to add, swap, remove or change background music in the Scrollmark editor, or a style or template they picked calls for music. Never add music on your own to a recut, captions or a vague "make it pop". Not for seated interviews or podcasts, footage that is already a song, or when the user said no music.
 ---
 
 # Editor Soundtrack
@@ -9,13 +9,15 @@ description: Use when a recut social talking-head video in the Scrollmark editor
 
 A running Scrollmark editor whose commands you can call: the SocialGPT editor chat, or `scrollmark mcp` from `@scrollmark/cli` for a coding agent. Without it the `music` op can't run; the when-to-skip rules and vibe queries still guide picking a bed by hand.
 
-## When to skip
+## When to add music
 
-Skip this skill (do not search, do not place) if the source is already a song or performance, the user said no music, or it is a seated interview or podcast. If they already placed a bed, keep it, duck it, trim it — do not add a second.
+Music is added only when the person asks for it ("add some music", "put a beat under it", "swap the song") or a style or template they picked calls for it. Music they did not ask for makes the edit feel worse to them, so a recut, "cut this for TikTok", "make it 30 seconds", captions or "make it pop" get no music unless they asked for it too. If you think music would help, you may offer it in one short line after the edit; do not add it.
+
+Even when they ask, skip it (and say why) if the source is already a song or performance, or it is a seated interview or podcast and they have not insisted. If they already placed a bed, keep it, duck it, trim it — do not add a second.
 
 ## Add the bed
 
-After the recut, add one `music` op to the plan with a **query** of the form "<vibe> background music" (instrumental, no competing vocals; a bare genre like "lo-fi" finds drum samples, not tracks):
+When they asked for music, add one `music` op to the plan with a **query** of the form "<vibe> background music" (instrumental, no competing vocals; a bare genre like "lo-fi" finds drum samples, not tracks):
 
 - lifestyle / casual talking-head → "warm acoustic background music"
 - product / UGC → "light pop background music"
